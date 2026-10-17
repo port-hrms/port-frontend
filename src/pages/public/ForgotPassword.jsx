@@ -181,7 +181,7 @@ export default function ForgotPassword() {
                             rel="noreferrer"
                             className="transition-colors hover:text-slate-500"
                         >
-                            Designed By Briskode Technology Pvt. Ltd.
+                            Designed By Dreamonix Solution Pvt. Ltd.
                         </Link>
                     </p>
                 </div>

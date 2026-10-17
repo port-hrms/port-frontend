@@ -5,7 +5,7 @@ import { numberToWords } from "@/utils/numberUtils";
 import { config } from "@/config";
 
 const defaultCompanyInfo = {
-  name: "Briskode Technology Pvt. Ltd.",
+  name: "Dreamonix Solution Pvt. Ltd.",
   address: "Plot No-222, District Center,\nBhubaneswar - 751001",
   gstin: "21AAMCB1486G1ZT",
   state: "Odisha",
@@ -13,7 +13,7 @@ const defaultCompanyInfo = {
   contact: "9348354248, 7978207390",
   email: config.companyEmail,
   bank: {
-    holder: "Briskode Technology Pvt. Ltd.",
+    holder: "Dreamonix Solution Pvt. Ltd.",
     bank: "HDFC Bank",
     account: "50200087663786",
     branch: "Infocity",

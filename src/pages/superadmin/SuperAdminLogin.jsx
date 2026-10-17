@@ -116,7 +116,7 @@ export default function SuperAdminLogin() {
             </div>
 
             <p className="mt-7 text-xs text-slate-400">
-                This is a restricted area for Briskode platform staff only.
+                This is a restricted area for Dreamonix platform staff only.
             </p>
         </div>
     );

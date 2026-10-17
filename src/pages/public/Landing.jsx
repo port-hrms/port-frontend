@@ -368,7 +368,7 @@ export default function Landing() {
                         rel="noreferrer"
                         className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 transition-colors hover:text-slate-600"
                     >
-                        Designed By Briskode Technology Pvt. Ltd.
+                        Designed By Dreamonix Solution Pvt. Ltd.
                     </Link>
                 </div>
             </footer>

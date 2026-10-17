@@ -12,7 +12,7 @@ export const ProfileSection = ({ form, handleChange }) => {
             value={form.name}
             onChange={handleChange}
             className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
-            placeholder="e.g. Briskode Technology Pvt. Ltd."
+            placeholder="e.g. Dreamonix Solution Pvt. Ltd."
           />
         </div>
         <div>
@@ -63,7 +63,7 @@ export const ProfileSection = ({ form, handleChange }) => {
             value={form.email}
             onChange={handleChange}
             className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
-            placeholder="e.g. briskodetechnology@gmail.com"
+            placeholder="e.g. dreamonixsolution@gmail.com"
           />
         </div>
         <div>
@@ -74,7 +74,7 @@ export const ProfileSection = ({ form, handleChange }) => {
             value={form.hrEmail}
             onChange={handleChange}
             className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
-            placeholder="e.g. hr@briskodetechnology.com"
+            placeholder="e.g. hr@dreamonixsolution.com"
           />
         </div>
         <div className="md:col-span-2">
