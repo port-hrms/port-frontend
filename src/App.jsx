@@ -86,7 +86,8 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Landing />} />
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/home" element={<Landing />} />
 
           {/* Public careers page — no login required */}
           <Route path="/careers" element={<Careers />} />
