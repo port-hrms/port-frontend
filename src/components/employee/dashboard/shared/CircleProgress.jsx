@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-export default function CircleProgress({ percent = 0, size = 64, stroke = 5, color = "#3b82f6" }) {
+export default function CircleProgress({ percent = 0, size = 64, stroke = 5, color = "#1e88c8" }) {
   const radius = (size - stroke * 2) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (percent / 100) * circumference;

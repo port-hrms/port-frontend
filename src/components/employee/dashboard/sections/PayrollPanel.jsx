@@ -19,10 +19,10 @@ export default function PayrollPanel({ payroll, navigate, setActiveTab }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex-1">
+    <div className="panel overflow-hidden flex-1">
       <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
         <div>
-          <h3 className="font-extrabold text-slate-900">Latest Payroll</h3>
+          <h3 className="font-bold text-slate-900">Latest Payroll</h3>
           <p className="text-xs text-slate-400 mt-0.5">Your most recent salary record</p>
         </div>
         <span className="text-xl">💳</span>
@@ -35,7 +35,7 @@ export default function PayrollPanel({ payroll, navigate, setActiveTab }) {
               <p className="text-sm font-bold text-slate-600">{MONTH_NAMES[payroll.month - 1]} {payroll.year}</p>
               <span
                 className={`text-xs font-bold px-2.5 py-1 rounded-full ${paymentStatus === "Paid" ? "bg-emerald-100 text-emerald-700"
-                    : paymentStatus === "Processed" ? "bg-blue-100 text-blue-700"
+                    : paymentStatus === "Processed" ? "bg-ocean-100 text-ocean-700"
                       : paymentStatus === "Hold" ? "bg-red-100 text-red-600"
                         : "bg-slate-100 text-slate-600"}`}
               >
@@ -43,9 +43,9 @@ export default function PayrollPanel({ payroll, navigate, setActiveTab }) {
               </span>
             </div>
 
-            <div className="bg-linear-to-br from-slate-900 to-slate-800 rounded-xl p-4 text-white mb-4">
+            <div className="bg-linear-to-br from-navy-900 to-navy-700 rounded-xl p-4 text-white mb-4">
               <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Net Salary</p>
-              <p className="text-3xl font-extrabold">{formatCurrency(netSalary)}</p>
+              <p className="text-3xl font-bold">{formatCurrency(netSalary)}</p>
               {paymentDate && (
                 <p className="text-xs text-slate-400 mt-1.5">Paid on {formatDate(paymentDate)}</p>
               )}
@@ -54,7 +54,7 @@ export default function PayrollPanel({ payroll, navigate, setActiveTab }) {
             <div className="space-y-2.5">
               <div className="flex justify-between items-center py-2 border-b border-slate-100">
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Earnings</span>
-                <span className="text-xs font-extrabold text-emerald-600">{formatCurrency(grossSalary)}</span>
+                <span className="text-xs font-bold text-emerald-600">{formatCurrency(grossSalary)}</span>
               </div>
               {[
                 { label: "Basic Salary", val: payroll?.earnings?.basic },
@@ -71,7 +71,7 @@ export default function PayrollPanel({ payroll, navigate, setActiveTab }) {
 
               <div className="flex justify-between items-center py-2 border-b border-slate-100 mt-2">
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Deductions</span>
-                <span className="text-xs font-extrabold text-red-500">-{formatCurrency(totalDeductions)}</span>
+                <span className="text-xs font-bold text-red-500">-{formatCurrency(totalDeductions)}</span>
               </div>
               {[
                 { label: "Provident Fund", val: payroll?.deductions?.pf },

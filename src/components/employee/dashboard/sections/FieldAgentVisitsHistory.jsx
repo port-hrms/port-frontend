@@ -101,7 +101,7 @@ export default function FieldAgentVisitsHistory({ employee }) {
 
             {loading ? (
                 <div className="flex flex-col items-center justify-center py-16 text-slate-400 gap-3">
-                    <div className="w-6 h-6 border-2 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+                    <div className="w-6 h-6 border-2 border-ocean-200 border-t-ocean-600 rounded-full animate-spin" />
                     <p className="text-xs font-medium">Loading visits history...</p>
                 </div>
             ) : Object.keys(groupedVisits).length === 0 ? (
@@ -116,7 +116,7 @@ export default function FieldAgentVisitsHistory({ employee }) {
                         {Object.keys(groupedVisits).map((dateKey) => (
                             <div key={dateKey} className="space-y-3">
                                 <div className="flex items-center gap-3">
-                                    <span className="text-xs font-extrabold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+                                    <span className="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
                                         📅 {dateKey}
                                     </span>
                                     <div className="h-px bg-slate-100 flex-1" />

@@ -16,8 +16,8 @@ export default function Settings() {
         <div className="space-y-6">
             {/* Page Header */}
             <div>
-                <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Settings</h2>
-                <p className="text-sm text-slate-400 mt-0.5">Manage your account and system preferences</p>
+                <h2 className="text-2xl font-bold text-navy-900 tracking-tight">Settings</h2>
+                <p className="text-sm text-slate-500 mt-0.5">Manage your account and system preferences</p>
             </div>
 
             {/* Profile Settings */}

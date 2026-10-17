@@ -5,8 +5,8 @@ import SelectField from "./SelectField";
 export default function PersonalInfoSection({ form, errors, onChange, genders }) {
     return (
         <div>
-            <h3 className="text-xs font-extrabold text-blue-600 uppercase tracking-widest mb-4 flex items-center gap-2">
-                <span className="w-5 h-0.5 bg-blue-600 rounded" /> Personal Information
+            <h3 className="text-xs font-bold text-ocean-600 uppercase tracking-widest mb-4 flex items-center gap-2">
+                <span className="w-5 h-0.5 bg-ocean-600 rounded" /> Personal Information
             </h3>
             <div className="grid grid-cols-2 gap-4">
                 <Field label="First Name" name="firstName" placeholder="Priya" required form={form} errors={errors} onChange={onChange} />

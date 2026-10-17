@@ -24,7 +24,7 @@ export default function Field({ label, name, type = "text", placeholder, require
           ${isPassword ? "pr-10" : ""}
           ${errors[name]
                             ? "border-red-400 focus:border-red-500 bg-red-50"
-                            : "border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                            : "border-slate-200 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100"
                         }`}
                 />
                 {isPassword && (

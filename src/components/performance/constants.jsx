@@ -9,7 +9,7 @@ export const YEARS = [2024, 2025, 2026, 2027];
 
 export const GRADE_STYLES = {
     Excellent: { badge: "bg-emerald-100 text-emerald-700", bar: "bg-emerald-500" },
-    Good: { badge: "bg-blue-100 text-blue-700", bar: "bg-blue-500" },
+    Good: { badge: "bg-ocean-100 text-ocean-700", bar: "bg-ocean-500" },
     Average: { badge: "bg-amber-100 text-amber-700", bar: "bg-amber-500" },
     "Needs Improvement": { badge: "bg-orange-100 text-orange-600", bar: "bg-orange-500" },
     Poor: { badge: "bg-red-100 text-red-600", bar: "bg-red-500" },
@@ -17,15 +17,12 @@ export const GRADE_STYLES = {
 
 export const STATUS_STYLES = {
     Draft: "bg-slate-100 text-slate-600",
-    Submitted: "bg-blue-100 text-blue-700",
-    Acknowledged: "bg-violet-100 text-violet-700",
+    Submitted: "bg-ocean-100 text-ocean-700",
+    Acknowledged: "bg-navy-100 text-navy-700",
     Closed: "bg-emerald-100 text-emerald-700",
 };
 
-const AVATAR_COLORS = [
-    "bg-blue-500", "bg-violet-500", "bg-emerald-500",
-    "bg-amber-500", "bg-pink-500", "bg-cyan-500", "bg-rose-500",
-];
+const AVATAR_COLORS = ["bg-navy-700", "bg-ocean-600", "bg-navy-600", "bg-ocean-500", "bg-port-teal", "bg-navy-500"];
 
 export const getAvatarColor = (name = "") =>
     AVATAR_COLORS[name.charCodeAt(0) % AVATAR_COLORS.length];
@@ -55,14 +52,14 @@ export const DEFAULT_FORM = {
 // ─── Reusable tiny UI helpers ─────────────────────────────────
 export const SectionLabel = ({ color, title }) => {
     const colors = {
-        blue: "text-blue-600 bg-blue-600",
-        violet: "text-violet-600 bg-violet-600",
+        blue: "text-ocean-600 bg-ocean-600",
+        violet: "text-navy-600 bg-navy-600",
         amber: "text-amber-600 bg-amber-600",
         emerald: "text-emerald-600 bg-emerald-600",
         rose: "text-rose-600 bg-rose-600",
     };
     return (
-        <h3 className={`text-xs font-extrabold ${colors[color].split(" ")[0]} uppercase tracking-widest mb-4 flex items-center gap-2`}>
+        <h3 className={`text-xs font-bold ${colors[color].split(" ")[0]} uppercase tracking-widest mb-4 flex items-center gap-2`}>
             <span className={`w-5 h-0.5 ${colors[color].split(" ")[1]} rounded`} />
             {title}
         </h3>

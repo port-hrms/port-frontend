@@ -11,14 +11,14 @@ export default function ReviewDetail({ review, onClose, onEdit }) {
             <div className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl" onClick={(e) => e.stopPropagation()}>
 
                 {/* Hero Header */}
-                <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-t-2xl px-6 py-6 text-white relative">
+                <div className="bg-gradient-to-br from-navy-900 to-navy-700 rounded-t-2xl px-6 py-6 text-white relative">
                     <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors">✕</button>
                     <div className="flex items-center gap-4 mb-3">
-                        <div className={`w-14 h-14 rounded-full ${getAvatarColor(review.employee?.firstName)} text-white text-lg font-extrabold flex items-center justify-center ring-2 ring-white/20`}>
+                        <div className={`w-14 h-14 rounded-full ${getAvatarColor(review.employee?.firstName)} text-white text-lg font-bold flex items-center justify-center ring-2 ring-white/20`}>
                             {review.employee?.firstName?.[0]}{review.employee?.lastName?.[0]}
                         </div>
                         <div>
-                            <p className="font-extrabold text-lg">{review.employee?.firstName} {review.employee?.lastName}</p>
+                            <p className="font-bold text-lg">{review.employee?.firstName} {review.employee?.lastName}</p>
                             <p className="text-slate-400 text-sm">{review.employee?.designation} · {review.employee?.department}</p>
                             <p className="text-slate-500 text-xs mt-0.5">{review.reviewCycle} Review · {review.year}</p>
                         </div>
@@ -27,12 +27,12 @@ export default function ReviewDetail({ review, onClose, onEdit }) {
                     <div className="flex items-center gap-4">
                         <div className="flex-1">
                             <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-                                <div className={`h-full ${GRADE_STYLES[review.grade]?.bar || "bg-blue-500"} rounded-full`}
+                                <div className={`h-full ${GRADE_STYLES[review.grade]?.bar || "bg-ocean-500"} rounded-full`}
                                     style={{ width: `${review.overallScore}%` }} />
                             </div>
                         </div>
                         <div className="text-right">
-                            <p className="text-3xl font-extrabold">{review.overallScore}</p>
+                            <p className="text-3xl font-bold">{review.overallScore}</p>
                             <span className={`text-xs font-bold px-2 py-0.5 rounded-lg ${GRADE_STYLES[review.grade]?.badge}`}>{review.grade}</span>
                         </div>
                     </div>
@@ -41,7 +41,7 @@ export default function ReviewDetail({ review, onClose, onEdit }) {
                 <div className="px-6 py-5 space-y-5">
                     {/* Skill Ratings */}
                     <div>
-                        <h4 className="text-xs font-extrabold text-slate-500 uppercase tracking-widest mb-3">Skill Ratings</h4>
+                        <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Skill Ratings</h4>
                         <div className="grid grid-cols-3 gap-2">
                             {[
                                 ["Technical", review.technicalSkills],
@@ -66,7 +66,7 @@ export default function ReviewDetail({ review, onClose, onEdit }) {
                     {/* KPIs */}
                     {review.kpis?.length > 0 && (
                         <div>
-                            <h4 className="text-xs font-extrabold text-slate-500 uppercase tracking-widest mb-3">KPIs</h4>
+                            <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">KPIs</h4>
                             <div className="space-y-2">
                                 {review.kpis.map((kpi, i) => {
                                     const pct = kpi.target > 0 ? Math.round((kpi.achieved / kpi.target) * 100) : 0;
@@ -74,7 +74,7 @@ export default function ReviewDetail({ review, onClose, onEdit }) {
                                         <div key={i} className="flex items-center gap-3">
                                             <p className="text-xs text-slate-600 w-36 flex-shrink-0 font-medium">{kpi.title}</p>
                                             <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
-                                                <div className="h-full bg-blue-500 rounded-full" style={{ width: `${pct}%` }} />
+                                                <div className="h-full bg-ocean-500 rounded-full" style={{ width: `${pct}%` }} />
                                             </div>
                                             <p className="text-xs font-bold text-slate-700 w-10 text-right">{pct}%</p>
                                         </div>
@@ -92,7 +92,7 @@ export default function ReviewDetail({ review, onClose, onEdit }) {
                         { label: "Manager Comments", val: review.managerComments },
                     ].filter((f) => f.val).map(({ label, val }) => (
                         <div key={label}>
-                            <h4 className="text-xs font-extrabold text-slate-500 uppercase tracking-widest mb-1">{label}</h4>
+                            <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">{label}</h4>
                             <p className="text-sm text-slate-700 bg-slate-50 rounded-xl px-4 py-3">{val}</p>
                         </div>
                     ))}
@@ -103,15 +103,15 @@ export default function ReviewDetail({ review, onClose, onEdit }) {
                             {review.incrementRecommended && (
                                 <div className="flex-1 bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-center">
                                     <p className="text-lg">💰</p>
-                                    <p className="text-sm font-extrabold text-emerald-700">+{review.incrementPercent}%</p>
+                                    <p className="text-sm font-bold text-emerald-700">+{review.incrementPercent}%</p>
                                     <p className="text-xs text-emerald-600">Increment</p>
                                 </div>
                             )}
                             {review.promotionRecommended && (
-                                <div className="flex-1 bg-violet-50 border border-violet-200 rounded-xl p-3 text-center">
+                                <div className="flex-1 bg-navy-50 border border-navy-200 rounded-xl p-3 text-center">
                                     <p className="text-lg">🚀</p>
-                                    <p className="text-sm font-extrabold text-violet-700">Recommended</p>
-                                    <p className="text-xs text-violet-600">Promotion</p>
+                                    <p className="text-sm font-bold text-navy-700">Recommended</p>
+                                    <p className="text-xs text-navy-600">Promotion</p>
                                 </div>
                             )}
                         </div>
@@ -121,7 +121,7 @@ export default function ReviewDetail({ review, onClose, onEdit }) {
                     <div className="flex gap-3">
                         <button onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-600 text-sm font-bold transition-colors">Close</button>
                         <button onClick={() => onEdit(review)}
-                            className="flex-[2] py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-bold shadow-md shadow-blue-200 transition-all">
+                            className="flex-[2] py-2.5 rounded-xl bg-gradient-to-r from-ocean-600 to-navy-600 hover:from-ocean-700 hover:to-navy-700 text-white text-sm font-bold shadow-md shadow-ocean-200 transition-all">
                             ✏️ Edit Review
                         </button>
                     </div>

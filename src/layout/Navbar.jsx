@@ -1,14 +1,17 @@
 // @ts-nocheck
 
 import { useEffect, useRef, useState } from "react";
+import { ChevronRight, MapPin } from "lucide-react";
 import API from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 
 const ROLE_STYLES = {
-    admin: "bg-rose-500/20 text-rose-400",
-    hr: "bg-blue-500/20 text-blue-400",
-    employee: "bg-emerald-500/20 text-emerald-400",
+    admin: "bg-ocean-50 text-ocean-700 ring-ocean-200",
+    hr: "bg-ocean-50 text-ocean-700 ring-ocean-200",
+    employee: "bg-emerald-50 text-emerald-700 ring-emerald-200",
 };
+
+const ICON_BTN = "p-2 rounded-lg border border-slate-200 text-slate-500 hover:bg-ocean-50 hover:text-ocean-700 hover:border-ocean-200 transition-colors";
 
 // Pure utility — no component state dependency, defined outside to avoid rebuild on every render
 const formatTime = (value) => {
@@ -63,10 +66,11 @@ export default function Navbar({ activeLabel, onToggleSidebar }) {
     const unreadCount = notifications.filter((note) => !note.isRead).length;
 
     return (
-        <header className="bg-white border-b border-slate-100 px-4 lg:px-7 py-3 lg:py-4 flex items-center gap-3 lg:gap-4 flex-shrink-0 shadow-sm">
+        <header className="bg-white/90 backdrop-blur border-b border-slate-200/70 px-4 lg:px-7 py-3 flex items-center gap-3 lg:gap-4 shrink-0">
             <button
                 onClick={onToggleSidebar}
-                className="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-500 transition-colors"
+                aria-label="Toggle sidebar"
+                className={ICON_BTN}
             >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -74,12 +78,22 @@ export default function Navbar({ activeLabel, onToggleSidebar }) {
             </button>
 
             <div className="flex-1 min-w-0">
-                <h1 className="text-base lg:text-lg font-extrabold text-slate-900 truncate">{activeLabel}</h1>
-                <p className="text-xs text-slate-400 hidden sm:block">HR Management</p>
+                <nav className="hidden sm:flex items-center gap-1 text-[11px] font-medium text-slate-400">
+                    <span>HR Management</span>
+                    <ChevronRight size={12} />
+                    <span className="text-ocean-600">{activeLabel}</span>
+                </nav>
+                <h1 className="text-base lg:text-lg font-bold text-navy-900 truncate leading-tight">{activeLabel}</h1>
             </div>
 
+            {/* Location tag */}
+            <span className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] font-semibold tracking-wide text-slate-500">
+                <MapPin size={13} className="text-ocean-500" />
+                Paradeep Port · Odisha
+            </span>
+
             {/* Role badge */}
-            <span className={`hidden sm:block px-3 py-1 rounded-xl text-xs font-bold capitalize ${ROLE_STYLES[user?.role]}`}>
+            <span className={`hidden sm:inline-flex px-2.5 py-1 rounded-lg ring-1 text-xs font-semibold capitalize ${ROLE_STYLES[user?.role] || ROLE_STYLES.admin}`}>
                 {user?.role}
             </span>
 
@@ -91,27 +105,28 @@ export default function Navbar({ activeLabel, onToggleSidebar }) {
                         setOpen(nextOpen);
                         if (!open) fetchNotifications();
                     }}
-                    className="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-500 transition-colors"
+                    aria-label="Notifications"
+                    className={ICON_BTN}
                 >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                     </svg>
                 </button>
                 {unreadCount > 0 && (
-                    <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white" />
+                    <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-port-red rounded-full border-2 border-white" />
                 )}
 
                 {open && (
                     <div className="absolute right-0 mt-3 w-80 bg-white rounded-2xl border border-slate-100 shadow-xl overflow-hidden z-50">
                         <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
                             <div>
-                                <p className="text-sm font-extrabold text-slate-900">Notifications</p>
+                                <p className="text-sm font-bold text-navy-900">Notifications</p>
                                 <p className="text-xs text-slate-400">Latest updates</p>
                             </div>
                             {notifications.length > 0 && (
                                 <button
                                     onClick={handleMarkAllRead}
-                                    className="text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors"
+                                    className="text-xs font-bold text-ocean-600 hover:text-ocean-700 transition-colors"
                                 >
                                     Mark all
                                 </button>
@@ -129,7 +144,7 @@ export default function Navbar({ activeLabel, onToggleSidebar }) {
                                                 <p className="text-[11px] text-slate-400 mt-2">{formatTime(note.createdAt)}</p>
                                             </div>
                                             {!note.isRead && (
-                                                <span className="mt-1 h-2 w-2 rounded-full bg-blue-500" />
+                                                <span className="mt-1 h-2 w-2 rounded-full bg-ocean-500" />
                                             )}
                                         </div>
                                     </div>

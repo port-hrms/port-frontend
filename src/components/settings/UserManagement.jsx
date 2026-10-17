@@ -13,14 +13,11 @@ const PAGE_SIZE = 5;
 
 const ROLE_STYLES = {
     admin: "bg-rose-100 text-rose-700",
-    hr: "bg-blue-100 text-blue-700",
+    hr: "bg-ocean-100 text-ocean-700",
     employee: "bg-emerald-100 text-emerald-700",
 };
 
-const AVATAR_COLORS = [
-    "bg-blue-500", "bg-violet-500", "bg-emerald-500",
-    "bg-amber-500", "bg-pink-500", "bg-cyan-500", "bg-rose-500",
-];
+const AVATAR_COLORS = ["bg-navy-700", "bg-ocean-600", "bg-navy-600", "bg-ocean-500", "bg-port-teal", "bg-navy-500"];
 const getAvatarColor = (name = "") =>
     AVATAR_COLORS[name.charCodeAt(0) % AVATAR_COLORS.length];
 
@@ -64,11 +61,11 @@ export default function UserManagement() {
     const paginatedUsers = users.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <div className="panel overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
                 <div>
-                    <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                        <span className="w-8 h-8 rounded-lg bg-violet-500/10 flex items-center justify-center text-lg">👥</span>
+                    <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                        <span className="w-8 h-8 rounded-lg bg-navy-500/10 flex items-center justify-center text-lg">👥</span>
                         User Management
                     </h3>
                     <p className="text-xs text-slate-400 mt-1 ml-10">Manage system users and their access</p>
@@ -82,7 +79,7 @@ export default function UserManagement() {
 
             {loading ? (
                 <div className="flex items-center justify-center py-16 text-slate-400">
-                    <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mr-3" />
+                    <div className="w-8 h-8 border-4 border-ocean-200 border-t-ocean-600 rounded-full animate-spin mr-3" />
                     <p className="text-sm font-medium">Loading users...</p>
                 </div>
             ) : users.length === 0 ? (
@@ -94,9 +91,9 @@ export default function UserManagement() {
                 <>
                     <table className="w-full">
                         <thead>
-                            <tr className="bg-slate-50 border-b border-slate-100">
+                            <tr className="bg-slate-50/80 border-b border-slate-100">
                                 {["User", "Role", "Status", "Last Login", "Actions"].map((h) => (
-                                    <th key={h} className="px-5 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                    <th key={h} className="px-5 py-3 text-left uppercase text-[11px] font-semibold text-slate-500 tracking-wider">
                                         {h}
                                     </th>
                                 ))}
@@ -104,7 +101,7 @@ export default function UserManagement() {
                         </thead>
                         <tbody className="divide-y divide-slate-50">
                             {paginatedUsers.map((u) => (
-                                <tr key={u._id} className="hover:bg-blue-50/40 transition-colors duration-150 group">
+                                <tr key={u._id} className="hover:bg-ocean-50/40 transition-colors duration-150 group">
                                     <td className="px-5 py-4">
                                         <div className="flex items-center gap-3">
                                             <div className={`w-9 h-9 rounded-full ${getAvatarColor(u.name)} text-white text-xs font-bold flex items-center justify-center flex-shrink-0 shadow-sm`}>
@@ -160,7 +157,7 @@ export default function UserManagement() {
                                 <button
                                     onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                                     disabled={currentPage === 1}
-                                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 bg-white border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 bg-white border border-slate-200 hover:bg-navy-50 hover:text-navy-600 hover:border-navy-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
                                 >
                                     <ChevronLeft className="w-3.5 h-3.5" />
                                     Prev
@@ -172,8 +169,8 @@ export default function UserManagement() {
                                         onClick={() => setCurrentPage(page)}
                                         className={`w-8 h-8 rounded-lg text-xs font-bold transition-all duration-200 border ${
                                             page === currentPage
-                                                ? "bg-indigo-600 text-white border-indigo-600 shadow-sm shadow-indigo-200"
-                                                : "bg-white text-slate-500 border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200"
+                                                ? "bg-navy-600 text-white border-navy-600 shadow-sm shadow-navy-200"
+                                                : "bg-white text-slate-500 border-slate-200 hover:bg-navy-50 hover:text-navy-600 hover:border-navy-200"
                                         }`}
                                     >
                                         {page}
@@ -183,7 +180,7 @@ export default function UserManagement() {
                                 <button
                                     onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                                     disabled={currentPage === totalPages}
-                                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 bg-white border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 bg-white border border-slate-200 hover:bg-navy-50 hover:text-navy-600 hover:border-navy-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
                                 >
                                     Next
                                     <ChevronRight className="w-3.5 h-3.5" />

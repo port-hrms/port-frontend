@@ -3,6 +3,91 @@
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+
+  /* ── Port theme ─────────────────────────────────────── */
+  --color-navy-950: #061f33;
+  --color-navy-900: #0a2c47;
+  --color-navy-800: #0b3b5e;
+  --color-navy-700: #134d78;
+  --color-navy-600: #1d5f8f;
+  --color-navy-500: #2f6f9f;
+  --color-navy-400: #5b8db5;
+  --color-navy-300: #8fb2cf;
+  --color-navy-200: #c2d5e6;
+  --color-navy-100: #e0eaf3;
+  --color-navy-50: #f1f6fa;
+
+  --color-ocean-950: #082b44;
+  --color-ocean-900: #0b3e60;
+  --color-ocean-800: #0f5482;
+  --color-ocean-700: #13679e;
+  --color-ocean-600: #1676b6;
+  --color-ocean-500: #1e88c8;
+  --color-ocean-400: #4aa8de;
+  --color-ocean-300: #86c6ea;
+  --color-ocean-200: #bfe0f4;
+  --color-ocean-100: #dcedf8;
+  --color-ocean-50: #eef7fc;
+
+  /* Container signal colours — status only */
+  --color-port-red: #e85e4a;
+  --color-port-amber: #f2a33a;
+  --color-port-teal: #2b8aaf;
+  --color-port-green: #2f9e6e;
+
+  --color-canvas: #f4f7fa;
+}
+
+/* ── Welcome banner harbour animation ─────────────────── */
+@keyframes wbBob { 0%,100% { transform: translateY(0) rotate(-0.6deg); } 50% { transform: translateY(2.5px) rotate(0.6deg); } }
+@keyframes wbDrift { 0%,100% { transform: translateX(0); } 50% { transform: translateX(26px); } }
+@keyframes wbWater { from { transform: translateX(0); } to { transform: translateX(260px); } }
+@keyframes wbLoad { 0%,15%,100% { transform: translateY(0); } 45%,70% { transform: translateY(14px); } }
+@keyframes wbCable { 0%,15%,100% { transform: scaleY(1); } 45%,70% { transform: scaleY(1.78); } }
+@keyframes wbSmoke { 0% { opacity: .35; transform: translate(0,0) scale(.7); } 100% { opacity: 0; transform: translate(-14px,-16px) scale(1.8); } }
+@keyframes wbSheen { 0% { transform: translateX(-120%) skewX(-18deg); } 60%,100% { transform: translateX(320%) skewX(-18deg); } }
+
+.wb-ship { transform-box: fill-box; transform-origin: center; animation: wbBob 4s ease-in-out infinite; }
+.wb-ship-drift { animation: wbDrift 18s ease-in-out infinite; }
+.wb-water { animation: wbWater 9s linear infinite; }
+.wb-water-2 { animation-duration: 14s; animation-direction: reverse; }
+.wb-load { transform-box: fill-box; animation: wbLoad 7s ease-in-out infinite; }
+.wb-cable { transform-box: fill-box; transform-origin: top; animation: wbCable 7s ease-in-out infinite; }
+.wb-hook-2 .wb-load, .wb-hook-2 .wb-cable { animation-delay: -3.5s; }
+.wb-smoke { transform-box: fill-box; transform-origin: center; animation: wbSmoke 3s ease-out infinite; }
+.wb-smoke-2 { animation-delay: -1.5s; }
+.wb-sheen { animation: wbSheen 9s ease-in-out infinite; }
+
+/* Employee "Today's voyage" ship */
+@keyframes voyageBob { 0%,100% { transform: translateY(0) rotate(-1.2deg); } 50% { transform: translateY(2px) rotate(1.2deg); } }
+@keyframes voyageWave { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.voyage-bob { transform-origin: 50% 80%; animation: voyageBob 3s ease-in-out infinite; }
+.voyage-bob-slow { animation-duration: 6s; }
+.voyage-wave { animation: voyageWave linear infinite; }
+
+/* Sail in from off-screen left, ease into the dock under the cranes, wait, fade, repeat */
+@keyframes voyageSail {
+  0%   { left: -8rem; opacity: 0; }
+  4%   { opacity: 1; }
+  78%  { left: calc(100% - 15rem); opacity: 1; }
+  92%  { left: calc(100% - 15rem); opacity: 1; }
+  100% { left: calc(100% - 15rem); opacity: 0; }
+}
+@keyframes voyageWake { from { stroke-dashoffset: 0; } to { stroke-dashoffset: 20; } }
+.voyage-sail { left: -8rem; animation: voyageSail 32s cubic-bezier(.25,.1,.35,1) infinite; }
+.voyage-wake { stroke-dasharray: 6 4; animation: voyageWake 1s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wb-ship, .wb-ship-drift, .wb-water, .wb-load, .wb-cable, .wb-smoke, .wb-sheen, .voyage-bob, .voyage-wave, .voyage-wake { animation: none; }
+  .voyage-sail { animation: none; left: 1.5rem; }
+}
+
+/* Standard surface for dashboard panels */
+@utility panel {
+  background-color: #fff;
+  border: 1px solid rgb(226 232 240 / 0.8);
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgb(16 42 67 / 0.04), 0 6px 20px -8px rgb(16 42 67 / 0.08);
 }
 
 body {

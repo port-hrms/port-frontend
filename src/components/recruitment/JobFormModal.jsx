@@ -9,7 +9,7 @@ function FieldLabel({ label, required }) {
     );
 }
 
-const inputCls = "w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors";
+const inputCls = "w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors";
 
 export default function JobFormModal({ show, editJob, jobForm, onClose, onSubmit, onChange }) {
     if (!show) return null;
@@ -18,7 +18,7 @@ export default function JobFormModal({ show, editJob, jobForm, onClose, onSubmit
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl" onClick={(e) => e.stopPropagation()}>
                 <div className="sticky top-0 bg-white flex items-center justify-between px-7 py-5 border-b border-slate-100 z-10 rounded-t-2xl">
-                    <h2 className="text-lg font-extrabold text-slate-900">
+                    <h2 className="text-lg font-bold text-navy-900">
                         {editJob ? "✏️ Edit Job" : "➕ Post New Job"}
                     </h2>
                     <button onClick={onClose} className="w-9 h-9 flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-xl transition-colors text-lg font-bold">✕</button>
@@ -103,7 +103,7 @@ export default function JobFormModal({ show, editJob, jobForm, onClose, onSubmit
                         <button type="button" onClick={onClose} className="flex-1 py-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-600 text-sm font-bold transition-colors">
                             Cancel
                         </button>
-                        <button type="submit" className="flex-2 py-3 rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-bold shadow-md shadow-blue-200 transition-all hover:-translate-y-0.5">
+                        <button type="submit" className="flex-2 py-3 rounded-xl bg-linear-to-r from-ocean-600 to-navy-600 hover:from-ocean-700 hover:to-navy-700 text-white text-sm font-bold shadow-md shadow-ocean-200 transition-all hover:-translate-y-0.5">
                             {editJob ? "Update Job" : "Post Job 🚀"}
                         </button>
                     </div>

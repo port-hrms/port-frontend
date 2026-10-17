@@ -34,25 +34,25 @@ export default function NewsFeedPanel({ setActiveTab }) {
 
     if (loading) {
         return (
-            <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 min-h-[300px] flex items-center justify-center">
-                <div className="w-8 h-8 border-4 border-indigo-500/30 border-t-indigo-600 rounded-full animate-spin" />
+            <div className="panel p-6 min-h-[300px] flex items-center justify-center">
+                <div className="w-8 h-8 border-4 border-ocean-100 border-t-ocean-600 rounded-full animate-spin" />
             </div>
         );
     }
 
     return (
-        <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col h-full">
+        <div className="panel p-6 flex flex-col h-full">
             <div className="flex items-center justify-between mb-6">
                 <div>
-                    <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-                        <Megaphone className="w-5 h-5 text-indigo-500" />
+                    <h3 className="text-[15px] font-bold text-navy-900 flex items-center gap-2">
+                        <Megaphone className="w-4.5 h-4.5 text-ocean-600" />
                         Company Connect
                     </h3>
-                    <p className="text-xs font-semibold text-slate-500 mt-0.5">Latest announcements and news</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Latest announcements and news</p>
                 </div>
                 <button
                     onClick={() => setActiveTab("announcements")}
-                    className="text-xs font-bold text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-full transition-colors flex items-center gap-1"
+                    className="text-xs font-semibold text-ocean-700 hover:text-navy-800 bg-ocean-50 hover:bg-ocean-100 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1"
                 >
                     View All <ArrowRight className="w-3.5 h-3.5" />
                 </button>
@@ -68,18 +68,18 @@ export default function NewsFeedPanel({ setActiveTab }) {
                     paginatedAnnouncements.map((post) => (
                         <div
                             key={post._id}
-                            className="group p-4 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:border-slate-300 hover:shadow-md transition-all cursor-pointer relative overflow-hidden"
+                            className="group p-4 rounded-xl border border-slate-100 bg-slate-50/60 hover:bg-white hover:border-ocean-200 hover:shadow-sm transition-all cursor-pointer relative overflow-hidden"
                             onClick={() => setActiveTab("announcements")}
                         >
                             {post.isPinned && (
-                                <div className="absolute top-0 right-0 z-10 bg-amber-500 text-white text-[9px] font-bold uppercase tracking-widest py-1 px-2.5 rounded-bl-lg shadow-sm flex items-center gap-1">
+                                <div className="absolute top-0 right-0 z-10 bg-port-amber text-white text-[9px] font-bold uppercase tracking-widest py-1 px-2.5 rounded-bl-lg shadow-sm flex items-center gap-1">
                                     <Pin className="w-2.5 h-2.5 fill-white" />
                                 </div>
                             )}
 
                             <div className="flex gap-4 mb-3">
                                 <div className="flex-1 min-w-0">
-                                    <h4 className="font-bold text-slate-800 text-sm mb-1.5 leading-tight pr-12 lg:pr-0">{post.title}</h4>
+                                    <h4 className="font-semibold text-navy-900 text-sm mb-1.5 leading-tight pr-12 lg:pr-0">{post.title}</h4>
                                     <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">{post.content}</p>
                                 </div>
                                 {post.image && (
@@ -98,7 +98,7 @@ export default function NewsFeedPanel({ setActiveTab }) {
                                     {post.author?.avatar ? (
                                         <img src={post.author.avatar} alt="author" className="w-5 h-5 rounded-full object-cover shrink-0" />
                                     ) : (
-                                        <div className="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0 text-[10px] uppercase">
+                                        <div className="w-5 h-5 rounded-full bg-ocean-50 text-navy-700 font-bold flex items-center justify-center shrink-0 text-[10px] uppercase">
                                             {post.author?.name?.charAt(0) || "U"}
                                         </div>
                                     )}
@@ -119,7 +119,7 @@ export default function NewsFeedPanel({ setActiveTab }) {
                     <button
                         onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                         disabled={currentPage === 1}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-ocean-50 hover:text-ocean-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
                     >
                         <ChevronLeft className="w-3.5 h-3.5" />
                         Prev
@@ -132,8 +132,8 @@ export default function NewsFeedPanel({ setActiveTab }) {
                                 onClick={() => setCurrentPage(page)}
                                 className={`w-7 h-7 rounded-lg text-xs font-bold transition-all duration-200 ${
                                     page === currentPage
-                                        ? "bg-indigo-600 text-white shadow-sm shadow-indigo-200"
-                                        : "text-slate-500 hover:bg-indigo-50 hover:text-indigo-600"
+                                        ? "bg-navy-800 text-white shadow-sm"
+                                        : "text-slate-500 hover:bg-ocean-50 hover:text-ocean-700"
                                 }`}
                             >
                                 {page}
@@ -144,7 +144,7 @@ export default function NewsFeedPanel({ setActiveTab }) {
                     <button
                         onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                         disabled={currentPage === totalPages}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-ocean-50 hover:text-ocean-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
                     >
                         Next
                         <ChevronRight className="w-3.5 h-3.5" />

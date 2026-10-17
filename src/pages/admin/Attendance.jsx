@@ -125,15 +125,15 @@ export default function Attendance() {
             {/* Page Header */}
             <div className="flex items-center justify-between flex-wrap gap-3">
                 <div>
-                    <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Attendance</h2>
-                    <p className="text-sm text-slate-400 mt-0.5">Track daily attendance for all employees</p>
+                    <h2 className="text-2xl font-bold text-navy-900 tracking-tight">Attendance</h2>
+                    <p className="text-sm text-slate-500 mt-0.5">Track daily attendance for all employees</p>
                 </div>
                 <div className="flex gap-3 flex-wrap">
                     <input type="date" value={selectedDate}
                         onChange={(e) => setSelectedDate(e.target.value)}
-                        className="bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors" />
+                        className="panel px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer focus:border-ocean-400 focus:ring-2 focus:ring-ocean-100 transition-colors" />
                     <button onClick={() => setShowMarkModal(true)}
-                        className="flex items-center gap-2 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-bold px-4 py-2.5 rounded-xl shadow-md shadow-blue-200 transition-all">
+                        className="flex items-center gap-2 bg-linear-to-r from-ocean-600 to-navy-600 hover:from-ocean-700 hover:to-navy-700 text-white text-sm font-bold px-4 py-2.5 rounded-xl shadow-md shadow-ocean-200 transition-all">
                         + Mark Attendance
                     </button>
                 </div>

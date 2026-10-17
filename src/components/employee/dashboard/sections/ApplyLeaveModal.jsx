@@ -77,7 +77,7 @@ export default function ApplyLeaveModal({ employeeId, onClose }) {
               name="leaveType"
               value={formData.leaveType}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-transparent"
             >
               <option>Casual Leave</option>
               <option>Sick Leave</option>
@@ -97,7 +97,7 @@ export default function ApplyLeaveModal({ employeeId, onClose }) {
               value={formData.startDate}
               onChange={handleChange}
               min={new Date().toISOString().split("T")[0]}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-transparent"
             />
           </div>
 
@@ -110,14 +110,14 @@ export default function ApplyLeaveModal({ employeeId, onClose }) {
               value={formData.endDate}
               onChange={handleChange}
               min={formData.startDate || new Date().toISOString().split("T")[0]}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-transparent"
             />
           </div>
 
           {/* Days */}
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-2">
-              Number of Days: <span className="font-bold text-violet-600">{formData.numberOfDays}</span>
+              Number of Days: <span className="font-bold text-navy-600">{formData.numberOfDays}</span>
             </label>
           </div>
 
@@ -130,7 +130,7 @@ export default function ApplyLeaveModal({ employeeId, onClose }) {
               onChange={handleChange}
               rows="3"
               placeholder="Please provide reason for leave..."
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-navy-500 focus:border-transparent"
             />
           </div>
 
@@ -149,7 +149,7 @@ export default function ApplyLeaveModal({ employeeId, onClose }) {
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 px-4 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700 font-medium transition-colors disabled:opacity-50"
+              className="flex-1 px-4 py-2 bg-navy-600 text-white rounded-lg hover:bg-navy-700 font-medium transition-colors disabled:opacity-50"
             >
               {loading ? "Submitting..." : "Submit"}
             </button>

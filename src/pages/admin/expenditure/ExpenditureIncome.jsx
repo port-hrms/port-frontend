@@ -17,7 +17,7 @@ function IncomeModal({ initial, onSave, onClose }) {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl" onClick={e => e.stopPropagation()}>
                 <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-                    <h3 className="font-extrabold text-slate-800">{initial?.id ? "Edit Income" : "Add Income"}</h3>
+                    <h3 className="font-bold text-slate-800">{initial?.id ? "Edit Income" : "Add Income"}</h3>
                     <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-400"><X size={16} /></button>
                 </div>
                 <div className="px-6 py-5 space-y-4">
@@ -82,8 +82,8 @@ export default function ExpenditureIncome() {
         <div className="space-y-5">
             <div className="flex items-center justify-between flex-wrap gap-3">
                 <div>
-                    <h2 className="text-xl font-extrabold text-slate-800">Income</h2>
-                    <p className="text-sm text-slate-400 mt-0.5">Track all incoming revenue and payments</p>
+                    <h2 className="text-xl font-bold text-navy-900">Income</h2>
+                    <p className="text-sm text-slate-500 mt-0.5">Track all incoming revenue and payments</p>
                 </div>
                 <button onClick={() => setModal("add")}
                     className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold shadow-md shadow-emerald-200 transition-all">
@@ -92,7 +92,7 @@ export default function ExpenditureIncome() {
             </div>
 
             {/* Filters */}
-            <div className="bg-white rounded-2xl px-5 py-4 border border-slate-100 shadow-sm flex flex-wrap gap-3 items-center">
+            <div className="panel px-5 py-4 flex flex-wrap gap-3 items-center">
                 <Filter size={15} className="text-slate-400" />
                 <select value={filterSrc} onChange={e => setFilterSrc(e.target.value)}
                     className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-700 focus:outline-none focus:border-emerald-400 transition-all">
@@ -111,17 +111,17 @@ export default function ExpenditureIncome() {
             </div>
 
             {/* Table */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+            <div className="panel overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                         <thead>
-                            <tr className="bg-slate-50 border-b border-slate-100">
-                                <th className="text-left px-5 py-3.5 text-xs font-extrabold text-slate-500 uppercase tracking-wider">Client / Company</th>
-                                <th className="text-left px-4 py-3.5 text-xs font-extrabold text-slate-500 uppercase tracking-wider">Description</th>
-                                <th className="text-left px-4 py-3.5 text-xs font-extrabold text-slate-500 uppercase tracking-wider">Source</th>
-                                <th className="text-left px-4 py-3.5 text-xs font-extrabold text-slate-500 uppercase tracking-wider">Date</th>
-                                <th className="text-left px-4 py-3.5 text-xs font-extrabold text-slate-500 uppercase tracking-wider">Method</th>
-                                <th className="text-right px-5 py-3.5 text-xs font-extrabold text-slate-500 uppercase tracking-wider">Amount</th>
+                            <tr className="bg-slate-50/80 border-b border-slate-100">
+                                <th className="text-left px-5 py-3.5 uppercase text-[11px] font-semibold text-slate-500 tracking-wider">Client / Company</th>
+                                <th className="text-left px-4 py-3.5 uppercase text-[11px] font-semibold text-slate-500 tracking-wider">Description</th>
+                                <th className="text-left px-4 py-3.5 uppercase text-[11px] font-semibold text-slate-500 tracking-wider">Source</th>
+                                <th className="text-left px-4 py-3.5 uppercase text-[11px] font-semibold text-slate-500 tracking-wider">Date</th>
+                                <th className="text-left px-4 py-3.5 uppercase text-[11px] font-semibold text-slate-500 tracking-wider">Method</th>
+                                <th className="text-right px-5 py-3.5 uppercase text-[11px] font-semibold text-slate-500 tracking-wider">Amount</th>
                                 <th className="px-4 py-3.5" />
                             </tr>
                         </thead>
@@ -139,10 +139,10 @@ export default function ExpenditureIncome() {
                                     <td className="px-4 py-3.5">
                                         <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-bold">{inc.method}</span>
                                     </td>
-                                    <td className="px-5 py-3.5 text-right font-extrabold text-emerald-600">{fmtINR(inc.amount)}</td>
+                                    <td className="px-5 py-3.5 text-right font-bold text-emerald-600">{fmtINR(inc.amount)}</td>
                                     <td className="px-4 py-3.5">
                                         <div className="flex items-center gap-1.5">
-                                            <button onClick={() => setModal(inc)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-indigo-50 text-slate-400 hover:text-indigo-600 transition-colors">
+                                            <button onClick={() => setModal(inc)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-navy-50 text-slate-400 hover:text-navy-600 transition-colors">
                                                 <Pencil size={13} />
                                             </button>
                                             <button onClick={() => deleteIncome(inc._id || inc.id)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition-colors">

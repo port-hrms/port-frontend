@@ -36,9 +36,9 @@ export default function ChangePassword() {
     };
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+        <div className="panel p-6">
             <div className="mb-5">
-                <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
                     <span className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-lg">🔑</span>
                     Change Password
                 </h3>
@@ -52,7 +52,7 @@ export default function ChangePassword() {
                         <input
                             name="currentPassword" type={showPasswords ? "text" : "password"}
                             value={form.currentPassword} onChange={handleChange}
-                            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors"
+                            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors"
                             placeholder="••••••••"
                         />
                     </div>
@@ -61,7 +61,7 @@ export default function ChangePassword() {
                         <input
                             name="newPassword" type={showPasswords ? "text" : "password"}
                             value={form.newPassword} onChange={handleChange}
-                            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors"
+                            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors"
                             placeholder="Min 6 characters"
                         />
                     </div>
@@ -70,7 +70,7 @@ export default function ChangePassword() {
                         <input
                             name="confirmPassword" type={showPasswords ? "text" : "password"}
                             value={form.confirmPassword} onChange={handleChange}
-                            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors"
+                            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors"
                             placeholder="Re-enter new password"
                         />
                     </div>
@@ -81,13 +81,13 @@ export default function ChangePassword() {
                         <input
                             type="checkbox" checked={showPasswords}
                             onChange={() => setShowPasswords(!showPasswords)}
-                            className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                            className="rounded border-slate-300 text-ocean-600 focus:ring-ocean-500"
                         />
                         Show passwords
                     </label>
                     <button
                         type="submit" disabled={loading}
-                        className={`px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all ${loading ? "bg-slate-400 cursor-not-allowed" : "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-md shadow-amber-200 hover:shadow-lg hover:-translate-y-0.5"}`}
+                        className={`px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all ${loading ? "bg-slate-400 cursor-not-allowed" : "bg-gradient-to-r from-ocean-600 to-navy-700 hover:from-ocean-700 hover:to-navy-800 shadow-md shadow-amber-200 hover:shadow-lg hover:-translate-y-0.5"}`}
                     >
                         {loading ? "Updating..." : "Update Password"}
                     </button>

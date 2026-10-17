@@ -130,8 +130,8 @@ export default function AdminAnnouncements() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
-                        <div className="w-12 h-12 bg-linear-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+                    <h1 className="text-3xl font-bold text-navy-900 tracking-tight flex items-center gap-3">
+                        <div className="w-12 h-12 bg-linear-to-br from-ocean-500 to-navy-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-navy-500/30">
                             <Megaphone className="w-6 h-6" />
                         </div>
                         Company News Feed
@@ -144,10 +144,10 @@ export default function AdminAnnouncements() {
                 
                 {/* Create post form */}
                 <div className="lg:col-span-5 relative order-first lg:sticky lg:top-6 self-start">
-                    <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-3xl p-6 shadow-xl shadow-slate-200/50">
+                    <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-2xl p-6 shadow-xl shadow-slate-200/50">
                         <div className="flex items-center gap-3 mb-6">
                             <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center">
-                                <Send className="w-5 h-5 text-indigo-500" />
+                                <Send className="w-5 h-5 text-navy-500" />
                             </div>
                             <h2 className="text-lg font-bold text-slate-800">Create Post</h2>
                         </div>
@@ -157,7 +157,7 @@ export default function AdminAnnouncements() {
                                 <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Announcement Title</label>
                                 <input
                                     {...register("title", { required: true })}
-                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium placeholder-slate-400"
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:ring-2 focus:ring-navy-500/20 focus:border-navy-500 transition-all font-medium placeholder-slate-400"
                                     placeholder="e.g., Q3 Town Hall Meeting"
                                 />
                             </div>
@@ -166,19 +166,19 @@ export default function AdminAnnouncements() {
                                 <textarea
                                     {...register("content", { required: true })}
                                     rows={5}
-                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium placeholder-slate-400 resize-none"
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:ring-2 focus:ring-navy-500/20 focus:border-navy-500 transition-all font-medium placeholder-slate-400 resize-none"
                                     placeholder="What's happening?"
                                 />
                             </div>
                             <div>
                                 <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Attach Image (Optional)</label>
-                                <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 cursor-pointer focus-within:ring-2 focus-within:ring-indigo-500/20 focus-within:border-indigo-500 transition-all">
+                                <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 cursor-pointer focus-within:ring-2 focus-within:ring-navy-500/20 focus-within:border-navy-500 transition-all">
                                     <ImageIcon className="w-5 h-5 text-slate-400" />
                                     <input
                                         type="file"
                                         accept="image/*"
                                         {...register("image")}
-                                        className="w-full text-sm font-medium text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer"
+                                        className="w-full text-sm font-medium text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-navy-50 file:text-navy-700 hover:file:bg-navy-100 cursor-pointer"
                                     />
                                 </div>
                             </div>
@@ -187,7 +187,7 @@ export default function AdminAnnouncements() {
                                     <input 
                                         type="checkbox" 
                                         {...register("isPinned")}
-                                        className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300"
+                                        className="w-4 h-4 rounded text-navy-600 focus:ring-navy-500 border-slate-300"
                                     />
                                     <span className="text-sm font-semibold text-slate-600 group-hover:text-slate-900 transition-colors flex items-center gap-1.5">
                                         <Pin className="w-4 h-4 text-slate-400 group-hover:text-amber-500 transition-colors" />
@@ -198,7 +198,7 @@ export default function AdminAnnouncements() {
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="px-6 py-2.5 bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-600/30 transition-all hover:-translate-y-0.5 disabled:opacity-50 disabled:pointer-events-none flex items-center gap-2"
+                                    className="px-6 py-2.5 bg-linear-to-r from-ocean-600 to-navy-700 hover:from-navy-500 hover:to-navy-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-navy-600/30 transition-all hover:-translate-y-0.5 disabled:opacity-50 disabled:pointer-events-none flex items-center gap-2"
                                 >
                                     {isSubmitting ? "Posting..." : "Publish"}
                                     {!isSubmitting && <Send className="w-4 h-4" />}
@@ -212,10 +212,10 @@ export default function AdminAnnouncements() {
                 <div className="lg:col-span-7 space-y-6">
                     {loading ? (
                         <div className="flex justify-center py-12">
-                            <div className="w-8 h-8 border-4 border-indigo-500/30 border-t-indigo-600 rounded-full animate-spin" />
+                            <div className="w-8 h-8 border-4 border-navy-500/30 border-t-navy-600 rounded-full animate-spin" />
                         </div>
                     ) : announcements.length === 0 ? (
-                        <div className="bg-white border border-slate-200 border-dashed rounded-3xl p-12 text-center">
+                        <div className="bg-white border border-slate-200 border-dashed rounded-2xl p-12 text-center">
                             <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <Megaphone className="w-8 h-8 text-slate-300" />
                             </div>
@@ -241,11 +241,11 @@ export default function AdminAnnouncements() {
 
                             {/* Pagination */}
                             {Math.ceil(announcements.length / PAGE_SIZE) > 1 && (
-                                <div className="flex items-center justify-between bg-white border border-slate-200 rounded-2xl px-5 py-3 shadow-sm">
+                                <div className="panel flex items-center justify-between px-5 py-3">
                                     <button
                                         onClick={() => { setCurrentPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                                         disabled={currentPage === 1}
-                                        className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold text-slate-600 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                                        className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold text-slate-600 bg-slate-100 hover:bg-navy-50 hover:text-navy-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
                                     >
                                         <ChevronLeft className="w-4 h-4" />
                                         Previous
@@ -258,8 +258,8 @@ export default function AdminAnnouncements() {
                                                 onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                                                 className={`w-8 h-8 rounded-lg text-sm font-bold transition-all duration-200 ${
                                                     page === currentPage
-                                                        ? "bg-indigo-600 text-white shadow-sm shadow-indigo-200"
-                                                        : "text-slate-500 hover:bg-indigo-50 hover:text-indigo-600"
+                                                        ? "bg-navy-600 text-white shadow-sm shadow-navy-200"
+                                                        : "text-slate-500 hover:bg-navy-50 hover:text-navy-600"
                                                 }`}
                                             >
                                                 {page}
@@ -270,7 +270,7 @@ export default function AdminAnnouncements() {
                                     <button
                                         onClick={() => { setCurrentPage(p => Math.min(Math.ceil(announcements.length / PAGE_SIZE), p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                                         disabled={currentPage === Math.ceil(announcements.length / PAGE_SIZE)}
-                                        className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold text-slate-600 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                                        className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold text-slate-600 bg-slate-100 hover:bg-navy-50 hover:text-navy-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
                                     >
                                         Next
                                         <ChevronRight className="w-4 h-4" />

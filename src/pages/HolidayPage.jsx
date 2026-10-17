@@ -15,13 +15,13 @@ export default function HolidayPage() {
     return (
         <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500 pb-12">
             {/* Header */}
-            <div className="relative overflow-hidden bg-white border border-slate-200 rounded-3xl p-8 sm:p-10 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="panel relative overflow-hidden p-8 sm:p-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="relative z-10 max-w-xl">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-bold uppercase tracking-wider mb-4">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ocean-50 border border-ocean-100 text-ocean-600 text-xs font-bold uppercase tracking-wider mb-4">
                         <Gift className="w-3.5 h-3.5" />
                         Company Holidays
                     </div>
-                    <h1 className="text-2xl sm:text-2xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                    <h1 className="text-2xl sm:text-2xl font-bold text-navy-900 tracking-tight leading-tight">
                         Holiday Calendar
                     </h1>
                     <p className="text-slate-500 mt-2 text-sm sm:text-base font-medium">
@@ -34,7 +34,7 @@ export default function HolidayPage() {
                         <button
                             onClick={() => setViewMode("calendar")}
                             className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${viewMode === "calendar"
-                                    ? "bg-white text-blue-600 shadow-md shadow-slate-200"
+                                    ? "bg-white text-ocean-600 shadow-md shadow-slate-200"
                                     : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
                                 }`}
                         >
@@ -44,7 +44,7 @@ export default function HolidayPage() {
                         <button
                             onClick={() => setViewMode("manage")}
                             className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${viewMode === "manage"
-                                    ? "bg-white text-blue-600 shadow-md shadow-slate-200"
+                                    ? "bg-white text-ocean-600 shadow-md shadow-slate-200"
                                     : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
                                 }`}
                         >
@@ -55,19 +55,19 @@ export default function HolidayPage() {
                 )}
 
                 {/* Decorative background element */}
-                <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-bl from-blue-100/50 to-transparent pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-bl from-ocean-100/50 to-transparent pointer-events-none" />
                 <div className="absolute -right-12 -top-12 w-48 h-48 bg-cyan-500/10 blur-3xl rounded-full" />
-                <div className="absolute right-20 -bottom-12 w-32 h-32 bg-blue-500/10 blur-2xl rounded-full" />
+                <div className="absolute right-20 -bottom-12 w-32 h-32 bg-ocean-500/10 blur-2xl rounded-full" />
             </div>
 
             {/* Content */}
             <div className="transition-all">
                 {viewMode === "calendar" ? (
-                    <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div className="panel overflow-hidden">
                         <HolidayCalendarView onNavigateToForm={isAdmin ? () => setViewMode("manage") : null} />
                     </div>
                 ) : (
-                    <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                    <div className="panel p-6 sm:p-8">
                         <HolidayManagement />
                     </div>
                 )}

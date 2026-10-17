@@ -15,12 +15,12 @@ export default function JobsPanel({ jobs, onEditJob, onDeleteJob }) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {jobs.map((job) => (
-                <div key={job._id} className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 hover:shadow-md transition-shadow">
+                <div key={job._id} className="panel p-5 hover:shadow-md transition-shadow">
                     <div className="flex items-start justify-between mb-3">
                         <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${DEPT_COLORS[job.department]}`}>{job.department}</span>
                         <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${JOB_STATUS_STYLES[job.status]}`}>{job.status}</span>
                     </div>
-                    <h3 className="font-extrabold text-slate-900 text-base mb-1">{job.title}</h3>
+                    <h3 className="font-bold text-slate-900 text-base mb-1">{job.title}</h3>
                     <div className="flex flex-wrap gap-2 text-xs text-slate-500 mb-3">
                         <span>📍 {job.location}</span>
                         <span>💼 {job.jobType}</span>

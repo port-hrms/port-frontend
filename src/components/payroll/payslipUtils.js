@@ -57,13 +57,23 @@ export function parseBankDetails(raw = "") {
     return { bankName, bankAcc, pan };
 }
 
+// Inline brand icon for the printed payslip (no external image)
+const BRAND_ICON_SVG = `<svg viewBox="0 0 40 40" width="56" height="56" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto;">
+  <defs><linearGradient id="ps-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e88c8"/><stop offset="1" stop-color="#0b3b5e"/></linearGradient></defs>
+  <rect width="40" height="40" rx="10" fill="url(#ps-bg)"/>
+  <path d="M13 9.5V25h5.5c5.2 0 8.5-3.2 8.5-7.8S23.7 9.5 18.5 9.5Z" fill="#fff"/>
+  <path d="M16.5 13h2c3 0 4.8 1.6 4.8 4.2s-1.8 4.3-4.8 4.3h-2Z" fill="#1676b6"/>
+  <path d="M7 30.5c2.2 0 2.2-1.6 4.4-1.6s2.2 1.6 4.4 1.6 2.2-1.6 4.4-1.6 2.2 1.6 4.4 1.6 2.2-1.6 4.4-1.6 2.2 1.6 4.4 1.6" fill="none" stroke="#bfe0f4" stroke-width="1.8" stroke-linecap="round"/>
+</svg>`;
+
+export const PAYSLIP_COMPANY_NAME = "Dreamonix Solution Pvt. Ltd.";
+
 // ─── Build the self-contained print HTML ─────────────────────
 export function buildPayslipHtml(payroll) {
     const emp  = payroll?.employee   || {};
     const att  = payroll?.attendance || {};
     const { basic, hra, bonus, pf, esi, ptax, leaveDed, totalEarnings, totalDed, netPay } =
         derivePayrollAmounts(payroll);
-  const logoSrc = new URL("/logo1.png", window.location.origin).href;
 
     const nameUC     = `${emp.firstName || ""} ${emp.lastName || ""}`.toUpperCase();
     const monthLabel = `${MONTHS[(payroll.month ?? 1) - 1]} ${payroll.year ?? ""}`;
@@ -106,10 +116,10 @@ export function buildPayslipHtml(payroll) {
   <!-- Header -->
   <table><tr>
     <td style="width:150px;border:1px solid #334155;padding:14px;text-align:center;vertical-align:middle;">
-      <img src="${logoSrc}" alt="HRMS" style="width:88px;display:block;margin:0 auto;object-fit:contain;" />
+      ${BRAND_ICON_SVG}
     </td>
     <td style="border:1px solid #334155;padding:14px;text-align:center;vertical-align:middle;">
-      <img src="${logoSrc}" alt="HRMS" style="width:110px;display:block;margin:0 auto;object-fit:contain;" />
+      <div style="font-size:18px;font-weight:800;color:#0b3b5e;letter-spacing:.3px;">${PAYSLIP_COMPANY_NAME}</div>
       <div style="font-size:11px;color:#475569;margin-top:4px;">Plot no 222, District Center, Chandrasekharpur,</div>
       <div style="font-size:11px;color:#475569;">Bhubaneswar, Odisha 751016</div>
       <div style="font-size:14px;font-weight:900;text-decoration:underline;margin-top:8px;">Pay slip for the month of ${monthLabel}</div>

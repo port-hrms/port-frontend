@@ -127,9 +127,9 @@ export default function Payroll() {
         <div className="space-y-6 max-w-7xl mx-auto">
 
             {/* Page Header */}
-            <div className="flex items-center justify-between flex-wrap gap-4 bg-white rounded-3xl shadow-xs border border-slate-200 p-6">
+            <div className="flex items-center justify-between flex-wrap gap-4 bg-white rounded-2xl shadow-xs border border-slate-200 p-6">
                 <div>
-                    <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+                    <h2 className="text-2xl font-bold text-navy-900 tracking-tight flex items-center gap-2">
                         <span className="text-3xl">🏦</span> Payroll Ledger
                     </h2>
                     <p className="text-sm text-slate-500 mt-1 max-w-sm">
@@ -141,19 +141,19 @@ export default function Payroll() {
                 <div className="flex flex-wrap gap-3 items-center">
                     {/* Month */}
                     <select value={selectedMonth} onChange={(e) => setSelectedMonth(Number(e.target.value))}
-                        className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-bold text-slate-700 outline-none cursor-pointer focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                        className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-bold text-slate-700 outline-none cursor-pointer focus:ring-2 focus:ring-ocean-500/20 focus:border-ocean-500 transition-all">
                         {MONTHS.map((m, i) => <option key={m} value={i + 1}>{m}</option>)}
                     </select>
 
                     {/* Year */}
                     <select value={selectedYear} onChange={(e) => setSelectedYear(Number(e.target.value))}
-                        className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-bold text-slate-700 outline-none cursor-pointer focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                        className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-bold text-slate-700 outline-none cursor-pointer focus:ring-2 focus:ring-ocean-500/20 focus:border-ocean-500 transition-all">
                         {YEARS.map((y) => <option key={y}>{y}</option>)}
                     </select>
 
                     {/* Status */}
                     <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}
-                        className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-bold text-slate-700 outline-none cursor-pointer focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                        className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-bold text-slate-700 outline-none cursor-pointer focus:ring-2 focus:ring-ocean-500/20 focus:border-ocean-500 transition-all">
                         {STATUS_OPTIONS.map((s) => <option key={s}>{s}</option>)}
                     </select>
 
@@ -167,7 +167,7 @@ export default function Payroll() {
 
                     {/* Generate Individual */}
                     <button onClick={() => setShowGenModal(true)}
-                        className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold px-4 py-2.5 rounded-xl shadow-md text-sm transition-all active:scale-[0.98]">
+                        className="flex items-center gap-2 bg-navy-800 hover:bg-navy-700 text-white font-bold px-4 py-2.5 rounded-xl shadow-md text-sm transition-all active:scale-[0.98]">
                         + Generate Payroll
                     </button>
                 </div>

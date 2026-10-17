@@ -65,13 +65,13 @@ export default function AdminWFHPanel() {
   return (
     <div className="space-y-5">
       {/* Header + Stats */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-teal-600 to-cyan-500 p-6 shadow-lg">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ocean-700 to-port-teal p-6 shadow-lg">
         <div className="absolute -top-6 -right-6 w-40 h-40 bg-white/10 rounded-full" />
         <div className="relative">
           <div className="flex items-center gap-3 mb-4">
             
             <div>
-              <h2 className="text-xl font-extrabold text-white">WFH Requests</h2>
+              <h2 className="text-xl font-bold text-white">WFH Requests</h2>
               <p className="text-teal-100 text-xs mt-0.5">Review and approve employee Work From Home requests</p>
             </div>
           </div>
@@ -82,7 +82,7 @@ export default function AdminWFHPanel() {
               { label: "Rejected", val: rejected, bg: "bg-red-50/90 text-red-700" },
             ].map((s) => (
               <div key={s.label} className={`rounded-xl px-4 py-3 backdrop-blur-sm ${s.bg}`}>
-                <p className="text-xl font-extrabold">{s.val}</p>
+                <p className="text-xl font-bold">{s.val}</p>
                 <p className="text-xs font-bold opacity-70 mt-0.5">{s.label}</p>
               </div>
             ))}
@@ -91,7 +91,7 @@ export default function AdminWFHPanel() {
       </div>
 
       {/* Filter tabs */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+      <div className="panel overflow-hidden">
         <div className="flex items-center gap-1 px-5 py-3 border-b border-slate-100 overflow-x-auto">
           {["All", "Pending", "Approved", "Rejected", "Cancelled"].map((tab) => (
             <button
@@ -142,7 +142,7 @@ export default function AdminWFHPanel() {
                     {/* Employee info */}
                     <div className="flex items-start gap-3 min-w-0">
                       <div className="w-9 h-9 rounded-xl bg-teal-100 flex items-center justify-center shrink-0">
-                        <span className="text-sm font-extrabold text-teal-700">
+                        <span className="text-sm font-bold text-teal-700">
                           {req.employee?.firstName?.[0] || "?"}
                         </span>
                       </div>
@@ -201,7 +201,7 @@ export default function AdminWFHPanel() {
       {notesModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
-            <h3 className="font-extrabold text-slate-800 mb-1">
+            <h3 className="font-bold text-slate-800 mb-1">
               {notesModal.action === "Approved" ? "✅ Approve" : "❌ Reject"} WFH Request
             </h3>
             <p className="text-xs text-slate-400 mb-4">Add an optional note to the employee</p>

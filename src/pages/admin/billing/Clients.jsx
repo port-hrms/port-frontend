@@ -101,12 +101,12 @@ export default function Clients() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-900">Clients</h1>
-          <p className="text-sm text-slate-400 mt-0.5">Manage your client relationships</p>
+          <h1 className="text-2xl font-bold text-navy-900">Clients</h1>
+          <p className="text-sm text-slate-500 mt-0.5">Manage your client relationships</p>
         </div>
         <button
           onClick={openAdd}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-blue-600 to-indigo-600 text-white text-sm font-bold rounded-xl shadow-md shadow-blue-200 hover:from-blue-700 hover:to-indigo-700 hover:-translate-y-0.5 transition-all"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-ocean-600 to-navy-600 text-white text-sm font-bold rounded-xl shadow-md shadow-ocean-200 hover:from-ocean-700 hover:to-navy-700 hover:-translate-y-0.5 transition-all"
         >
           <Plus size={16} />
           Add Client
@@ -121,18 +121,18 @@ export default function Clients() {
           placeholder="Search clients..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
+          className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-700 outline-none focus:border-ocean-400 focus:ring-2 focus:ring-ocean-100 transition-colors"
         />
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+      <div className="panel overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-100">
+              <tr className="bg-slate-50/80 border-b border-slate-100">
                 {["Client ID", "Client Name", "Company", "Email", "Phone", "Status", "Actions"].map((h) => (
-                  <th key={h} className="text-left px-5 py-3.5 text-xs font-extrabold text-slate-500 uppercase tracking-wider whitespace-nowrap">{h}</th>
+                  <th key={h} className="text-left px-5 py-3.5 uppercase whitespace-nowrap text-[11px] font-semibold text-slate-500 tracking-wider">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -155,8 +155,8 @@ export default function Clients() {
                   </td>
                   <td className="px-4 py-3.5">
                     <div className="flex items-center gap-1">
-                      <button onClick={() => setShowDetail(c)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-blue-50 text-slate-400 hover:text-blue-600 transition-colors"><Eye size={13} /></button>
-                      <button onClick={() => openEdit(c)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-indigo-50 text-slate-400 hover:text-indigo-600 transition-colors"><Pencil size={13} /></button>
+                      <button onClick={() => setShowDetail(c)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-ocean-50 text-slate-400 hover:text-ocean-600 transition-colors"><Eye size={13} /></button>
+                      <button onClick={() => openEdit(c)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-navy-50 text-slate-400 hover:text-navy-600 transition-colors"><Pencil size={13} /></button>
                       <button onClick={() => handleDelete(c)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition-colors"><Trash2 size={13} /></button>
                     </div>
                   </td>

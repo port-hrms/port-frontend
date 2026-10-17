@@ -5,8 +5,9 @@ import { X, Printer } from "lucide-react";
 import {
     MONTHS, fmt, fmtDate,
     derivePayrollAmounts, parseBankDetails,
-    buildPayslipHtml, printViaIframe,
+    buildPayslipHtml, printViaIframe, PAYSLIP_COMPANY_NAME,
 } from "./payslipUtils";
+import { BrandIcon } from "../BrandMark";
 
 // ─── Sub-components ───────────────────────────────────────────
 
@@ -27,15 +28,15 @@ function SlipHeader({ month, year }) {
                     {/* Logo */}
                     <td className="w-36 border border-slate-800 p-3 align-middle">
                         <div className="flex flex-col items-center justify-center gap-1">
-                            <img src={new URL("/logo1.png", window.location.origin).href} alt="HRMS" className="w-20 object-contain" />
+                            <BrandIcon className="w-14 h-14" />
                         </div>
                     </td>
                     {/* Company info */}
                     <td className="border border-slate-800 p-3 text-center align-middle">
-                        <img src={new URL("/logo1.png", window.location.origin).href} alt="HRMS" className="w-28 object-contain mx-auto" />
+                        <p className="text-lg font-bold text-navy-900">{PAYSLIP_COMPANY_NAME}</p>
                         <p className="text-xs text-slate-600 mt-1">Plot no 222, District Center, Chandrasekharpur,</p>
                         <p className="text-xs text-slate-600">Bhubaneswar, Odisha 751016</p>
-                        <p className="font-extrabold text-base mt-2 text-slate-800 underline underline-offset-2">
+                        <p className="font-bold text-base mt-2 text-slate-800 underline underline-offset-2">
                             Pay slip for the month of {MONTHS[month - 1]} {year}
                         </p>
                     </td>
@@ -140,10 +141,10 @@ export default function PayslipModal({ payroll, onClose }) {
 
                 {/* Toolbar */}
                 <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
-                    <h2 className="font-extrabold text-slate-800 text-lg">Payslip Preview</h2>
+                    <h2 className="font-bold text-navy-900 text-lg">Payslip Preview</h2>
                     <div className="flex items-center gap-3">
                         <button onClick={handlePrint}
-                            className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-xl transition-colors">
+                            className="flex items-center gap-2 px-4 py-2 bg-navy-600 hover:bg-navy-700 text-white text-sm font-bold rounded-xl transition-colors">
                             <Printer className="w-4 h-4" /> Print / Download
                         </button>
                         <button onClick={onClose}
@@ -166,7 +167,7 @@ export default function PayslipModal({ payroll, onClose }) {
                                 <tr>
                                     <td className="border border-slate-800 px-4 py-2">
                                         <span className="font-bold">Net Pay for the month (Total Earnings-Total Deductions): </span>
-                                        <span className="font-extrabold text-base ml-1">₹{fmt(netPay)}</span>
+                                        <span className="font-bold text-base ml-1">₹{fmt(netPay)}</span>
                                     </td>
                                 </tr>
                                 <tr>

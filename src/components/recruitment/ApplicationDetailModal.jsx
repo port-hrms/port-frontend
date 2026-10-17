@@ -15,14 +15,14 @@ export default function ApplicationDetailModal({
     return (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl" onClick={(e) => e.stopPropagation()}>
-                <div className="bg-gradient-to-br from-slate-900 to-slate-800 px-6 py-6 rounded-t-2xl text-white relative">
+                <div className="bg-gradient-to-br from-navy-900 to-navy-700 px-6 py-6 rounded-t-2xl text-white relative">
                     <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-lg transition-colors">✕</button>
                     <div className="flex items-center gap-4 mb-3">
-                        <div className={`w-14 h-14 rounded-full ${getAvatarColor(viewApp.firstName)} text-white text-lg font-extrabold flex items-center justify-center ring-2 ring-white/20`}>
+                        <div className={`w-14 h-14 rounded-full ${getAvatarColor(viewApp.firstName)} text-white text-lg font-bold flex items-center justify-center ring-2 ring-white/20`}>
                             {viewApp.firstName[0]}{viewApp.lastName[0]}
                         </div>
                         <div>
-                            <p className="font-extrabold text-lg">{viewApp.firstName} {viewApp.lastName}</p>
+                            <p className="font-bold text-lg">{viewApp.firstName} {viewApp.lastName}</p>
                             <p className="text-slate-400 text-sm">{viewApp.email} · {viewApp.phone}</p>
                             <span className={`text-xs font-bold px-2 py-0.5 rounded-full mt-1 inline-block ${STATUS_STYLES[viewApp.status]}`}>
                                 {viewApp.status}
@@ -32,9 +32,9 @@ export default function ApplicationDetailModal({
                 </div>
 
                 <div className="px-6 py-5 space-y-4">
-                    <div className="bg-blue-50 rounded-xl p-4">
-                        <p className="text-xs font-bold text-blue-500 uppercase tracking-wider mb-1">Applied For</p>
-                        <p className="font-extrabold text-slate-900">{viewApp.job?.title}</p>
+                    <div className="bg-ocean-50 rounded-xl p-4">
+                        <p className="text-xs font-bold text-ocean-500 uppercase tracking-wider mb-1">Applied For</p>
+                        <p className="font-bold text-slate-900">{viewApp.job?.title}</p>
                         <p className="text-xs text-slate-500 mt-0.5">{viewApp.job?.department} · {viewApp.job?.location}</p>
                     </div>
 
@@ -66,13 +66,13 @@ export default function ApplicationDetailModal({
                             defaultValue={viewApp.hrNotes}
                             placeholder="Add internal notes about this candidate..."
                             onBlur={(e) => onSaveNotes(viewApp._id, e.target.value)}
-                            className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none resize-none placeholder-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors"
+                            className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none resize-none placeholder-slate-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors"
                         />
                         <p className="text-xs text-slate-400 mt-1">Auto-saved when you click away</p>
                     </div>
 
                     <div className="flex gap-2 pt-1">
-                        <button onClick={() => onOpenResume(viewApp._id)} className="flex-1 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-600 text-sm font-bold rounded-xl transition-colors">
+                        <button onClick={() => onOpenResume(viewApp._id)} className="flex-1 py-2.5 bg-ocean-50 hover:bg-ocean-100 text-ocean-600 text-sm font-bold rounded-xl transition-colors">
                             📄 View Resume
                         </button>
                         {viewApp.status === "New" && (

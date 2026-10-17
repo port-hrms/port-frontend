@@ -71,7 +71,7 @@ export default function LiveMap({ agents, selectedAgent, onAgentClick }) {
             const name = `${agentData.agent.firstName} ${agentData.agent.lastName}`;
             const isSelected = selectedAgent?.agent?.employeeId === id;
 
-            const markerColor = isSelected ? "#3b82f6" : "#64748b";
+            const markerColor = isSelected ? "#1e88c8" : "#64748b";
             const icon = window.L.divIcon({
                 className: "",
                 html: `

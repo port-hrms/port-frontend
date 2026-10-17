@@ -11,7 +11,7 @@ export default function LocationPhotoUploader({
         <div>
             <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Location Photo (Optional)</label>
             <div className="flex items-center gap-4">
-                <label className="flex items-center justify-center gap-2 border-2 border-dashed border-slate-300 hover:border-blue-500 rounded-xl px-4 py-3 cursor-pointer transition-all bg-white hover:bg-slate-50">
+                <label className="flex items-center justify-center gap-2 border-2 border-dashed border-slate-300 hover:border-ocean-500 rounded-xl px-4 py-3 cursor-pointer transition-all bg-white hover:bg-slate-50">
                     <span className="text-sm">📸</span>
                     <span className="text-xs font-bold text-slate-600">Upload Live Photo</span>
                     <input

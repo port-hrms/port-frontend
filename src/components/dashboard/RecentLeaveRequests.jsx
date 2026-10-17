@@ -2,9 +2,9 @@
 import { useState } from "react";
 
 const STATUS_STYLES = {
-  Pending: "bg-amber-100 text-amber-700",
-  Approved: "bg-emerald-100 text-emerald-700",
-  Rejected: "bg-red-100 text-red-700",
+  Pending: "bg-amber-50 text-amber-700 ring-1 ring-amber-100",
+  Approved: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100",
+  Rejected: "bg-rose-50 text-rose-700 ring-1 ring-rose-100",
   Cancelled: "bg-slate-100 text-slate-700",
 };
 
@@ -22,11 +22,11 @@ export default function RecentLeaveRequests({ requests, onUpdateStatus }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+    <div className="panel overflow-hidden">
       <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
         <div>
-          <h3 className="text-base font-extrabold text-slate-900">Recent Leave Requests</h3>
-          <p className="text-xs text-slate-400 mt-0.5">Latest leave applications by employees</p>
+          <h3 className="text-[15px] font-bold text-navy-900">Recent Leave Requests</h3>
+          <p className="text-xs text-slate-500 mt-0.5">Latest leave applications by employees</p>
         </div>
       </div>
 
@@ -34,9 +34,9 @@ export default function RecentLeaveRequests({ requests, onUpdateStatus }) {
         <div className="overflow-x-auto">
           <table className="w-full min-w-215">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-100">
+              <tr className="bg-slate-50/80 border-b border-slate-100">
                 {["Employee", "Leave Type", "Duration", "Status", "Applied", "Actions"].map((h) => (
-                  <th key={h} className="px-5 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  <th key={h} className="px-5 py-3 text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                     {h}
                   </th>
                 ))}
@@ -58,20 +58,20 @@ export default function RecentLeaveRequests({ requests, onUpdateStatus }) {
                 });
 
                 return (
-                  <tr key={request._id} className="hover:bg-violet-50/40 transition-colors duration-150">
+                  <tr key={request._id} className="hover:bg-ocean-50/50 transition-colors duration-150">
                     <td className="px-5 py-4">
-                      <p className="text-sm font-bold text-slate-900">{employeeName}</p>
+                      <p className="text-sm font-semibold text-navy-900">{employeeName}</p>
                       <p className="text-xs text-slate-400">{request.employee?.email || "No email"}</p>
                     </td>
                     <td className="px-5 py-4">
-                      <p className="text-sm font-bold text-slate-900">{request.leaveType}</p>
+                      <p className="text-sm font-semibold text-navy-900">{request.leaveType}</p>
                       {request.reason ? (
                         <p className="text-xs text-slate-500 mt-1 max-w-[220px] sm:max-w-xs leading-relaxed" title={request.reason}>
                           <span className="font-semibold text-slate-400">Reason: </span>
                           {request.reason}
                         </p>
                       ) : (
-                        <p className="text-xs text-slate-400 mt-0.5 italic">No reason provided</p>
+                        <p className="text-xs text-slate-500 mt-0.5 italic">No reason provided</p>
                       )}
                     </td>
                     <td className="px-5 py-4 text-xs text-slate-500">
@@ -79,7 +79,7 @@ export default function RecentLeaveRequests({ requests, onUpdateStatus }) {
                       <div className="text-[11px] text-slate-400 mt-0.5">{request.numberOfDays} day{request.numberOfDays > 1 ? "s" : ""}</div>
                     </td>
                     <td className="px-5 py-4">
-                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${STATUS_STYLES[request.status] || "bg-slate-100 text-slate-700"}`}>
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold ${STATUS_STYLES[request.status] || "bg-slate-100 text-slate-700"}`}>
                         {request.status}
                       </span>
                     </td>

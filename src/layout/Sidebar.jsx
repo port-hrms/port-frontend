@@ -6,10 +6,15 @@ import { useAuth } from "../context/AuthContext";
 import AdminProfileCard from "./AdminProfileCard";
 import EmployeeProfileCard from "./EmployeeProfileCard";
 
+import BrandMark from "../components/BrandMark";
 const ROLE_STYLES = {
-  admin: "bg-rose-500/20 text-rose-400",
-  employee: "bg-emerald-500/20 text-emerald-400",
+  admin: "bg-ocean-400/15 text-ocean-300",
+  employee: "bg-port-green/20 text-emerald-300",
 };
+
+const ITEM_ACTIVE = "bg-white/10 text-white before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-[3px] before:rounded-r-full before:bg-ocean-400";
+const ITEM_IDLE = "text-ocean-100/60 hover:bg-white/5 hover:text-white";
+const GROUP_ACTIVE = "text-white";
 
 const BUILT_MODULES = ["dashboard", "employees", "attendance", "tasks", "announcements", "leaves", "payroll", "wages-creation", "expenditure", "profile", "performance", "tracking", "recruitment", "settings", "holidays"];
 
@@ -25,11 +30,8 @@ function NavItem({ item, activeTab, isEmployee, sidebarOpen, expandedGroups, tog
       <div>
         <button
           onClick={() => toggleGroup(item.id)}
-          className={`w-full flex items-center gap-2.5 px-3 ${isEmployee ? "py-1.5" : "py-2"} rounded-xl ${isEmployee ? "text-sm" : "text-[15px]"} font-semibold transition-all duration-200
-            ${isChildActive
-              ? "bg-linear-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-900/30"
-              : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
-            }`}
+          className={`relative w-full flex items-center gap-2.5 px-3 ${isEmployee ? "py-1.5" : "py-2"} rounded-lg ${isEmployee ? "text-sm" : "text-[14px]"} font-medium transition-colors duration-200
+            ${isChildActive ? GROUP_ACTIVE : ITEM_IDLE}`}
         >
           <span className="shrink-0 inline-flex items-center justify-center w-5 h-5">
             {Icon && typeof Icon !== "string" ? <Icon size={18} strokeWidth={2} className="text-current" /> : <span className="text-sm">•</span>}
@@ -44,15 +46,15 @@ function NavItem({ item, activeTab, isEmployee, sidebarOpen, expandedGroups, tog
         </button>
 
         {sidebarOpen && isOpen && (
-          <div className="ml-2 mt-0.5 space-y-0.5 border-l border-slate-700/50 pl-2">
+          <div className="ml-5 mt-0.5 space-y-0.5 border-l border-white/10 pl-2">
             {item.subItems.map((sub) => {
               const SubIcon = sub.icon;
               return (
                 <button
                   key={sub.id}
                   onClick={() => handleNavClick(sub.id)}
-                  className={`w-full flex items-center gap-2.5 px-3 ${isEmployee ? "py-1.5" : "py-2"} rounded-xl ${isEmployee ? "text-sm" : "text-[15px]"} font-semibold transition-all duration-200
-                    ${activeTab === sub.id ? "bg-linear-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-900/30" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"}`}
+                  className={`relative w-full flex items-center gap-2.5 px-3 ${isEmployee ? "py-1.5" : "py-1.5"} rounded-lg text-[13px] font-medium transition-colors duration-200
+                    ${activeTab === sub.id ? ITEM_ACTIVE : ITEM_IDLE}`}
                 >
                   <span className="shrink-0 inline-flex items-center justify-center w-5 h-5">
                     {SubIcon && typeof SubIcon !== "string" ? <SubIcon size={16} strokeWidth={2} className="text-current" /> : <span className="text-sm">•</span>}
@@ -70,8 +72,8 @@ function NavItem({ item, activeTab, isEmployee, sidebarOpen, expandedGroups, tog
   return (
     <button
       onClick={() => handleNavClick(item.id)}
-      className={`w-full flex items-center gap-2.5 px-3 ${isEmployee ? "py-1.5" : "py-2"} rounded-xl ${isEmployee ? "text-sm" : "text-[15px]"} font-semibold transition-all duration-200
-        ${activeTab === item.id ? "bg-linear-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-900/30" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"}`}
+      className={`relative w-full flex items-center gap-2.5 px-3 ${isEmployee ? "py-1.5" : "py-2"} rounded-lg ${isEmployee ? "text-sm" : "text-[14px]"} font-medium transition-colors duration-200
+        ${activeTab === item.id ? ITEM_ACTIVE : ITEM_IDLE}`}
     >
       <span className="shrink-0 inline-flex items-center justify-center w-5 h-5">
         {Icon && typeof Icon !== "string" ? <Icon size={18} strokeWidth={2} className="text-current" /> : typeof Icon === "string" ? <span className="text-sm">{Icon}</span> : <span className="text-sm">•</span>}
@@ -135,16 +137,20 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeTab, setAct
         ${sidebarOpen ? `translate-x-0 ${expandedDesktopWidthClass}` : "-translate-x-full md:translate-x-0 md:w-20"}
         fixed md:relative inset-y-0 left-0 z-40
         w-64
-        bg-slate-900 flex flex-col shrink-0
+        bg-linear-to-b from-navy-900 to-navy-950 flex flex-col shrink-0
         transition-all duration-300 overflow-hidden
       `}>
-        <div className={`flex items-center ${sidebarOpen ? "justify-start" : "justify-center"} px-4 ${isEmployee ? "py-3.5" : "py-4"} border-b border-slate-800`}>
-          <div className="rounded-xl bg-white px-2 py-1">
-            <img src="/logo1.png" alt="HRMS" className={`${sidebarOpen ? "w-28" : "w-9"} object-contain`} />
-          </div>
+        {/* Faint harbour waves at the bottom */}
+        <svg className="pointer-events-none absolute bottom-0 left-0 w-full h-24 text-ocean-400/[0.06]" viewBox="0 0 256 96" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 40 Q32 28 64 40 T128 40 T192 40 T256 40 V96 H0Z" fill="currentColor" />
+          <path d="M0 62 Q32 50 64 62 T128 62 T192 62 T256 62 V96 H0Z" fill="currentColor" />
+        </svg>
+
+        <div className={`relative flex items-center ${sidebarOpen ? "justify-start" : "justify-center"} px-4 ${isEmployee ? "py-3.5" : "py-4"} border-b border-white/5`}>
+          <BrandMark tone="light" compact={!sidebarOpen} />
         </div>
 
-        <div className="flex-1 flex flex-col overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-slate-900 [&::-webkit-scrollbar-thumb]:bg-slate-700 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-slate-600">
+        <div className="relative flex-1 flex flex-col overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/20">
           <nav className={`flex-1 px-2 ${isEmployee ? "py-2.5" : "py-3"} space-y-0.5`}>
             {navItems.map((item) => (
               <NavItem
@@ -160,22 +166,22 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeTab, setAct
             ))}
           </nav>
 
-          <div className={`px-2 ${isEmployee ? "py-2.5" : "py-3"} border-t border-slate-800 space-y-1`}>
-            <div className="px-3 py-3 bg-slate-800/60 rounded-xl md:hidden">
+          <div className={`px-2 ${isEmployee ? "py-2.5" : "py-3"} border-t border-white/5 space-y-1`}>
+            <div className="px-3 py-3 bg-white/5 border border-white/10 rounded-xl md:hidden">
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-9 h-9 rounded-full bg-linear-to-br from-blue-500 to-indigo-600 text-white text-xs font-bold flex items-center justify-center shrink-0">
+                <div className="w-9 h-9 rounded-full bg-linear-to-br from-ocean-400 to-navy-600 text-white text-xs font-bold flex items-center justify-center shrink-0">
                   {user?.name?.[0]?.toUpperCase()}
                 </div>
                 <div className="overflow-hidden flex-1">
                   <p className="text-white text-xs font-bold truncate">{user?.name}</p>
-                  <p className="text-slate-500 text-xs truncate">{user?.email}</p>
+                  <p className="text-ocean-100/50 text-xs truncate">{user?.email}</p>
                 </div>
               </div>
               <div className="flex items-center justify-between">
                 <span className={`px-2 py-0.5 rounded-md text-xs font-bold capitalize ${ROLE_STYLES[user?.role]}`}>
                   {user?.role}
                 </span>
-                <button onClick={logout} className="text-xs text-slate-500 hover:text-red-400 font-bold transition-colors">
+                <button onClick={logout} className="text-xs text-ocean-100/50 hover:text-port-red font-semibold transition-colors">
                   Sign out
                 </button>
               </div>
@@ -198,7 +204,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeTab, setAct
               <button
                 onClick={logout}
                 title="Sign out"
-                className="w-full items-center justify-center px-3 py-2.5 rounded-xl text-slate-500 hover:text-red-400 hover:bg-slate-800 transition-colors hidden md:flex"
+                className="w-full items-center justify-center px-3 py-2.5 rounded-lg text-ocean-100/50 hover:text-port-red hover:bg-white/5 transition-colors hidden md:flex"
               >
                 <LogOut size={18} strokeWidth={2} />
               </button>

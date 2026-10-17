@@ -12,7 +12,7 @@ const HolidayDataTable = ({
     return (
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
         <div className="flex justify-center items-center h-64">
-          <div className="w-10 h-10 border-4 border-indigo-500/30 border-t-indigo-600 rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-4 border-navy-500/30 border-t-navy-600 rounded-full animate-spin"></div>
         </div>
       </div>
     );
@@ -33,21 +33,21 @@ const HolidayDataTable = ({
     <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-left">
-          <thead className="bg-slate-50 border-b border-slate-100">
+          <thead className="bg-slate-50/80 border-b border-slate-100">
             <tr>
-              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest pl-8">
+              <th className="px-6 py-4 uppercase pl-8 text-[11px] font-semibold text-slate-500 tracking-wider">
                 Holiday Name
               </th>
-              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">
+              <th className="px-6 py-4 uppercase text-[11px] font-semibold text-slate-500 tracking-wider">
                 Date
               </th>
-              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">
+              <th className="px-6 py-4 uppercase text-[11px] font-semibold text-slate-500 tracking-wider">
                 Type
               </th>
-              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">
+              <th className="px-6 py-4 uppercase text-[11px] font-semibold text-slate-500 tracking-wider">
                 Status
               </th>
-              <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest text-right pr-8">
+              <th className="px-6 py-4 uppercase text-right pr-8 text-[11px] font-semibold text-slate-500 tracking-wider">
                 Actions
               </th>
             </tr>
@@ -63,12 +63,12 @@ const HolidayDataTable = ({
                     <div
                       className="w-3 h-3 rounded-full flex-shrink-0"
                       style={{
-                        backgroundColor: holiday.color || "#6366f1",
-                        boxShadow: `0 0 0 4px ${holiday.color || "#6366f1"}20`,
+                        backgroundColor: holiday.color || "#1e88c8",
+                        boxShadow: `0 0 0 4px ${holiday.color || "#1e88c8"}20`,
                       }}
                     ></div>
                     <div className="min-w-0">
-                      <p className="text-sm font-extrabold text-slate-800 truncate">
+                      <p className="text-sm font-bold text-slate-800 truncate">
                         {holiday.name}
                       </p>
                       {holiday.description && (
@@ -101,9 +101,9 @@ const HolidayDataTable = ({
                   <span
                     className="inline-flex px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded border"
                     style={{
-                      color: holiday.color || "#6366f1",
-                      backgroundColor: `${holiday.color || "#6366f1"}10`,
-                      borderColor: `${holiday.color || "#6366f1"}30`,
+                      color: holiday.color || "#1e88c8",
+                      backgroundColor: `${holiday.color || "#1e88c8"}10`,
+                      borderColor: `${holiday.color || "#1e88c8"}30`,
                     }}
                   >
                     {holiday.type}
@@ -138,7 +138,7 @@ const HolidayDataTable = ({
                   <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
                       onClick={() => handleEdit(holiday)}
-                      className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors"
+                      className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-navy-600 hover:bg-navy-50 rounded-full transition-colors"
                       title="Edit"
                     >
                       <Edit2 size={16} />

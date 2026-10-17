@@ -72,11 +72,11 @@ const HolidayCalendarView = ({ onSelectHoliday, onNavigateToForm }) => {
       <div className="flex-1 p-6 sm:p-8">
         {/* Header Navigation */}
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-extrabold text-slate-800">{monthYear}</h2>
+          <h2 className="text-2xl font-bold text-navy-900">{monthYear}</h2>
           <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-full p-1 shadow-sm">
             <button
               onClick={handlePrevMonth}
-              className="p-2 text-slate-500 hover:text-indigo-600 hover:bg-white rounded-full transition-all"
+              className="p-2 text-slate-500 hover:text-navy-600 hover:bg-white rounded-full transition-all"
               title="Previous month"
             >
               <ChevronLeft size={20} className="stroke-[3]" />
@@ -84,7 +84,7 @@ const HolidayCalendarView = ({ onSelectHoliday, onNavigateToForm }) => {
             <div className="w-[1px] h-4 bg-slate-300"></div>
             <button
               onClick={handleNextMonth}
-              className="p-2 text-slate-500 hover:text-indigo-600 hover:bg-white rounded-full transition-all"
+              className="p-2 text-slate-500 hover:text-navy-600 hover:bg-white rounded-full transition-all"
               title="Next month"
             >
               <ChevronRight size={20} className="stroke-[3]" />
@@ -96,7 +96,7 @@ const HolidayCalendarView = ({ onSelectHoliday, onNavigateToForm }) => {
         <div className="relative min-h-[400px]">
         {loading && (
           <div className="absolute inset-0 z-10 bg-white/50 backdrop-blur-sm flex items-center justify-center rounded-2xl">
-            <div className="w-10 h-10 border-4 border-indigo-500/30 border-t-indigo-600 rounded-full animate-spin"></div>
+            <div className="w-10 h-10 border-4 border-navy-500/30 border-t-navy-600 rounded-full animate-spin"></div>
           </div>
         )}
         
@@ -117,7 +117,7 @@ const HolidayCalendarView = ({ onSelectHoliday, onNavigateToForm }) => {
             const isToday = day === today.getDate() && currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear();
             
             // Primary holiday color if exists
-            const dominantHolidayColor = hasHoliday ? (holidaysOnDay[0].color || "#6366f1") : null;
+            const dominantHolidayColor = hasHoliday ? (holidaysOnDay[0].color || "#1e88c8") : null;
 
             return (
               <div
@@ -126,8 +126,8 @@ const HolidayCalendarView = ({ onSelectHoliday, onNavigateToForm }) => {
                 className={`
                   relative aspect-square flex flex-col rounded-2xl font-bold cursor-pointer transition-all duration-300 border-2
                   ${!day ? "bg-transparent border-transparent cursor-default pointer-events-none" : ""}
-                  ${day && !isSelected && !hasHoliday ? "bg-slate-50 border-transparent hover:border-indigo-200 hover:bg-indigo-50/50 text-slate-700" : ""}
-                  ${day && isSelected ? "border-indigo-500 shadow-md shadow-indigo-200 bg-white z-10 scale-105" : ""}
+                  ${day && !isSelected && !hasHoliday ? "bg-slate-50 border-transparent hover:border-navy-200 hover:bg-navy-50/50 text-slate-700" : ""}
+                  ${day && isSelected ? "border-navy-500 shadow-md shadow-navy-200 bg-white z-10 scale-105" : ""}
                   ${day && hasHoliday && !isSelected ? "bg-white border-transparent hover:scale-105 shadow-sm" : ""}
                 `}
                 style={day && hasHoliday && !isSelected ? { borderBottomColor: dominantHolidayColor, borderBottomWidth: '4px' } : {}}
@@ -135,7 +135,7 @@ const HolidayCalendarView = ({ onSelectHoliday, onNavigateToForm }) => {
                 {day && (
                   <>
                     <div className={`p-2 sm:p-3 flex items-start justify-between w-full h-full`}>
-                       <span className={`text-sm sm:text-base ${isToday ? 'bg-indigo-600 text-white rounded-full w-7 h-7 flex items-center justify-center -ml-1 -mt-1' : ''}`}>
+                       <span className={`text-sm sm:text-base ${isToday ? 'bg-navy-600 text-white rounded-full w-7 h-7 flex items-center justify-center -ml-1 -mt-1' : ''}`}>
                           {day}
                        </span>
                     </div>
@@ -143,7 +143,7 @@ const HolidayCalendarView = ({ onSelectHoliday, onNavigateToForm }) => {
                     {hasHoliday && (
                         <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
                             {holidaysOnDay.slice(0, 3).map((h, i) => (
-                                <div key={i} className="w-1.5 h-1.5 rounded-full shadow-sm" style={{ backgroundColor: h.color || "#6366f1" }}></div>
+                                <div key={i} className="w-1.5 h-1.5 rounded-full shadow-sm" style={{ backgroundColor: h.color || "#1e88c8" }}></div>
                             ))}
                         </div>
                     )}

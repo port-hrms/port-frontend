@@ -30,10 +30,10 @@ export default function ReviewForm({ form, setForm, employees, editReview, onSub
                 {/* Header */}
                 <div className="sticky top-0 bg-white flex items-center justify-between px-7 py-5 border-b border-slate-100 z-10 rounded-t-2xl">
                     <div>
-                        <h2 className="text-lg font-extrabold text-slate-900">
+                        <h2 className="text-lg font-bold text-navy-900">
                             {editReview ? "✏️ Edit Review" : "➕ New Performance Review"}
                         </h2>
-                        <p className="text-xs text-slate-400 mt-0.5">
+                        <p className="text-xs text-slate-500 mt-0.5">
                             {editReview ? "Update review details" : "Fill in scores and feedback"}
                         </p>
                     </div>
@@ -50,7 +50,7 @@ export default function ReviewForm({ form, setForm, employees, editReview, onSub
                             <div className="col-span-3">
                                 <FieldLabel label="Employee" required />
                                 <select required value={form.employee} onChange={(e) => setForm((p) => ({ ...p, employee: e.target.value }))}
-                                    className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none cursor-pointer focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors">
+                                    className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none cursor-pointer focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors">
                                     <option value="">-- Select Employee --</option>
                                     {employees.map((emp) => (
                                         <option key={emp._id} value={emp._id}>
@@ -63,7 +63,7 @@ export default function ReviewForm({ form, setForm, employees, editReview, onSub
                             <div>
                                 <FieldLabel label="Review Cycle" required />
                                 <select value={form.reviewCycle} onChange={(e) => setForm((p) => ({ ...p, reviewCycle: e.target.value }))}
-                                    className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none cursor-pointer focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors">
+                                    className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none cursor-pointer focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors">
                                     {CYCLES_NO_ALL.map((c) => <option key={c}>{c}</option>)}
                                 </select>
                             </div>
@@ -71,7 +71,7 @@ export default function ReviewForm({ form, setForm, employees, editReview, onSub
                             <div>
                                 <FieldLabel label="Year" required />
                                 <select value={form.year} onChange={(e) => setForm((p) => ({ ...p, year: Number(e.target.value) }))}
-                                    className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none cursor-pointer focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors">
+                                    className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none cursor-pointer focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors">
                                     {YEARS.map((y) => <option key={y}>{y}</option>)}
                                 </select>
                             </div>
@@ -79,7 +79,7 @@ export default function ReviewForm({ form, setForm, employees, editReview, onSub
                             <div>
                                 <FieldLabel label="Status" />
                                 <select value={form.status} onChange={(e) => setForm((p) => ({ ...p, status: e.target.value }))}
-                                    className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none cursor-pointer focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors">
+                                    className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none cursor-pointer focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors">
                                     {["Draft", "Submitted", "Acknowledged", "Closed"].map((s) => <option key={s}>{s}</option>)}
                                 </select>
                             </div>
@@ -103,17 +103,17 @@ export default function ReviewForm({ form, setForm, employees, editReview, onSub
                                             <label className="text-xs text-slate-500 mb-1 block">Target</label>
                                             <input type="number" min="0" max="100" value={kpi.target}
                                                 onChange={(e) => updateKpi(i, "target", e.target.value)}
-                                                className="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors" />
+                                                className="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors" />
                                         </div>
                                         <div>
                                             <label className="text-xs text-slate-500 mb-1 block">Achieved</label>
                                             <input type="number" min="0" max="100" value={kpi.achieved}
                                                 onChange={(e) => updateKpi(i, "achieved", e.target.value)}
-                                                className="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors" />
+                                                className="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors" />
                                         </div>
                                         <div>
                                             <label className="text-xs text-slate-500 mb-1 block">Score</label>
-                                            <div className="px-3 py-2 text-sm font-bold text-blue-600 bg-blue-50 rounded-xl text-center">
+                                            <div className="px-3 py-2 text-sm font-bold text-ocean-600 bg-ocean-50 rounded-xl text-center">
                                                 {kpi.target > 0 ? Math.round((kpi.achieved / kpi.target) * 100) : 0}%
                                             </div>
                                         </div>
@@ -154,7 +154,7 @@ export default function ReviewForm({ form, setForm, employees, editReview, onSub
                                     <FieldLabel label={label} />
                                     <textarea rows={2} placeholder={placeholder} value={form[field]}
                                         onChange={(e) => setForm((p) => ({ ...p, [field]: e.target.value }))}
-                                        className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none resize-none placeholder-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors" />
+                                        className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none resize-none placeholder-slate-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors" />
                                 </div>
                             ))}
                         </div>
@@ -175,13 +175,13 @@ export default function ReviewForm({ form, setForm, employees, editReview, onSub
                                     <p className="text-xs text-emerald-600">Suggest a salary hike</p>
                                 </div>
                             </label>
-                            <label className="flex items-center gap-3 p-4 bg-violet-50 border border-violet-200 rounded-xl cursor-pointer">
+                            <label className="flex items-center gap-3 p-4 bg-navy-50 border border-navy-200 rounded-xl cursor-pointer">
                                 <input type="checkbox" checked={form.promotionRecommended}
                                     onChange={(e) => setForm((p) => ({ ...p, promotionRecommended: e.target.checked }))}
-                                    className="w-5 h-5 accent-violet-600 rounded" />
+                                    className="w-5 h-5 accent-navy-600 rounded" />
                                 <div>
-                                    <p className="text-sm font-bold text-violet-800">Recommend Promotion</p>
-                                    <p className="text-xs text-violet-600">Suggest a role upgrade</p>
+                                    <p className="text-sm font-bold text-navy-800">Recommend Promotion</p>
+                                    <p className="text-xs text-navy-600">Suggest a role upgrade</p>
                                 </div>
                             </label>
                         </div>
@@ -192,7 +192,7 @@ export default function ReviewForm({ form, setForm, employees, editReview, onSub
                                     value={form.incrementPercent}
                                     onChange={(e) => setForm((p) => ({ ...p, incrementPercent: Number(e.target.value) }))}
                                     placeholder="e.g. 10"
-                                    className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors" />
+                                    className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors" />
                             </div>
                         )}
                     </div>
@@ -204,7 +204,7 @@ export default function ReviewForm({ form, setForm, employees, editReview, onSub
                             Cancel
                         </button>
                         <button type="submit"
-                            className="flex-[2] py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-bold shadow-md shadow-blue-200 transition-all hover:-translate-y-0.5">
+                            className="flex-[2] py-3 rounded-xl bg-gradient-to-r from-ocean-600 to-navy-600 hover:from-ocean-700 hover:to-navy-700 text-white text-sm font-bold shadow-md shadow-ocean-200 transition-all hover:-translate-y-0.5">
                             {editReview ? "Update Review" : "Submit Review"}
                         </button>
                     </div>

@@ -2,42 +2,59 @@
 // client/src/components/dashboard/AttendanceSummary.jsx
 // ─────────────────────────────────────────────────────────────
 
-function AttendancePill({ label, count, color, bgColor }) {
-    return (
-        <div className={`flex items-center gap-2 px-4 py-2.5 rounded-xl ${bgColor}`}>
-            <span className={`w-2.5 h-2.5 rounded-full ${color}`} />
-            <span className="text-xs font-bold text-slate-600">{label}</span>
-            <span className={`text-sm font-extrabold ml-auto ${color.replace("bg-", "text-")}`}>{count}</span>
-        </div>
-    );
-}
+const STATUSES = [
+    { key: "present", label: "Present", dot: "bg-port-green", text: "text-port-green" },
+    { key: "late", label: "Late", dot: "bg-port-amber", text: "text-amber-600" },
+    { key: "absent", label: "Absent", dot: "bg-port-red", text: "text-port-red" },
+    { key: "onLeave", label: "On Leave", dot: "bg-ocean-500", text: "text-ocean-600" },
+    { key: "halfDay", label: "Half Day", dot: "bg-navy-600", text: "text-navy-600" },
+];
 
 export default function AttendanceSummary({ attendance }) {
-    const total = attendance.present + attendance.late + attendance.absent + attendance.onLeave + attendance.halfDay;
+    const total = STATUSES.reduce((sum, s) => sum + (attendance[s.key] || 0), 0);
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+        <div className="panel p-6">
             <div className="flex items-center justify-between mb-5">
                 <div>
-                    <h3 className="text-base font-extrabold text-slate-900">Today's Attendance</h3>
-                    <p className="text-xs text-slate-400 mt-0.5">Status breakdown for today</p>
+                    <h3 className="text-[15px] font-bold text-navy-900">Today's Attendance</h3>
+                    <p className="text-xs text-slate-500 mt-0.5">Status breakdown for today</p>
                 </div>
-                <span className="text-xs font-bold bg-emerald-50 text-emerald-600 px-3 py-1 rounded-lg">
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold bg-emerald-50 text-port-green ring-1 ring-emerald-100 px-2.5 py-1 rounded-md">
+                    <span className="relative flex h-1.5 w-1.5">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-port-green opacity-60" />
+                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-port-green" />
+                    </span>
                     Live
                 </span>
             </div>
 
-            <div className="space-y-3">
-                <AttendancePill label="Present" count={attendance.present} color="bg-emerald-500" bgColor="bg-emerald-50" />
-                <AttendancePill label="Late" count={attendance.late} color="bg-amber-500" bgColor="bg-amber-50" />
-                <AttendancePill label="Absent" count={attendance.absent} color="bg-red-500" bgColor="bg-red-50" />
-                <AttendancePill label="On Leave" count={attendance.onLeave} color="bg-blue-500" bgColor="bg-blue-50" />
-                <AttendancePill label="Half Day" count={attendance.halfDay} color="bg-violet-500" bgColor="bg-violet-50" />
+            {/* Distribution bar */}
+            <div className="mb-5 flex h-2 w-full overflow-hidden rounded-full bg-slate-100">
+                {total > 0 && STATUSES.map((s) => {
+                    const count = attendance[s.key] || 0;
+                    return count > 0 ? (
+                        <div key={s.key} className={`${s.dot} h-full`} style={{ width: `${(count / total) * 100}%` }} title={`${s.label}: ${count}`} />
+                    ) : null;
+                })}
             </div>
 
-            <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
-                <span className="text-xs text-slate-400">Total marked today</span>
-                <span className="text-sm font-extrabold text-slate-700">{total}</span>
+            <div className="divide-y divide-slate-100">
+                {STATUSES.map((s) => (
+                    <div key={s.key} className="flex items-center gap-3 py-2.5">
+                        <span className={`h-2.5 w-2.5 rounded-full ${s.dot}`} />
+                        <span className="text-sm font-medium text-slate-600">{s.label}</span>
+                        <span className="ml-auto text-xs text-slate-400 tabular-nums">
+                            {total > 0 ? `${Math.round(((attendance[s.key] || 0) / total) * 100)}%` : "—"}
+                        </span>
+                        <span className={`w-8 text-right text-sm font-bold tabular-nums ${s.text}`}>{attendance[s.key] || 0}</span>
+                    </div>
+                ))}
+            </div>
+
+            <div className="mt-3 pt-4 border-t border-slate-100 flex items-center justify-between">
+                <span className="text-xs text-slate-500">Total marked today</span>
+                <span className="text-sm font-bold text-navy-900 tabular-nums">{total}</span>
             </div>
         </div>
     );

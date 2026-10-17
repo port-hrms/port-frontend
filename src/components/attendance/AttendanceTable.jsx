@@ -6,18 +6,18 @@ import { formatHours } from "../../utils/dateUtils";
 
 export default function AttendanceTable({ records, loading, selectedDate, onEdit, onDelete, onCheckout }) {
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <div className="panel overflow-hidden">
             {/* Table header */}
             <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
                 <div>
-                    <h3 className="font-extrabold text-slate-900">Attendance Log</h3>
+                    <h3 className="font-bold text-slate-900">Attendance Log</h3>
                     <p className="text-xs text-slate-400 mt-0.5">{formatDate(selectedDate)} · {records.length} records</p>
                 </div>
             </div>
 
             {loading ? (
                 <div className="flex flex-col items-center justify-center py-16 text-slate-400">
-                    <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4" />
+                    <div className="w-10 h-10 border-4 border-ocean-200 border-t-ocean-600 rounded-full animate-spin mb-4" />
                     <p className="text-sm font-medium">Loading attendance...</p>
                 </div>
             ) : records.length === 0 ? (
@@ -30,15 +30,15 @@ export default function AttendanceTable({ records, loading, selectedDate, onEdit
             <div className="overflow-x-auto">
                 <table className="w-full min-w-[700px]">
                     <thead>
-                        <tr className="bg-slate-50 border-b border-slate-100">
+                        <tr className="bg-slate-50/80 border-b border-slate-100">
                             {["Employee", "Status", "Check In", "Check Out", "Hours", "Leave Type", "Actions"].map((h) => (
-                                <th key={h} className="px-5 py-3.5 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">{h}</th>
+                                <th key={h} className="px-5 py-3.5 text-left uppercase text-[11px] font-semibold text-slate-500 tracking-wider">{h}</th>
                             ))}
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-50">
                         {records.map((rec) => (
-                            <tr key={rec._id} className="hover:bg-blue-50/40 transition-colors group">
+                            <tr key={rec._id} className="hover:bg-ocean-50/40 transition-colors group">
                                 {/* Employee */}
                                 <td className="px-5 py-4">
                                     <div className="flex items-center gap-3">
@@ -89,7 +89,7 @@ export default function AttendanceTable({ records, loading, selectedDate, onEdit
                                         )}
                                         <button
                                             onClick={() => onEdit(rec)}
-                                            className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 text-xs font-bold rounded-lg transition-colors"
+                                            className="px-3 py-1.5 bg-ocean-50 hover:bg-ocean-100 text-ocean-600 text-xs font-bold rounded-lg transition-colors"
                                         >
                                             Edit
                                         </button>

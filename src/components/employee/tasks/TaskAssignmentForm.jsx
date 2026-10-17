@@ -6,13 +6,13 @@ import React from "react";
  */
 const TaskAssignmentForm = ({ employees, form, setForm, onSubmit, submitting }) => {
   return (
-    <form onSubmit={onSubmit} className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 space-y-4 h-fit sticky top-6">
+    <form onSubmit={onSubmit} className="panel p-6 space-y-4 h-fit sticky top-6">
       <div>
         <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Assign To</label>
         <select
           value={form.employee}
           onChange={(event) => setForm((prev) => ({ ...prev, employee: event.target.value }))}
-          className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100"
           required
         >
           <option value="">Select employee</option>
@@ -30,7 +30,7 @@ const TaskAssignmentForm = ({ employees, form, setForm, onSubmit, submitting }) 
           type="text"
           value={form.title}
           onChange={(event) => setForm((prev) => ({ ...prev, title: event.target.value }))}
-          className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100"
           placeholder="e.g., Prepare report"
           required
         />
@@ -42,7 +42,7 @@ const TaskAssignmentForm = ({ employees, form, setForm, onSubmit, submitting }) 
           rows="2"
           value={form.description}
           onChange={(event) => setForm((prev) => ({ ...prev, description: event.target.value }))}
-          className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100"
           placeholder="Optional details..."
         />
       </div>
@@ -53,7 +53,7 @@ const TaskAssignmentForm = ({ employees, form, setForm, onSubmit, submitting }) 
           type="date"
           value={form.date}
           onChange={(event) => setForm((prev) => ({ ...prev, date: event.target.value }))}
-          className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100"
           required
         />
       </div>
@@ -61,7 +61,7 @@ const TaskAssignmentForm = ({ employees, form, setForm, onSubmit, submitting }) 
       <button
         type="submit"
         disabled={submitting}
-        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white text-sm font-bold px-4 py-2.5 rounded-xl shadow-sm transition-all"
+        className="w-full bg-ocean-600 hover:bg-ocean-700 disabled:bg-slate-300 text-white text-sm font-bold px-4 py-2.5 rounded-xl shadow-sm transition-all"
       >
         {submitting ? "Assigning..." : "Assign Task"}
       </button>

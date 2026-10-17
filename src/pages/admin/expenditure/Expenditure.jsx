@@ -29,20 +29,20 @@ function ExpenditureInner() {
     return (
         <div className="space-y-5">
             {/* Sub-page tab bar */}
-            <div className="flex items-center gap-1 flex-wrap bg-white rounded-2xl p-1.5 border border-slate-100 shadow-sm w-fit">
+            <div className="panel flex items-center gap-1 flex-wrap p-1.5 w-fit">
                 {SUB_PAGES.map(({ id, label, icon: Icon }) => {
                     const isActive = subPage === id;
                     return (
                         <button key={id} onClick={() => setSubPage(id)}
                             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all relative ${
                                 isActive
-                                    ? "bg-linear-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-200"
+                                    ? "bg-linear-to-r from-ocean-600 to-navy-700 text-white shadow-md shadow-navy-200"
                                     : "text-slate-500 hover:bg-slate-50 hover:text-slate-700"
                             }`}>
                             <Icon size={15} />
                             {label}
                             {id === "advances" && pendingAdvancesCount > 0 && (
-                                <span className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded-full ${isActive ? "bg-white/20 text-white" : "bg-amber-100 text-amber-700"}`}>
+                                <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${isActive ? "bg-white/20 text-white" : "bg-amber-100 text-amber-700"}`}>
                                     {pendingAdvancesCount}
                                 </span>
                             )}

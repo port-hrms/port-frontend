@@ -27,12 +27,12 @@ function handleExport(title, rows, total, totalLabel) {
 
 function ReportCard({ title, rows, total, totalLabel, color }) {
     return (
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+        <div className="panel overflow-hidden">
             <div className={`px-5 py-4 border-b border-slate-100 flex items-center justify-between`}>
-                <p className="font-extrabold text-slate-800">{title}</p>
+                <p className="font-bold text-slate-800">{title}</p>
                 <button 
                     onClick={() => handleExport(title, rows, total, totalLabel)}
-                    className="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-indigo-600 transition-colors"
+                    className="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-navy-600 transition-colors"
                 >
                     <FileDown size={14} /> Export PDF
                 </button>
@@ -41,14 +41,14 @@ function ReportCard({ title, rows, total, totalLabel, color }) {
                 {rows.map((r, i) => (
                     <div key={i} className="flex items-center justify-between px-5 py-3">
                         <span className="text-sm text-slate-600">{r.label}</span>
-                        <span className={`text-sm font-extrabold ${color}`}>{r.value}</span>
+                        <span className={`text-sm font-bold ${color}`}>{r.value}</span>
                     </div>
                 ))}
             </div>
             {total !== undefined && (
                 <div className={`px-5 py-3.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between`}>
-                    <span className="text-sm font-extrabold text-slate-700">{totalLabel}</span>
-                    <span className={`text-base font-extrabold ${color}`}>{total}</span>
+                    <span className="text-sm font-bold text-slate-700">{totalLabel}</span>
+                    <span className={`text-base font-bold ${color}`}>{total}</span>
                 </div>
             )}
         </div>
@@ -129,8 +129,8 @@ export default function ExpenditureReports() {
         <div className="space-y-6">
             <div className="flex items-center justify-between flex-wrap gap-3">
                 <div>
-                    <h2 className="text-xl font-extrabold text-slate-800">Reports</h2>
-                    <p className="text-sm text-slate-400 mt-0.5">Financial summary and downloadable reports</p>
+                    <h2 className="text-xl font-bold text-navy-900">Reports</h2>
+                    <p className="text-sm text-slate-500 mt-0.5">Financial summary and downloadable reports</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <label className="text-sm font-bold text-slate-600">Filter by Date:</label>
@@ -138,7 +138,7 @@ export default function ExpenditureReports() {
                         type="date" 
                         value={filterDate} 
                         onChange={e => setFilterDate(e.target.value)}
-                        className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-700 focus:outline-none focus:border-indigo-400 shadow-sm transition-all"
+                        className="panel px-3 py-2 text-sm text-slate-700 focus:outline-none focus:border-navy-400 transition-all"
                     />
                     {filterDate && (
                         <button onClick={() => setFilterDate("")} className="text-xs text-rose-500 hover:text-rose-600 font-bold">Clear</button>
@@ -151,12 +151,12 @@ export default function ExpenditureReports() {
                 {[
                     { label: "Total Income",          val: fmtINR(totalIncome),    bg: "bg-emerald-50",  text: "text-emerald-700",  border: "border-emerald-100" },
                     { label: "Total Expenses",         val: fmtINR(totalExpenses),  bg: "bg-rose-50",     text: "text-rose-700",     border: "border-rose-100" },
-                    { label: "Gross Profit",           val: fmtINR(profit),         bg: profit >= 0 ? "bg-indigo-50" : "bg-rose-50", text: profit >= 0 ? "text-indigo-700" : "text-rose-700", border: "border-indigo-100" },
+                    { label: "Gross Profit",           val: fmtINR(profit),         bg: profit >= 0 ? "bg-navy-50" : "bg-rose-50", text: profit >= 0 ? "text-navy-700" : "text-rose-700", border: "border-navy-100" },
                     { label: "Net (After Salaries)",   val: fmtINR(netAfterSalary), bg: "bg-amber-50",    text: "text-amber-700",    border: "border-amber-100" },
                 ].map(c => (
                     <div key={c.label} className={`${c.bg} ${c.border} border rounded-2xl p-5`}>
                         <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">{c.label}</p>
-                        <p className={`text-xl font-extrabold mt-1 ${c.text}`}>{c.val}</p>
+                        <p className={`text-xl font-bold mt-1 ${c.text}`}>{c.val}</p>
                     </div>
                 ))}
             </div>
@@ -208,9 +208,9 @@ export default function ExpenditureReports() {
                 />
 
                 {/* P&L Summary */}
-                <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+                <div className="panel overflow-hidden">
                     <div className="px-5 py-4 border-b border-slate-100">
-                        <p className="font-extrabold text-slate-800">Profit & Loss Summary</p>
+                        <p className="font-bold text-slate-800">Profit & Loss Summary</p>
                     </div>
                     <div className="p-5 space-y-3">
                         {[
@@ -221,12 +221,12 @@ export default function ExpenditureReports() {
                         ].map(r => (
                             <div key={r.label} className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0">
                                 <span className="text-sm text-slate-600">{r.label}</span>
-                                <span className={`text-sm font-extrabold ${r.color}`}>{r.val}</span>
+                                <span className={`text-sm font-bold ${r.color}`}>{r.val}</span>
                             </div>
                         ))}
                         <div className={`flex items-center justify-between py-3 rounded-xl px-3 mt-2 ${netAfterSalary >= 0 ? "bg-emerald-50" : "bg-rose-50"}`}>
-                            <span className="text-sm font-extrabold text-slate-700">Net Profit / Loss</span>
-                            <span className={`text-lg font-extrabold ${netAfterSalary >= 0 ? "text-emerald-700" : "text-rose-700"}`}>{fmtINR(netAfterSalary)}</span>
+                            <span className="text-sm font-bold text-slate-700">Net Profit / Loss</span>
+                            <span className={`text-lg font-bold ${netAfterSalary >= 0 ? "text-emerald-700" : "text-rose-700"}`}>{fmtINR(netAfterSalary)}</span>
                         </div>
                     </div>
                 </div>

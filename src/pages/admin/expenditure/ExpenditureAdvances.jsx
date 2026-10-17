@@ -34,7 +34,7 @@ function AdvanceModal({ initial, onSave, onClose }) {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl" onClick={e => e.stopPropagation()}>
                 <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-                    <h3 className="font-extrabold text-slate-800">{initial?.id ? "Edit Advance" : "Give Advance"}</h3>
+                    <h3 className="font-bold text-slate-800">{initial?.id ? "Edit Advance" : "Give Advance"}</h3>
                     <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-400"><X size={16} /></button>
                 </div>
                 <div className="px-6 py-5 space-y-4">
@@ -101,9 +101,9 @@ export default function ExpenditureAdvances() {
             <div className="flex items-center justify-between flex-wrap gap-3">
                 <div>
                     <div className="flex items-center gap-3">
-                        <h2 className="text-xl font-extrabold text-slate-800">Advances</h2>
+                        <h2 className="text-xl font-bold text-navy-900">Advances</h2>
                         {pendingAdvancesCount > 0 && (
-                            <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-extrabold animate-pulse">
+                            <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-bold animate-pulse">
                                 {pendingAdvancesCount} Pending
                             </span>
                         )}
@@ -129,7 +129,7 @@ export default function ExpenditureAdvances() {
             {/* Advances cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filtered.length === 0 ? (
-                    <div className="col-span-2 bg-white rounded-2xl border border-slate-100 shadow-sm py-14 flex flex-col items-center justify-center text-slate-400">
+                    <div className="panel col-span-2 py-14 flex flex-col items-center justify-center text-slate-400">
                         <div className="text-4xl mb-3">💰</div>
                         <p className="text-sm font-semibold">No advance records found.</p>
                     </div>
@@ -140,24 +140,24 @@ export default function ExpenditureAdvances() {
                         <div key={adv._id || adv.id} className={`bg-white rounded-2xl p-5 border shadow-sm ${adv.status === "Cleared" ? "border-emerald-100 opacity-75" : "border-amber-100"}`}>
                             <div className="flex items-start justify-between mb-3">
                                 <div>
-                                    <p className="font-extrabold text-slate-800">
+                                    <p className="font-bold text-slate-800">
                                         {adv.employee?.firstName
                                             ? `${adv.employee.firstName} ${adv.employee.lastName}`
                                             : adv.employee}
                                     </p>
                                     <p className="text-xs text-slate-400">{adv.employee?.employeeId || adv.employeeId} · {new Date(adv.date).toLocaleDateString("en-IN")}</p>
                                 </div>
-                                <span className={`px-2.5 py-1 rounded-full text-xs font-extrabold ${adv.status === "Cleared" ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>
+                                <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${adv.status === "Cleared" ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>
                                     {adv.status}
                                 </span>
                             </div>
                             <div className="flex items-center justify-between mb-2">
                                 <span className="text-sm text-slate-500">Total Advance</span>
-                                <span className="font-extrabold text-slate-700">{fmtINR(adv.amount)}</span>
+                                <span className="font-bold text-slate-700">{fmtINR(adv.amount)}</span>
                             </div>
                             <div className="flex items-center justify-between mb-3">
                                 <span className="text-sm text-slate-500">Remaining</span>
-                                <span className={`font-extrabold ${remaining > 0 ? "text-amber-600" : "text-emerald-600"}`}>{fmtINR(remaining)}</span>
+                                <span className={`font-bold ${remaining > 0 ? "text-amber-600" : "text-emerald-600"}`}>{fmtINR(remaining)}</span>
                             </div>
                             {/* Progress bar */}
                             <div className="w-full h-1.5 bg-slate-100 rounded-full mb-3">
@@ -175,7 +175,7 @@ export default function ExpenditureAdvances() {
                                     </button>
                                 )}
                                 <button onClick={() => setModal(adv)}
-                                    className="flex items-center justify-center py-2 px-3 rounded-xl hover:bg-slate-50 text-slate-400 hover:text-indigo-600 transition-colors">
+                                    className="flex items-center justify-center py-2 px-3 rounded-xl hover:bg-slate-50 text-slate-400 hover:text-navy-600 transition-colors">
                                     <Pencil size={13} />
                                 </button>
                                 <button onClick={() => deleteAdvance(adv._id || adv.id)}

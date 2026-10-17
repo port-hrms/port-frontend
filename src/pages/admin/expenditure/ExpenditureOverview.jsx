@@ -15,13 +15,13 @@ function BarChart({ data = [] }) {
                 const eH = (d.expenses / maxVal) * h;
                 return (
                     <g key={i}>
-                        <rect x={x} y={110 - iH} width={18} height={iH} rx="3" fill="#6366f1" opacity="0.85" />
+                        <rect x={x} y={110 - iH} width={18} height={iH} rx="3" fill="#1e88c8" opacity="0.85" />
                         <rect x={x + 20} y={110 - eH} width={18} height={eH} rx="3" fill="#f43f5e" opacity="0.85" />
                         <text x={x + 9} y={125} textAnchor="middle" fontSize="9" fill="#94a3b8">{d.month}</text>
                     </g>
                 );
             })}
-            <rect x={10}  y={5} width={10} height={10} rx="2" fill="#6366f1" />
+            <rect x={10}  y={5} width={10} height={10} rx="2" fill="#1e88c8" />
             <text x={24}  y={14} fontSize="9" fill="#94a3b8">Income</text>
             <rect x={80}  y={5} width={10} height={10} rx="2" fill="#f43f5e" />
             <text x={94}  y={14} fontSize="9" fill="#94a3b8">Expenses</text>
@@ -34,7 +34,7 @@ function DonutChart({ expenses }) {
     const categories = {};
     expenses.forEach(e => { categories[e.category] = (categories[e.category] || 0) + Number(e.amount); });
     const total = Object.values(categories).reduce((s, v) => s + v, 0);
-    const COLORS = ["#6366f1","#f43f5e","#10b981","#f59e0b","#3b82f6","#8b5cf6"];
+    const COLORS = ["#1e88c8","#f43f5e","#10b981","#f59e0b","#1e88c8","#8b5cf6"];
     let cumulative = 0;
     const segments = Object.entries(categories).map(([label, val], i) => {
         const pct  = total ? val / total : 0;
@@ -83,13 +83,13 @@ function DonutChart({ expenses }) {
 // ─── Summary Card ─────────────────────────────────────────────
 function SummaryCard({ label, value, icon: Icon, color, sub }) {
     return (
-        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex items-start gap-4">
+        <div className="panel p-5 flex items-start gap-4">
             <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${color}`}>
                 <Icon size={20} className="text-white" />
             </div>
             <div className="min-w-0">
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{label}</p>
-                <p className="text-xl font-extrabold text-slate-800 mt-0.5">{value}</p>
+                <p className="text-xl font-bold text-navy-900 mt-0.5">{value}</p>
                 {sub && <p className="text-xs text-slate-400 mt-0.5">{sub}</p>}
             </div>
         </div>
@@ -109,7 +109,7 @@ function RecentTransaction({ label, amount, date, type }) {
                     <p className="text-xs text-slate-400">{date}</p>
                 </div>
             </div>
-            <span className={`text-sm font-extrabold ${type === "income" ? "text-emerald-600" : "text-rose-500"}`}>
+            <span className={`text-sm font-bold ${type === "income" ? "text-emerald-600" : "text-rose-500"}`}>
                 {type === "income" ? "+" : "-"}₹{Number(amount).toLocaleString("en-IN")}
             </span>
         </div>
@@ -133,7 +133,7 @@ export default function ExpenditureOverview() {
     if (loading) {
         return (
             <div className="flex items-center justify-center py-20 text-slate-400">
-                <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
+                <div className="w-10 h-10 border-4 border-navy-200 border-t-navy-600 rounded-full animate-spin" />
             </div>
         );
     }
@@ -149,7 +149,7 @@ export default function ExpenditureOverview() {
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
                 <SummaryCard label="Total Income"      value={fmtINR(totalIncome)}    icon={TrendingUp}   color="bg-emerald-500" sub="This month" />
                 <SummaryCard label="Total Expenses"    value={fmtINR(totalExpenses)}  icon={TrendingDown} color="bg-rose-500"    sub="This month" />
-                <SummaryCard label="Salary Paid"       value={fmtINR(totalSalaryPaid)} icon={CreditCard}  color="bg-indigo-500"  sub="This month" />
+                <SummaryCard label="Salary Paid"       value={fmtINR(totalSalaryPaid)} icon={CreditCard}  color="bg-navy-500"  sub="This month" />
                 <SummaryCard label="Advances Given"    value={fmtINR(totalAdvances)}  icon={UserCheck}    color="bg-amber-500"   sub={`${advances.filter(a=>a.status==='Active').length} active`} />
             </div>
 
@@ -157,15 +157,15 @@ export default function ExpenditureOverview() {
             <div className={`rounded-2xl px-6 py-4 flex items-center justify-between ${profit >= 0 ? "bg-emerald-50 border border-emerald-200" : "bg-rose-50 border border-rose-200"}`}>
                 <div>
                     <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Net Profit / Loss (This Month)</p>
-                    <p className={`text-2xl font-extrabold mt-0.5 ${profit >= 0 ? "text-emerald-600" : "text-rose-600"}`}>{profit >= 0 ? "+" : ""}{fmtINR(profit)}</p>
+                    <p className={`text-2xl font-bold mt-0.5 ${profit >= 0 ? "text-emerald-600" : "text-rose-600"}`}>{profit >= 0 ? "+" : ""}{fmtINR(profit)}</p>
                 </div>
                 <ArrowUpRight size={36} className={profit >= 0 ? "text-emerald-300" : "text-rose-300"} />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Bar chart */}
-                <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-                    <p className="text-sm font-extrabold text-slate-700 mb-4">Income vs Expenses (Last 6 Months)</p>
+                <div className="panel p-5">
+                    <p className="text-sm font-bold text-slate-700 mb-4">Income vs Expenses (Last 6 Months)</p>
                     {barData.length === 0
                         ? <p className="text-slate-400 text-sm text-center py-8">No chart data yet.</p>
                         : <BarChart data={barData} />
@@ -173,8 +173,8 @@ export default function ExpenditureOverview() {
                 </div>
 
                 {/* Donut chart */}
-                <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-                    <p className="text-sm font-extrabold text-slate-700 mb-4">Expense Breakdown</p>
+                <div className="panel p-5">
+                    <p className="text-sm font-bold text-slate-700 mb-4">Expense Breakdown</p>
                     {donutExpenses.length === 0
                         ? <p className="text-slate-400 text-sm text-center py-8">No expense data yet.</p>
                         : <DonutChart expenses={donutExpenses} />
@@ -183,8 +183,8 @@ export default function ExpenditureOverview() {
             </div>
 
             {/* Recent transactions */}
-            <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-                <p className="text-sm font-extrabold text-slate-700 mb-4">Recent Transactions</p>
+            <div className="panel p-5">
+                <p className="text-sm font-bold text-slate-700 mb-4">Recent Transactions</p>
                 {recent.length === 0
                     ? <p className="text-slate-400 text-sm text-center py-6">No transactions yet.</p>
                     : recent.map((t, i) => <RecentTransaction key={i} {...t} />)

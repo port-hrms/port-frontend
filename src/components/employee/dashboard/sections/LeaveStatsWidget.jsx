@@ -47,14 +47,14 @@ export default function LeaveStatsWidget({ employeeId, onViewAll }) {
 
   if (loading) {
     return (
-      <div className="mt-3 bg-slate-800/60 rounded-xl border border-slate-700/70 overflow-hidden animate-pulse">
-        <div className="px-3 py-3 border-b border-slate-700/70">
-          <div className="h-4 bg-slate-600 rounded w-2/3 mb-2" />
-          <div className="h-3 bg-slate-700 rounded w-1/2" />
+      <div className="mt-3 bg-white/5 rounded-xl border border-white/10 overflow-hidden animate-pulse">
+        <div className="px-3 py-3 border-b border-white/10">
+          <div className="h-4 bg-white/15 rounded w-2/3 mb-2" />
+          <div className="h-3 bg-white/10 rounded w-1/2" />
         </div>
         <div className="p-3 space-y-2">
-          <div className="h-10 bg-slate-700 rounded-lg" />
-          <div className="h-10 bg-slate-700 rounded-lg" />
+          <div className="h-10 bg-white/10 rounded-lg" />
+          <div className="h-10 bg-white/10 rounded-lg" />
         </div>
       </div>
     );
@@ -65,16 +65,16 @@ export default function LeaveStatsWidget({ employeeId, onViewAll }) {
 
 
   return (
-    <div className="mt-2.5 bg-slate-800/60 rounded-xl border border-slate-700/70 overflow-hidden">
-      <div className="px-3 py-2 border-b border-slate-700/70">
+    <div className="mt-2.5 bg-white/5 rounded-xl border border-white/10 overflow-hidden">
+      <div className="px-3 py-2 border-b border-white/10">
         <div className="flex items-center justify-between gap-2">
           <div>
-            <p className="text-slate-200 text-[11px] font-extrabold">Recent Leaves</p>
+            <p className="text-slate-200 text-[11px] font-bold">Recent Leaves</p>
             <p className="text-[9px] text-slate-400 mt-0.5">Latest leave requests</p>
           </div>
           <button
             onClick={() => setShowModal(true)}
-            className="text-[10px] px-2 py-0.5 bg-violet-600 hover:bg-violet-500 text-white rounded-md font-extrabold transition-colors"
+            className="text-[10px] px-2 py-0.5 bg-navy-600 hover:bg-navy-500 text-white rounded-md font-bold transition-colors"
           >
             Apply
           </button>
@@ -84,17 +84,17 @@ export default function LeaveStatsWidget({ employeeId, onViewAll }) {
           {[
             { label: "Approved", val: stats.totalApproved, color: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20" },
             { label: "Pending", val: stats.totalPending, color: "bg-amber-500/10 text-amber-300 border-amber-500/20" },
-            { label: "Used", val: stats.totalDaysUsed, color: "bg-violet-500/10 text-violet-300 border-violet-500/20" },
+            { label: "Used", val: stats.totalDaysUsed, color: "bg-navy-500/10 text-navy-300 border-navy-500/20" },
           ].map((summary) => (
             <div key={summary.label} className={`rounded-lg border px-1 py-1 text-center ${summary.color}`}>
-              <p className="text-xs font-extrabold leading-none">{summary.val}</p>
+              <p className="text-xs font-bold leading-none">{summary.val}</p>
               <p className="text-[9px] font-bold mt-0.5 opacity-90">{summary.label}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="divide-y divide-slate-700/60">
+      <div className="divide-y divide-white/10">
         {recentLeaves.length === 0 ? (
           <div className="px-3 py-4 text-center">
             <p className="text-slate-400 text-xs font-medium">No leave requests yet</p>
@@ -105,11 +105,11 @@ export default function LeaveStatsWidget({ employeeId, onViewAll }) {
             const startDate = new Date(leave.startDate);
             const endDate = new Date(leave.endDate);
             return (
-              <div key={leave._id} className="px-3 py-1.5 hover:bg-slate-700/20 transition-colors">
+              <div key={leave._id} className="px-3 py-1.5 hover:bg-white/5 transition-colors">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0 flex items-start gap-2">
-                    <div className="w-5.5 h-5.5 rounded-lg bg-violet-500/15 text-violet-300 flex items-center justify-center shrink-0 border border-violet-500/20">
-                      <span className="text-[10px] font-extrabold">{startDate.getDate()}</span>
+                    <div className="w-5.5 h-5.5 rounded-lg bg-navy-500/15 text-navy-300 flex items-center justify-center shrink-0 border border-navy-500/20">
+                      <span className="text-[10px] font-bold">{startDate.getDate()}</span>
                     </div>
                     <div className="min-w-0">
                       <p className="text-[11px] font-bold text-slate-200 truncate">{leave.leaveType}</p>
@@ -132,10 +132,10 @@ export default function LeaveStatsWidget({ employeeId, onViewAll }) {
       </div>
 
       {typeof onViewAll === "function" && (
-        <div className="px-3 py-2 border-t border-slate-700/70">
+        <div className="px-3 py-2 border-t border-white/10">
           <button
             onClick={onViewAll}
-            className="w-full text-left text-[10px] font-bold text-violet-300 hover:text-violet-200 transition-colors"
+            className="w-full text-left text-[10px] font-bold text-navy-300 hover:text-navy-200 transition-colors"
           >
             View all leaves →
           </button>

@@ -36,15 +36,15 @@ export default function FieldAgentTrackingPanel({ employee }) {
     const [activeTab, setActiveTab] = useState("tracker"); // "tracker" or "history"
 
     return (
-        <section className="rounded-3xl bg-white/90 border border-slate-200 shadow-sm p-6 backdrop-blur-[1px] space-y-5">
+        <section className="rounded-2xl bg-white/90 border border-slate-200 shadow-sm p-6 backdrop-blur-[1px] space-y-5">
             {/* Header section */}
             <div className="flex items-center justify-between flex-wrap gap-4 border-b border-slate-100 pb-4">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                    <div className="w-10 h-10 rounded-full bg-ocean-50 text-ocean-600 flex items-center justify-center font-bold">
                         🗺️
                     </div>
                     <div>
-                        <h3 className="text-base font-extrabold text-slate-900">Field Duty Tracker</h3>
+                        <h3 className="text-base font-bold text-slate-900">Field Duty Tracker</h3>
                         <p className="text-xs text-slate-500 mt-0.5">Share locations and record visits during your field shift</p>
                     </div>
                 </div>
@@ -53,7 +53,7 @@ export default function FieldAgentTrackingPanel({ employee }) {
                     onClick={toggleTracking}
                     className={`px-5 py-2.5 rounded-xl font-bold text-xs shadow-sm transition-all flex items-center gap-2 ${trackingActive
                         ? "bg-rose-500 hover:bg-rose-600 text-white animate-pulse"
-                        : "bg-blue-600 hover:bg-blue-700 text-white"
+                        : "bg-ocean-600 hover:bg-ocean-700 text-white"
                         }`}
                 >
                     {trackingActive ? (
@@ -73,7 +73,7 @@ export default function FieldAgentTrackingPanel({ employee }) {
                     onClick={() => setActiveTab("tracker")}
                     className={`pb-2 text-xs font-bold transition-all relative cursor-pointer ${
                         activeTab === "tracker"
-                            ? "text-blue-600 border-b-2 border-blue-600 -mb-[3px]"
+                            ? "text-ocean-600 border-b-2 border-ocean-600 -mb-[3px]"
                             : "text-slate-400 hover:text-slate-600"
                     }`}
                 >
@@ -83,7 +83,7 @@ export default function FieldAgentTrackingPanel({ employee }) {
                     onClick={() => setActiveTab("history")}
                     className={`pb-2 text-xs font-bold transition-all relative cursor-pointer ${
                         activeTab === "history"
-                            ? "text-blue-600 border-b-2 border-blue-600 -mb-[3px]"
+                            ? "text-ocean-600 border-b-2 border-ocean-600 -mb-[3px]"
                             : "text-slate-400 hover:text-slate-600"
                     }`}
                 >
@@ -93,7 +93,7 @@ export default function FieldAgentTrackingPanel({ employee }) {
                     onClick={() => setActiveTab("visits")}
                     className={`pb-2 text-xs font-bold transition-all relative cursor-pointer ${
                         activeTab === "visits"
-                            ? "text-blue-600 border-b-2 border-blue-600 -mb-[3px]"
+                            ? "text-ocean-600 border-b-2 border-ocean-600 -mb-[3px]"
                             : "text-slate-400 hover:text-slate-600"
                     }`}
                 >
@@ -126,8 +126,8 @@ export default function FieldAgentTrackingPanel({ employee }) {
                                         <button
                                             key={status.id}
                                             onClick={() => setVisitStatus(status.id)}
-                                            className={`px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all border cursor-pointer ${visitStatus === status.id
-                                                ? "bg-blue-600 border-blue-600 text-white shadow-sm shadow-blue-100"
+                                            className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all border cursor-pointer ${visitStatus === status.id
+                                                ? "bg-ocean-600 border-ocean-600 text-white shadow-sm shadow-ocean-100"
                                                 : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
                                                 }`}
                                         >
@@ -144,7 +144,7 @@ export default function FieldAgentTrackingPanel({ employee }) {
                                     <div className="text-xs text-slate-600 leading-relaxed flex items-center gap-3">
                                         <span className="text-xl">🚗</span>
                                         <div>
-                                            <p className="font-extrabold text-slate-800">Route tracking active</p>
+                                            <p className="font-bold text-slate-800">Route tracking active</p>
                                             <p className="text-slate-500 mt-0.5">Your location coordinates are automatically syncing in the background.</p>
                                         </div>
                                     </div>
@@ -154,7 +154,7 @@ export default function FieldAgentTrackingPanel({ employee }) {
                                     <div className="text-xs text-slate-600 leading-relaxed flex items-center gap-3">
                                         <span className="text-xl">☕</span>
                                         <div>
-                                            <p className="font-extrabold text-slate-800">Currently on break</p>
+                                            <p className="font-bold text-slate-800">Currently on break</p>
                                             <p className="text-slate-500 mt-0.5">Background tracking remains active, marked as on break.</p>
                                         </div>
                                     </div>

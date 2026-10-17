@@ -35,8 +35,8 @@ export default function DocumentsSection({ docs, onFileChange }) {
         <div>
             {/* Section heading */}
             <div className="flex items-center gap-2 mb-4">
-                <span className="w-4 h-0.5 bg-violet-500 rounded" />
-                <p className="text-xs font-extrabold text-violet-600 uppercase tracking-widest">
+                <span className="w-4 h-0.5 bg-navy-500 rounded" />
+                <p className="text-xs font-bold text-navy-600 uppercase tracking-widest">
                     Documents
                 </p>
                 <span className="text-xs text-slate-400 font-normal normal-case">(PDF or DOC only)</span>
@@ -51,8 +51,8 @@ export default function DocumentsSection({ docs, onFileChange }) {
                             htmlFor={`doc-${field}`}
                             className={`flex items-start gap-3 rounded-xl border-2 border-dashed p-3.5 cursor-pointer transition-all
                                 ${file
-                                    ? "border-violet-400 bg-violet-50"
-                                    : "border-slate-200 bg-slate-50 hover:border-violet-300 hover:bg-violet-50/40"
+                                    ? "border-navy-400 bg-navy-50"
+                                    : "border-slate-200 bg-slate-50 hover:border-navy-300 hover:bg-navy-50/40"
                                 }`}
                         >
                             <span className="text-2xl shrink-0">{icon}</span>
@@ -60,7 +60,7 @@ export default function DocumentsSection({ docs, onFileChange }) {
                                 <p className="text-sm font-bold text-slate-800">{label}</p>
                                 <p className="text-[11px] text-slate-400 mt-0.5">
                                     {file ? (
-                                        <span className="text-violet-600 font-semibold truncate block">
+                                        <span className="text-navy-600 font-semibold truncate block">
                                             ✓ {file.name}
                                         </span>
                                     ) : (

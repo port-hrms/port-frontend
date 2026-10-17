@@ -123,34 +123,34 @@ export default function EmployeeAnnouncements() {
     return (
         <div className="max-w-5xl mx-auto space-y-8 animate-in fade-in duration-500 pb-12">
             {/* Header */}
-            <div className="relative overflow-hidden bg-white border border-slate-200 rounded-3xl p-8 sm:p-10 shadow-sm flex items-center justify-between">
+            <div className="panel relative overflow-hidden p-8 sm:p-10 flex items-center justify-between">
                 <div className="relative z-10 max-w-xl">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-xs font-bold uppercase tracking-wider mb-4">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-navy-50 border border-navy-100 text-navy-600 text-xs font-bold uppercase tracking-wider mb-4">
                         <Megaphone className="w-3.5 h-3.5" />
                         Company Connect
                     </div>
-                    <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-navy-900 tracking-tight leading-tight">
                         The Hub
                     </h1>
                     <p className="text-slate-500 mt-2 text-sm sm:text-base font-medium">Stay up to date with company news and share updates with your team.</p>
                 </div>
                 
                 {/* Decorative background element */}
-                <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-linear-to-bl from-indigo-100/50 to-transparent pointer-events-none" />
-                <div className="absolute -right-12 -top-12 w-48 h-48 bg-purple-500/10 blur-3xl rounded-full" />
-                <div className="absolute right-20 -bottom-12 w-32 h-32 bg-indigo-500/10 blur-2xl rounded-full" />
+                <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-linear-to-bl from-navy-100/50 to-transparent pointer-events-none" />
+                <div className="absolute -right-12 -top-12 w-48 h-48 bg-navy-500/10 blur-3xl rounded-full" />
+                <div className="absolute right-20 -bottom-12 w-32 h-32 bg-navy-500/10 blur-2xl rounded-full" />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 
                 {/* Create post form */}
                 <div className="lg:col-span-5 relative order-first lg:sticky lg:top-6 self-start">
-                    <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-3xl p-6 shadow-xl shadow-slate-200/50">
+                    <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-2xl p-6 shadow-xl shadow-slate-200/50">
                 <div className="flex items-center gap-3 mb-4">
                     {currentUser?.avatar ? (
                         <img src={currentUser.avatar} className="w-10 h-10 rounded-full object-cover border border-slate-200" alt="me" />
                     ) : (
-                        <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center text-sm uppercase border border-indigo-200">
+                        <div className="w-10 h-10 rounded-full bg-navy-100 text-navy-700 font-bold flex items-center justify-center text-sm uppercase border border-navy-200">
                             {currentUser?.name?.charAt(0) || "U"}
                         </div>
                     )}
@@ -159,29 +159,29 @@ export default function EmployeeAnnouncements() {
                 <form onSubmit={handleSubmit(onSubmitPost)}>
                     <input
                          {...register("title", { required: true })}
-                         className="w-full bg-transparent border-b border-slate-200 px-2 py-3 text-sm focus:border-indigo-500 outline-none font-bold text-slate-800 placeholder-slate-400 mb-3 transition-colors"
+                         className="w-full bg-transparent border-b border-slate-200 px-2 py-3 text-sm focus:border-navy-500 outline-none font-bold text-slate-800 placeholder-slate-400 mb-3 transition-colors"
                          placeholder="Subject / Title"
                     />
                     <textarea
                         {...register("content", { required: true })}
                         rows={3}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium placeholder-slate-400 resize-none mb-3"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:bg-white focus:ring-2 focus:ring-navy-500/20 focus:border-navy-500 transition-all font-medium placeholder-slate-400 resize-none mb-3"
                         placeholder="What's on your mind?"
                     />
-                    <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 cursor-pointer focus-within:ring-2 focus-within:ring-indigo-500/20 focus-within:border-indigo-500 transition-all text-slate-500">
+                    <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 cursor-pointer focus-within:ring-2 focus-within:ring-navy-500/20 focus-within:border-navy-500 transition-all text-slate-500">
                         <ImageIcon className="w-5 h-5" />
                         <input
                             type="file"
                             accept="image/*"
                             {...register("image")}
-                            className="w-full text-sm font-medium file:mr-4 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer"
+                            className="w-full text-sm font-medium file:mr-4 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-navy-50 file:text-navy-700 hover:file:bg-navy-100 cursor-pointer"
                         />
                     </div>
                     <div className="flex justify-end mt-3">
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold shadow-md shadow-indigo-600/20 transition-all hover:-translate-y-0.5 disabled:opacity-50 disabled:pointer-events-none flex items-center gap-2"
+                            className="px-6 py-2 bg-navy-600 hover:bg-navy-700 text-white rounded-xl text-sm font-bold shadow-md shadow-navy-600/20 transition-all hover:-translate-y-0.5 disabled:opacity-50 disabled:pointer-events-none flex items-center gap-2"
                         >
                             {isSubmitting ? "Posting..." : "Post Update"}
                             {!isSubmitting && <Send className="w-4 h-4" />}
@@ -195,10 +195,10 @@ export default function EmployeeAnnouncements() {
                 <div className="lg:col-span-7 space-y-6">
                 {loading ? (
                     <div className="flex justify-center py-12">
-                        <div className="w-8 h-8 border-4 border-indigo-500/30 border-t-indigo-600 rounded-full animate-spin" />
+                        <div className="w-8 h-8 border-4 border-navy-500/30 border-t-navy-600 rounded-full animate-spin" />
                     </div>
                 ) : announcements.length === 0 ? (
-                    <div className="bg-white border border-slate-200 border-dashed rounded-3xl p-12 text-center text-slate-500">
+                    <div className="bg-white border border-slate-200 border-dashed rounded-2xl p-12 text-center text-slate-500">
                         <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
                             <Megaphone className="w-10 h-10 text-slate-300" />
                         </div>
@@ -225,11 +225,11 @@ export default function EmployeeAnnouncements() {
 
                         {/* Pagination */}
                         {Math.ceil(announcements.length / PAGE_SIZE) > 1 && (
-                            <div className="flex items-center justify-between bg-white border border-slate-200 rounded-2xl px-5 py-3 shadow-sm">
+                            <div className="panel flex items-center justify-between px-5 py-3">
                                 <button
                                     onClick={() => { setCurrentPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                                     disabled={currentPage === 1}
-                                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold text-slate-600 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold text-slate-600 bg-slate-100 hover:bg-navy-50 hover:text-navy-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
                                 >
                                     <ChevronLeft className="w-4 h-4" />
                                     Previous
@@ -242,8 +242,8 @@ export default function EmployeeAnnouncements() {
                                             onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                                             className={`w-8 h-8 rounded-lg text-sm font-bold transition-all duration-200 ${
                                                 page === currentPage
-                                                    ? "bg-indigo-600 text-white shadow-sm shadow-indigo-200"
-                                                    : "text-slate-500 hover:bg-indigo-50 hover:text-indigo-600"
+                                                    ? "bg-navy-600 text-white shadow-sm shadow-navy-200"
+                                                    : "text-slate-500 hover:bg-navy-50 hover:text-navy-600"
                                             }`}
                                         >
                                             {page}
@@ -254,7 +254,7 @@ export default function EmployeeAnnouncements() {
                                 <button
                                     onClick={() => { setCurrentPage(p => Math.min(Math.ceil(announcements.length / PAGE_SIZE), p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                                     disabled={currentPage === Math.ceil(announcements.length / PAGE_SIZE)}
-                                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold text-slate-600 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold text-slate-600 bg-slate-100 hover:bg-navy-50 hover:text-navy-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
                                 >
                                     Next
                                     <ChevronRight className="w-4 h-4" />

@@ -11,7 +11,7 @@ export const ProfileSection = ({ form, handleChange }) => {
             name="name"
             value={form.name}
             onChange={handleChange}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors"
             placeholder="e.g. Dreamonix Solution Pvt. Ltd."
           />
         </div>
@@ -21,7 +21,7 @@ export const ProfileSection = ({ form, handleChange }) => {
             name="gstin"
             value={form.gstin}
             onChange={handleChange}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors"
             placeholder="e.g. 21AAMCB1486G1ZT"
           />
         </div>
@@ -31,7 +31,7 @@ export const ProfileSection = ({ form, handleChange }) => {
             name="state"
             value={form.state}
             onChange={handleChange}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors"
             placeholder="e.g. Odisha"
           />
         </div>
@@ -41,7 +41,7 @@ export const ProfileSection = ({ form, handleChange }) => {
             name="stateCode"
             value={form.stateCode}
             onChange={handleChange}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors"
             placeholder="e.g. 21"
           />
         </div>
@@ -51,7 +51,7 @@ export const ProfileSection = ({ form, handleChange }) => {
             name="contact"
             value={form.contact}
             onChange={handleChange}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors"
             placeholder="e.g. 9348354248, 8117856483"
           />
         </div>
@@ -62,7 +62,7 @@ export const ProfileSection = ({ form, handleChange }) => {
             type="email"
             value={form.email}
             onChange={handleChange}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors"
             placeholder="e.g. dreamonixsolution@gmail.com"
           />
         </div>
@@ -73,7 +73,7 @@ export const ProfileSection = ({ form, handleChange }) => {
             type="email"
             value={form.hrEmail}
             onChange={handleChange}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors"
             placeholder="e.g. hr@dreamonixsolution.com"
           />
         </div>
@@ -84,7 +84,7 @@ export const ProfileSection = ({ form, handleChange }) => {
             value={form.address}
             onChange={handleChange}
             rows={2}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors resize-none"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors resize-none"
             placeholder="Plot No-222, District Center, Bhubaneswar - 751001"
           />
         </div>

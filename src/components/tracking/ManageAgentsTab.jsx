@@ -4,10 +4,10 @@ import { getAvatarColor } from "./constants";
 export default function ManageAgentsTab({ fieldAgents, nonFieldAgents, onToggleFieldAgent }) {
     return (
         <div className="space-y-5">
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+            <div className="panel overflow-hidden">
                 <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
                     <div>
-                        <h3 className="font-extrabold text-slate-900">✅ Current Field Agents</h3>
+                        <h3 className="font-bold text-slate-900">✅ Current Field Agents</h3>
                         <p className="text-xs text-slate-400 mt-0.5">{fieldAgents.length} employees marked as field agents</p>
                     </div>
                 </div>
@@ -22,9 +22,9 @@ export default function ManageAgentsTab({ fieldAgents, nonFieldAgents, onToggleF
                     <div className="overflow-x-auto">
                         <table className="w-full min-w-[600px]">
                             <thead>
-                                <tr className="bg-slate-50 border-b border-slate-100">
+                                <tr className="bg-slate-50/80 border-b border-slate-100">
                                     {["Employee", "Department", "Designation", "Action"].map((header) => (
-                                        <th key={header} className="px-5 py-3.5 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">{header}</th>
+                                        <th key={header} className="px-5 py-3.5 text-left uppercase text-[11px] font-semibold text-slate-500 tracking-wider">{header}</th>
                                     ))}
                                 </tr>
                             </thead>
@@ -60,9 +60,9 @@ export default function ManageAgentsTab({ fieldAgents, nonFieldAgents, onToggleF
                 )}
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+            <div className="panel overflow-hidden">
                 <div className="px-6 py-4 border-b border-slate-100">
-                    <h3 className="font-extrabold text-slate-900">➕ Add Field Agents</h3>
+                    <h3 className="font-bold text-slate-900">➕ Add Field Agents</h3>
                     <p className="text-xs text-slate-400 mt-0.5">Click "Mark as Agent" to add an employee to tracking</p>
                 </div>
 
@@ -74,9 +74,9 @@ export default function ManageAgentsTab({ fieldAgents, nonFieldAgents, onToggleF
                     <div className="overflow-x-auto">
                         <table className="w-full min-w-[600px]">
                             <thead>
-                                <tr className="bg-slate-50 border-b border-slate-100">
+                                <tr className="bg-slate-50/80 border-b border-slate-100">
                                     {["Employee", "Department", "Designation", "Action"].map((header) => (
-                                        <th key={header} className="px-5 py-3.5 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">{header}</th>
+                                        <th key={header} className="px-5 py-3.5 text-left uppercase text-[11px] font-semibold text-slate-500 tracking-wider">{header}</th>
                                     ))}
                                 </tr>
                             </thead>

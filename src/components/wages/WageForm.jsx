@@ -4,7 +4,7 @@ import { Briefcase, Clock, CalendarDays, IndianRupee, Plus } from "lucide-react"
 
 const WORKER_TYPES = ["Daily Worker", "Hourly Worker", "Freelancer"];
 
-const inputCls = "w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all";
+const inputCls = "w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20 transition-all";
 const labelCls = "text-xs font-bold text-slate-600 uppercase tracking-wider flex items-center gap-1.5 mb-1.5";
 
 const rateLabel = (workerType) =>
@@ -24,11 +24,11 @@ export default function WageForm({ form, setForm, workers, submitting, onSubmit 
     const liveTotal = calcTotal(form);
 
     return (
-        <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+        <div className="panel overflow-hidden">
             {/* Header */}
-            <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-indigo-50 to-violet-50">
-                <h2 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                    <Plus className="w-4 h-4 text-indigo-500" /> New Wage Entry
+            <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-ocean-50 to-navy-50">
+                <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <Plus className="w-4 h-4 text-navy-500" /> New Wage Entry
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">Select a registered worker and enter details</p>
             </div>
@@ -53,14 +53,14 @@ export default function WageForm({ form, setForm, workers, submitting, onSubmit 
 
                 {/* Worker Type */}
                 <div>
-                    <label className={labelCls}><Briefcase className="w-3.5 h-3.5 text-indigo-500" /> Worker Type</label>
+                    <label className={labelCls}><Briefcase className="w-3.5 h-3.5 text-navy-500" /> Worker Type</label>
                     <div className="grid grid-cols-3 gap-2">
                         {WORKER_TYPES.map(type => (
                             <button key={type} type="button"
                                 onClick={() => setForm(f => ({ ...f, workerType: type, workingDays: "", workingHours: "" }))}
                                 className={`py-2 px-1 rounded-xl text-xs font-bold border-2 transition-all ${
                                     form.workerType === type
-                                        ? "border-indigo-500 bg-indigo-50 text-indigo-700"
+                                        ? "border-navy-500 bg-navy-50 text-navy-700"
                                         : "border-slate-200 bg-white text-slate-500 hover:border-slate-300"
                                 }`}>
                                 {type.split(" ")[0]}
@@ -71,7 +71,7 @@ export default function WageForm({ form, setForm, workers, submitting, onSubmit 
 
                 {/* Date Range */}
                 <div>
-                    <label className={labelCls}><CalendarDays className="w-3.5 h-3.5 text-indigo-500" /> Work Period *</label>
+                    <label className={labelCls}><CalendarDays className="w-3.5 h-3.5 text-navy-500" /> Work Period *</label>
                     <div className="grid grid-cols-2 gap-2">
                         <div>
                             <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">From</p>
@@ -91,7 +91,7 @@ export default function WageForm({ form, setForm, workers, submitting, onSubmit 
                 {/* Working Days — Daily only */}
                 {form.workerType === "Daily Worker" && (
                     <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-                        <label className={labelCls}><CalendarDays className="w-3.5 h-3.5 text-indigo-500" /> Working Days *</label>
+                        <label className={labelCls}><CalendarDays className="w-3.5 h-3.5 text-navy-500" /> Working Days *</label>
                         <input type="number" required min="0" step="1" placeholder="e.g. 26"
                             value={form.workingDays}
                             onChange={e => setForm(f => ({ ...f, workingDays: e.target.value }))}
@@ -102,7 +102,7 @@ export default function WageForm({ form, setForm, workers, submitting, onSubmit 
                 {/* Working Hours — Hourly only */}
                 {form.workerType === "Hourly Worker" && (
                     <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-                        <label className={labelCls}><Clock className="w-3.5 h-3.5 text-indigo-500" /> Working Hours *</label>
+                        <label className={labelCls}><Clock className="w-3.5 h-3.5 text-navy-500" /> Working Hours *</label>
                         <input type="number" required min="0" step="0.5" placeholder="e.g. 40"
                             value={form.workingHours}
                             onChange={e => setForm(f => ({ ...f, workingHours: e.target.value }))}
@@ -112,7 +112,7 @@ export default function WageForm({ form, setForm, workers, submitting, onSubmit 
 
                 {/* Rate Amount */}
                 <div>
-                    <label className={labelCls}><IndianRupee className="w-3.5 h-3.5 text-indigo-500" /> {rateLabel(form.workerType)} *</label>
+                    <label className={labelCls}><IndianRupee className="w-3.5 h-3.5 text-navy-500" /> {rateLabel(form.workerType)} *</label>
                     <input type="number" required min="1" step="0.01" placeholder="0.00"
                         value={form.rateAmount}
                         onChange={e => setForm(f => ({ ...f, rateAmount: e.target.value }))}
@@ -120,10 +120,10 @@ export default function WageForm({ form, setForm, workers, submitting, onSubmit 
                 </div>
 
                 {/* Live Total */}
-                <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-4 border border-indigo-100 flex items-center justify-between">
+                <div className="bg-gradient-to-br from-ocean-50 to-navy-50 rounded-2xl p-4 border border-navy-100 flex items-center justify-between">
                     <div>
-                        <p className="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-0.5">Total Payable</p>
-                        <p className="text-2xl font-black text-slate-900">₹{liveTotal.toLocaleString("en-IN")}</p>
+                        <p className="text-xs font-bold text-navy-500 uppercase tracking-wider mb-0.5">Total Payable</p>
+                        <p className="text-2xl font-bold text-navy-900">₹{liveTotal.toLocaleString("en-IN")}</p>
                     </div>
                     <p className="text-xs text-slate-400">
                         {form.workerType === "Daily Worker"  && `${form.rateAmount || 0} × ${form.workingDays || 0} days`}
@@ -134,7 +134,7 @@ export default function WageForm({ form, setForm, workers, submitting, onSubmit 
 
                 {/* Submit */}
                 <button type="submit" disabled={submitting}
-                    className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 disabled:opacity-50 text-white font-extrabold shadow-lg shadow-indigo-200 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+                    className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-ocean-600 to-navy-700 hover:from-ocean-700 hover:to-navy-800 disabled:opacity-50 text-white font-bold shadow-lg shadow-navy-200 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
                     {submitting
                         ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" /> Saving...</>
                         : <><Plus className="w-4 h-4" /> Create Wage Record</>}

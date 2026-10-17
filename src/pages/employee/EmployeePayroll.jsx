@@ -21,7 +21,7 @@ const getNet = (payroll) => getGross(payroll) - getDeductions(payroll);
 
 const statusClasses = {
   Paid: "bg-emerald-100 text-emerald-700",
-  Processed: "bg-blue-100 text-blue-700",
+  Processed: "bg-ocean-100 text-ocean-700",
   Hold: "bg-amber-100 text-amber-700",
   Draft: "bg-slate-100 text-slate-600",
 };
@@ -76,33 +76,33 @@ export default function EmployeePayroll() {
   }, [selectedMonth]);
 
   return (
-    <div className="relative overflow-hidden rounded-3xl pb-8">
+    <div className="relative overflow-hidden rounded-2xl pb-8">
       <div className="absolute inset-0 bg-[url('/Payroll.png')] bg-cover bg-center" />
       <div className="absolute inset-0 bg-white/30" />
 
       <div className="relative z-10 space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight p-1">My Payroll</h2>
-          <p className="text-sm text-slate-400 mt-0.5">View your payslips and download PDF</p>
+          <h2 className="text-2xl font-bold text-navy-900 tracking-tight p-1">My Payroll</h2>
+          <p className="text-sm text-slate-500 mt-0.5">View your payslips and download PDF</p>
         </div>
         <input
           type="month"
           value={selectedMonth}
           onChange={(event) => setSelectedMonth(event.target.value)}
-          className="bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
+          className="panel px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer focus:border-ocean-400 focus:ring-2 focus:ring-ocean-100 transition-colors"
         />
       </div>
 
       <section className="bg-white/88 rounded-2xl border border-slate-100 shadow-sm overflow-hidden backdrop-blur-[1px]">
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-          <h3 className="font-extrabold text-slate-900">Payslips</h3>
+          <h3 className="font-bold text-slate-900">Payslips</h3>
           <span className="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl">{monthLabel}</span>
         </div>
 
         {loading ? (
           <div className="flex flex-col items-center justify-center py-12 text-slate-400 gap-3">
-            <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+            <div className="w-10 h-10 border-4 border-ocean-200 border-t-ocean-600 rounded-full animate-spin" />
             <p className="text-sm font-medium">Loading payroll...</p>
           </div>
         ) : records.length === 0 ? (
@@ -125,7 +125,7 @@ export default function EmployeePayroll() {
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                     <div>
                       <div className="flex items-center gap-3 flex-wrap">
-                        <p className="text-sm font-extrabold text-slate-900">{MONTHS[payroll.month - 1]} {payroll.year}</p>
+                        <p className="text-sm font-bold text-slate-900">{MONTHS[payroll.month - 1]} {payroll.year}</p>
                         <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${statusClass}`}>{status}</span>
                       </div>
                       <p className="text-xs text-slate-500 mt-1">
@@ -135,7 +135,7 @@ export default function EmployeePayroll() {
 
                     <button
                       onClick={() => handleDownloadPayslip(payroll)}
-                      className="w-full lg:w-auto px-4 py-2.5 rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-bold shadow-md shadow-blue-200 transition-all"
+                      className="w-full lg:w-auto px-4 py-2.5 rounded-xl bg-linear-to-r from-ocean-600 to-navy-600 hover:from-ocean-700 hover:to-navy-700 text-white text-sm font-bold shadow-md shadow-ocean-200 transition-all"
                     >
                       Download PDF
                     </button>

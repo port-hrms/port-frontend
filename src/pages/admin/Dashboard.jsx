@@ -13,10 +13,10 @@ import OnLeaveTodayCard from "@/components/dashboard/OnLeaveTodayCard";
 import PerformanceGrades from "@/components/dashboard/PerformanceGrades";
 import RecentEmployees from "@/components/dashboard/RecentEmployees";
 import RecentLeaveRequests from "@/components/dashboard/RecentLeaveRequests";
-import TodayDateCard from "@/components/dashboard/TodayDateCard";
 import WelcomeBanner from "@/components/dashboard/WelcomeBanner";
 import NewsFeedPanel from "@/components/dashboard/NewsFeedPanel";
-import { FaBuilding, FaFileInvoiceDollar, FaFileSignature, FaMoneyBillWave, FaWallet } from "react-icons/fa";
+import { SectionHeader, StatCard } from "@/components/dashboard/StatCard";
+import { BadgeIndianRupee, Building2, FileSignature, FileText, Hourglass } from "lucide-react";
 
 export default function Dashboard({ setActiveTab }) {
     const [stats, setStats] = useState(null);
@@ -55,7 +55,7 @@ export default function Dashboard({ setActiveTab }) {
     if (loading) {
         return (
             <div className="flex flex-col items-center justify-center h-full text-slate-400 select-none">
-                <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4" />
+                <div className="w-12 h-12 border-4 border-ocean-100 border-t-ocean-600 rounded-full animate-spin mb-4" />
                 <p className="text-sm font-medium">Loading dashboard...</p>
             </div>
         );
@@ -65,8 +65,8 @@ export default function Dashboard({ setActiveTab }) {
         return (
             <div className="flex flex-col items-center justify-center h-full text-slate-400 select-none">
                 <div className="text-5xl mb-4 opacity-60">📊</div>
-                <h2 className="text-xl font-extrabold text-slate-700 mb-1">No Data Available</h2>
-                <p className="text-sm text-slate-400">Unable to load dashboard statistics.</p>
+                <h2 className="text-xl font-bold text-slate-700 mb-1">No Data Available</h2>
+                <p className="text-sm text-slate-500">Unable to load dashboard statistics.</p>
             </div>
         );
     }
@@ -77,37 +77,27 @@ export default function Dashboard({ setActiveTab }) {
         <div className="space-y-6">
             <WelcomeBanner />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <TodayDateCard />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <OnLeaveTodayCard requests={recentLeaveRequests} activeCount={leaves?.activeToday || 0} />
                 <BirthdayTodayCard employees={birthdayEmployees} />
             </div>
 
-            <KPICards employees={employees} attendance={attendance} payroll={payroll} performance={performance} leaves={leaves} />
+            <div>
+                <SectionHeader title="Workforce at a Glance" subtitle="Key people metrics for this month" />
+                <KPICards employees={employees} attendance={attendance} payroll={payroll} performance={performance} leaves={leaves} />
+            </div>
 
             {billing && (
-              <div>
-                <h3 className="text-base font-extrabold text-slate-800 mb-3">Client & Billing Overview</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-4">
-                  {[
-                    { icon: <FaBuilding className="text-lg" />, label: "Total Clients", value: billing.totalClients, bg: "bg-blue-500/10", color: "text-blue-600" },
-                    { icon: <FaFileSignature className="text-lg" />, label: "Total Quotations", value: billing.totalQuotations, bg: "bg-violet-500/10", color: "text-violet-600" },
-                    { icon: <FaFileInvoiceDollar className="text-lg" />, label: "Total Invoices", value: billing.totalInvoices, bg: "bg-indigo-500/10", color: "text-indigo-600" },
-                    { icon: <FaWallet className="text-lg" />, label: "Pending Payments", value: "₹" + (billing.pendingPayments || 0).toLocaleString("en-IN"), bg: "bg-amber-500/10", color: "text-amber-600" },
-                    { icon: <FaMoneyBillWave className="text-lg" />, label: "Revenue Generated", value: "₹" + (billing.revenueGenerated || 0).toLocaleString("en-IN"), bg: "bg-emerald-500/10", color: "text-emerald-600" },
-                  ].map((card) => (
-                    <div key={card.label} className="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 flex items-start gap-3 hover:shadow-md transition-shadow duration-300 group">
-                      <div className={`w-10 h-10 rounded-xl ${card.bg} flex items-center justify-center shrink-0 ${card.color} group-hover:scale-110 transition-transform duration-300`}>
-                        {card.icon}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{card.label}</p>
-                        <p className="text-lg font-extrabold text-slate-900 mt-0.5 truncate">{card.value}</p>
-                      </div>
+                <div>
+                    <SectionHeader title="Client & Billing Overview" subtitle="Clients, documents and collections" />
+                    <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-4">
+                        <StatCard compact icon={Building2} label="Total Clients" value={billing.totalClients} />
+                        <StatCard compact icon={FileSignature} label="Quotations" value={billing.totalQuotations} />
+                        <StatCard compact icon={FileText} label="Invoices" value={billing.totalInvoices} />
+                        <StatCard compact icon={Hourglass} label="Pending Payments" value={"₹" + (billing.pendingPayments || 0).toLocaleString("en-IN")} />
+                        <StatCard compact icon={BadgeIndianRupee} label="Revenue" value={"₹" + (billing.revenueGenerated || 0).toLocaleString("en-IN")} />
                     </div>
-                  ))}
                 </div>
-              </div>
             )}
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

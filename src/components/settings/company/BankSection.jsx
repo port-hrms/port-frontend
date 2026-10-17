@@ -11,7 +11,7 @@ export const BankSection = ({ bank, handleBankChange }) => {
             name="holder"
             value={bank.holder}
             onChange={handleBankChange}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors"
             placeholder="e.g. Dreamonix Solution Pvt. Ltd."
           />
         </div>
@@ -21,7 +21,7 @@ export const BankSection = ({ bank, handleBankChange }) => {
             name="bank"
             value={bank.bank}
             onChange={handleBankChange}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors"
             placeholder="e.g. HDFC Bank"
           />
         </div>
@@ -31,7 +31,7 @@ export const BankSection = ({ bank, handleBankChange }) => {
             name="account"
             value={bank.account}
             onChange={handleBankChange}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors"
             placeholder="e.g. 50200087663786"
           />
         </div>
@@ -41,7 +41,7 @@ export const BankSection = ({ bank, handleBankChange }) => {
             name="branch"
             value={bank.branch}
             onChange={handleBankChange}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors"
             placeholder="e.g. Infocity"
           />
         </div>
@@ -51,7 +51,7 @@ export const BankSection = ({ bank, handleBankChange }) => {
             name="ifsc"
             value={bank.ifsc}
             onChange={handleBankChange}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors"
             placeholder="e.g. HDFC0004013"
           />
         </div>

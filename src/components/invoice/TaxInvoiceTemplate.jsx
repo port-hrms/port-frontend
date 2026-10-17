@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import logo from "@/assets/logo.png";
+import { BrandIcon } from "@/components/BrandMark";
 import signature from "@/assets/signature.png";
 import { numberToWords } from "@/utils/numberUtils";
 import { config } from "@/config";
@@ -23,7 +23,7 @@ const defaultCompanyInfo = {
 
 const TaxInvoiceTemplate = forwardRef(({ invoice, companyInfo: propCompanyInfo }, ref) => {
   const companyInfo = propCompanyInfo || defaultCompanyInfo;
-  const logoSrc = companyInfo.logo || logo;
+  const logoSrc = companyInfo.logo || "";
   const signatureSrc = companyInfo.signature || signature;
 
   const client = invoice?.clientId || {};
@@ -69,7 +69,9 @@ const TaxInvoiceTemplate = forwardRef(({ invoice, companyInfo: propCompanyInfo }
 
         <div className="flex border-b-2 border-black">
           <div className="w-1/2 p-3 border-r border-black flex gap-3 items-start">
-            <img src={logoSrc} alt="Logo" className="w-28 h-auto object-contain mt-1" />
+            {logoSrc
+              ? <img src={logoSrc} alt="Logo" className="w-28 h-auto object-contain mt-1" />
+              : <BrandIcon className="w-12 h-12 mt-1 shrink-0" />}
             <div className="space-y-0.5 text-[9px] leading-tight flex-1">
               <p className="font-bold text-[11px] uppercase">{companyInfo.name}</p>
               <p className="whitespace-pre-line">{companyInfo.address}</p>

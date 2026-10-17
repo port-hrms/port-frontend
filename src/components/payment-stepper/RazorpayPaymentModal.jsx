@@ -22,11 +22,11 @@ function ReviewScreen({ payroll, net, totalDeductions, loading, paymentError, on
         <div className="space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-400">
             {/* Employee Card */}
             <div className="bg-slate-50 rounded-2xl p-5 border border-slate-100 flex items-center gap-4">
-                <div className="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-lg font-extrabold shrink-0">
+                <div className="w-14 h-14 bg-navy-100 text-navy-600 rounded-full flex items-center justify-center text-lg font-bold shrink-0">
                     {payroll.employee?.firstName?.[0]}{payroll.employee?.lastName?.[0]}
                 </div>
                 <div>
-                    <h3 className="text-lg font-extrabold text-slate-900">
+                    <h3 className="text-lg font-bold text-navy-900">
                         {payroll.employee?.firstName} {payroll.employee?.lastName}
                     </h3>
                     <p className="text-sm text-slate-500">
@@ -36,12 +36,12 @@ function ReviewScreen({ payroll, net, totalDeductions, loading, paymentError, on
             </div>
 
             {/* Salary Breakdown */}
-            <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+            <div className="panel overflow-hidden">
                 <div className="px-5 py-3.5 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
                     <h4 className="font-bold text-slate-700 flex items-center gap-2 text-sm">
-                        <FileText className="w-4 h-4 text-indigo-500" /> Salary Breakdown
+                        <FileText className="w-4 h-4 text-navy-500" /> Salary Breakdown
                     </h4>
-                    <span className="text-[10px] font-bold bg-indigo-50 text-indigo-700 px-2 py-1 rounded-full border border-indigo-100 flex items-center gap-1">
+                    <span className="text-[10px] font-bold bg-navy-50 text-navy-700 px-2 py-1 rounded-full border border-navy-100 flex items-center gap-1">
                         <ShieldCheck className="w-3 h-3" /> Razorpay Secure
                     </span>
                 </div>
@@ -67,7 +67,7 @@ function ReviewScreen({ payroll, net, totalDeductions, loading, paymentError, on
                     <hr className="border-slate-100" />
                     <div className="flex justify-between items-center">
                         <span className="font-bold text-slate-900">Net Payable</span>
-                        <span className="text-xl font-black text-slate-900">₹{net.toLocaleString("en-IN")}</span>
+                        <span className="text-xl font-bold text-navy-900">₹{net.toLocaleString("en-IN")}</span>
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@ function ReviewScreen({ payroll, net, totalDeductions, loading, paymentError, on
             <button
                 onClick={onPay}
                 disabled={loading}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.99] text-white font-extrabold py-4 rounded-2xl shadow-lg shadow-indigo-100 transition-all flex items-center justify-center gap-2.5"
+                className="w-full bg-navy-600 hover:bg-navy-700 disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.99] text-white font-bold py-4 rounded-2xl shadow-lg shadow-navy-100 transition-all flex items-center justify-center gap-2.5"
             >
                 <CreditCard className="w-5 h-5" />
                 Pay ₹{net.toLocaleString("en-IN")} via Razorpay
@@ -110,12 +110,12 @@ function LoadingScreen({ statusText }) {
     return (
         <div className="py-16 flex flex-col items-center justify-center text-center animate-in fade-in duration-300">
             <div className="relative mb-6">
-                <div className="w-20 h-20 border-4 border-indigo-50 border-t-indigo-600 rounded-full animate-spin" />
+                <div className="w-20 h-20 border-4 border-navy-50 border-t-navy-600 rounded-full animate-spin" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <Landmark className="w-7 h-7 text-indigo-600 animate-pulse" />
+                    <Landmark className="w-7 h-7 text-navy-600 animate-pulse" />
                 </div>
             </div>
-            <h3 className="text-xl font-black text-slate-900 mb-1">Please Wait</h3>
+            <h3 className="text-xl font-bold text-navy-900 mb-1">Please Wait</h3>
             <p className="text-slate-500 text-sm">{statusText}</p>
         </div>
     );
@@ -127,7 +127,7 @@ function SuccessScreen({ net, paymentResult, payroll, onDone }) {
             <div className="w-20 h-20 bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center mb-5 shadow-lg shadow-emerald-100/50">
                 <CheckCircle2 className="w-10 h-10" />
             </div>
-            <h3 className="text-2xl font-black text-slate-900 mb-1">Transfer Successful!</h3>
+            <h3 className="text-2xl font-bold text-navy-900 mb-1">Transfer Successful!</h3>
             <p className="text-slate-500 mb-6 text-sm">
                 ₹{net.toLocaleString("en-IN")} disbursed to {payroll.employee?.firstName} {payroll.employee?.lastName}
             </p>
@@ -146,12 +146,12 @@ function SuccessScreen({ net, paymentResult, payroll, onDone }) {
                 </div>
                 <div className="flex justify-between">
                     <span className="text-slate-500">Gateway</span>
-                    <span className="font-bold text-indigo-600">Razorpay</span>
+                    <span className="font-bold text-navy-600">Razorpay</span>
                 </div>
             </div>
             <button
                 onClick={onDone}
-                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl transition-all"
+                className="w-full bg-navy-800 hover:bg-navy-700 text-white font-bold py-3.5 rounded-xl transition-all"
             >
                 Done &amp; Close
             </button>
@@ -263,7 +263,7 @@ export default function RazorpayPaymentModal({ payroll, onClose, onSuccess, apiP
                     },
                 },
 
-                theme: { color: "#4F46E5" },
+                theme: { color: "#0b3b5e" },
 
                 modal: {
                     ondismiss: function () {
@@ -310,12 +310,12 @@ export default function RazorpayPaymentModal({ payroll, onClose, onSuccess, apiP
                 {/* Header */}
                 <div className="px-7 py-5 border-b border-slate-100 flex items-center justify-between shrink-0">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center shadow-md shadow-indigo-200">
+                        <div className="w-10 h-10 bg-navy-600 text-white rounded-xl flex items-center justify-center shadow-md shadow-navy-200">
                             <CreditCard className="w-5 h-5" />
                         </div>
                         <div>
-                            <h2 className="text-lg font-extrabold text-slate-900">Razorpay Gateway</h2>
-                            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Secure Salary Disbursal</p>
+                            <h2 className="text-lg font-bold text-navy-900">Razorpay Gateway</h2>
+                            <p className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">Secure Salary Disbursal</p>
                         </div>
                     </div>
                     {!loading && !paymentResult && (

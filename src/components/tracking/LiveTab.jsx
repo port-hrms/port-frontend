@@ -5,15 +5,15 @@ import { getAvatarColor, STATUS_ICONS, STATUS_STYLES, timeAgo } from "./constant
 export default function LiveTab({ liveAgents, loading, selectedAgent, setSelectedAgent }) {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+            <div className="panel overflow-hidden">
                 <div className="px-5 py-4 border-b border-slate-100">
-                    <h3 className="font-extrabold text-slate-900">Field Agents</h3>
+                    <h3 className="font-bold text-slate-900">Field Agents</h3>
                     <p className="text-xs text-slate-400 mt-0.5">{liveAgents.length} agents · auto-refreshes every 30s</p>
                 </div>
 
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-12 text-slate-400">
-                        <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-3" />
+                        <div className="w-8 h-8 border-4 border-ocean-200 border-t-ocean-600 rounded-full animate-spin mb-3" />
                         <p className="text-sm">Loading agents...</p>
                     </div>
                 ) : liveAgents.length === 0 ? (
@@ -32,8 +32,8 @@ export default function LiveTab({ liveAgents, loading, selectedAgent, setSelecte
                                 <button
                                     key={agentData.agent.employeeId}
                                     onClick={() => setSelectedAgent(isSelected ? null : agentData)}
-                                    className={`w-full text-left px-5 py-4 transition-colors hover:bg-blue-50/50
-                        ${isSelected ? "bg-blue-50 border-l-4 border-blue-500" : ""}`}
+                                    className={`w-full text-left px-5 py-4 transition-colors hover:bg-ocean-50/50
+                        ${isSelected ? "bg-ocean-50 border-l-4 border-ocean-500" : ""}`}
                                 >
                                     <div className="flex items-center gap-3">
                                         <div className="relative shrink-0">
@@ -86,7 +86,7 @@ export default function LiveTab({ liveAgents, loading, selectedAgent, setSelecte
                 )}
             </div>
 
-            <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden" style={{ minHeight: "520px" }}>
+            <div className="panel lg:col-span-2 overflow-hidden" style={{ minHeight: "520px" }}>
                 {liveAgents.length === 0 && !loading ? (
                     <div className="flex flex-col items-center justify-center h-full text-slate-400 p-8 text-center">
                         <div className="text-6xl mb-4">🗺️</div>

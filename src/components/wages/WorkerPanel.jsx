@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 const EMPTY = { fullName: "", phone: "", bank: { name: "", account: "", ifsc: "" } };
 
 function getAvatarBg(name = "") {
-    const c = ["bg-violet-500","bg-blue-500","bg-emerald-500","bg-rose-500","bg-amber-500","bg-cyan-500"];
+    const c = ["bg-navy-500","bg-ocean-500","bg-emerald-500","bg-rose-500","bg-amber-500","bg-cyan-500"];
     return c[name.charCodeAt(0) % c.length] || "bg-slate-400";
 }
 
@@ -47,20 +47,20 @@ export default function WorkerPanel({ workers, onWorkerCreated, onWorkerDeleted 
         } catch { toast.error("Failed to remove worker"); }
     };
 
-    const inputCls = "w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all";
+    const inputCls = "w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20 transition-all";
     const labelCls = "text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 block";
 
     return (
-        <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+        <div className="panel overflow-hidden">
             {/* Header */}
             <button
                 type="button"
                 onClick={() => setOpen(o => !o)}
-                className="w-full px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-violet-50 to-indigo-50 hover:from-violet-100 hover:to-indigo-100 transition-colors"
+                className="w-full px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-ocean-50 to-navy-50 hover:from-navy-100 hover:to-navy-100 transition-colors"
             >
                 <div className="flex items-center gap-2">
-                    <UserPlus className="w-5 h-5 text-indigo-500" />
-                    <span className="font-extrabold text-slate-900">Register Worker</span>
+                    <UserPlus className="w-5 h-5 text-navy-500" />
+                    <span className="font-bold text-slate-900">Register Worker</span>
                 </div>
                 {open ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
             </button>
@@ -95,7 +95,7 @@ export default function WorkerPanel({ workers, onWorkerCreated, onWorkerDeleted 
                     </div>
 
                     <button type="submit" disabled={saving}
-                        className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-bold text-sm shadow-md shadow-indigo-200 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+                        className="w-full py-3 rounded-xl bg-navy-600 hover:bg-navy-700 disabled:opacity-50 text-white font-bold text-sm shadow-md shadow-navy-200 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
                         {saving ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" /> Saving...</> : <><UserPlus className="w-4 h-4" /> Register Worker</>}
                     </button>
                 </form>

@@ -21,7 +21,7 @@ const AnnouncementItem = ({
   // const serverUrl = API.defaults.baseURL.replace("/api", "");
 
   return (
-    <div className="group bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 relative overflow-hidden">
+    <div className="panel group p-6 sm:p-8 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 relative overflow-hidden">
       {post.isPinned && (
         <div className="absolute top-0 right-0 bg-amber-500 text-white text-[10px] font-bold uppercase tracking-widest py-1 px-3 rounded-bl-xl shadow-sm flex items-center gap-1">
           <Pin className="w-3 h-3 fill-white" /> Pinned
@@ -37,7 +37,7 @@ const AnnouncementItem = ({
               className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
             />
           ) : (
-            <div className="w-12 h-12 rounded-full bg-linear-to-br from-indigo-100 to-purple-100 text-indigo-700 font-bold flex items-center justify-center border-2 border-white shadow-sm text-lg uppercase">
+            <div className="w-12 h-12 rounded-full bg-linear-to-br from-ocean-100 to-navy-100 text-navy-700 font-bold flex items-center justify-center border-2 border-white shadow-sm text-lg uppercase">
               {post.author?.name?.charAt(0) || <User className="w-5 h-5" />}
             </div>
           )}
@@ -46,7 +46,7 @@ const AnnouncementItem = ({
               {post.author?.name || "Unknown Author"}
             </h4>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-[11px] font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full capitalize">
+              <span className="text-[11px] font-semibold text-navy-600 bg-navy-50 px-2 py-0.5 rounded-full capitalize">
                 {post.author?.role}
               </span>
               <span className="text-[11px] font-semibold text-slate-400 flex items-center gap-1">
@@ -160,7 +160,7 @@ const AnnouncementItem = ({
             onSubmit={(e) => handleCommentSubmit(e, post._id)}
             className="flex gap-3 pt-2 relative"
           >
-            <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0 text-xs uppercase">
+            <div className="w-8 h-8 rounded-full bg-navy-100 text-navy-700 font-bold flex items-center justify-center shrink-0 text-xs uppercase">
               Me
             </div>
             <input
@@ -170,12 +170,12 @@ const AnnouncementItem = ({
                 setCommentData({ ...commentData, [post._id]: e.target.value })
               }
               placeholder="Write a comment..."
-              className="flex-1 bg-white border border-slate-200 rounded-full px-4 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-400 pr-10"
+              className="flex-1 bg-white border border-slate-200 rounded-full px-4 text-sm focus:ring-2 focus:ring-navy-500/20 focus:border-navy-500 transition-all placeholder:text-slate-400 pr-10"
             />
             <button
               type="submit"
               disabled={!commentData[post._id]?.trim()}
-              className="absolute right-3 top-1/2 -translate-y-1/2 mt-1 text-indigo-500 hover:text-indigo-600 disabled:opacity-50 transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 mt-1 text-navy-500 hover:text-navy-600 disabled:opacity-50 transition-colors"
             >
               <Send className="w-4 h-4" />
             </button>

@@ -4,10 +4,7 @@
 
 import { config } from "../../config";
 
-const AVATAR_COLORS = [
-    "bg-blue-500", "bg-violet-500", "bg-emerald-500",
-    "bg-amber-500", "bg-pink-500", "bg-cyan-500", "bg-rose-500",
-];
+const AVATAR_COLORS = ["bg-navy-700", "bg-ocean-600", "bg-navy-600", "bg-ocean-500", "bg-port-teal", "bg-navy-500"];
 const getAvatarColor = (name = "") =>
     AVATAR_COLORS[name.charCodeAt(0) % AVATAR_COLORS.length];
 
@@ -39,18 +36,18 @@ export default function EmployeeDetail({ employee, onClose, onEdit }) {
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* ── Hero Header ── */}
-                <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-t-2xl px-7 py-8 text-center relative">
+                <div className="bg-gradient-to-br from-navy-900 to-navy-700 rounded-t-2xl px-7 py-8 text-center relative">
                     <button
                         onClick={onClose}
                         className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-base"
                     >✕</button>
 
                     {/* Avatar */}
-                    <div className={`w-16 h-16 rounded-full ${getAvatarColor(employee.firstName)} text-white text-2xl font-extrabold flex items-center justify-center mx-auto mb-3 ring-4 ring-white/20`}>
+                    <div className={`w-16 h-16 rounded-full ${getAvatarColor(employee.firstName)} text-white text-2xl font-bold flex items-center justify-center mx-auto mb-3 ring-4 ring-white/20`}>
                         {initials}
                     </div>
-                    <h2 className="text-xl font-extrabold text-white">{fullName}</h2>
-                    <p className="text-sm text-slate-400 mt-1">{employee.designation} · {employee.department}</p>
+                    <h2 className="text-xl font-bold text-white">{fullName}</h2>
+                    <p className="text-sm text-slate-500 mt-1">{employee.designation} · {employee.department}</p>
                     <span className={`inline-block mt-3 px-4 py-1 rounded-full text-xs font-bold ${STATUS_STYLES[employee.status]}`}>
                         {employee.status}
                     </span>
@@ -61,8 +58,8 @@ export default function EmployeeDetail({ employee, onClose, onEdit }) {
 
                     {/* Personal */}
                     <div>
-                        <h3 className="text-xs font-extrabold text-blue-600 uppercase tracking-widest mb-3 flex items-center gap-2">
-                            <span className="w-4 h-0.5 bg-blue-600 rounded" /> Personal Info
+                        <h3 className="text-xs font-bold text-ocean-600 uppercase tracking-widest mb-3 flex items-center gap-2">
+                            <span className="w-4 h-0.5 bg-ocean-600 rounded" /> Personal Info
                         </h3>
                         <div className="grid grid-cols-2 gap-2.5">
                             <InfoCard label="Employee ID" value={employee.employeeId} />
@@ -82,8 +79,8 @@ export default function EmployeeDetail({ employee, onClose, onEdit }) {
 
                     {/* Job */}
                     <div>
-                        <h3 className="text-xs font-extrabold text-violet-600 uppercase tracking-widest mb-3 flex items-center gap-2">
-                            <span className="w-4 h-0.5 bg-violet-600 rounded" /> Job Info
+                        <h3 className="text-xs font-bold text-navy-600 uppercase tracking-widest mb-3 flex items-center gap-2">
+                            <span className="w-4 h-0.5 bg-navy-600 rounded" /> Job Info
                         </h3>
                         <div className="grid grid-cols-2 gap-2.5">
                             <InfoCard label="Department" value={employee.department} />
@@ -104,8 +101,8 @@ export default function EmployeeDetail({ employee, onClose, onEdit }) {
 
                     {/* Documents */}
                     <div>
-                        <h3 className="text-xs font-extrabold text-violet-600 uppercase tracking-widest mb-3 flex items-center gap-2">
-                            <span className="w-4 h-0.5 bg-violet-600 rounded" /> Documents
+                        <h3 className="text-xs font-bold text-navy-600 uppercase tracking-widest mb-3 flex items-center gap-2">
+                            <span className="w-4 h-0.5 bg-navy-600 rounded" /> Documents
                         </h3>
                         <div className="grid grid-cols-1 gap-2">
                             {[
@@ -127,7 +124,7 @@ export default function EmployeeDetail({ employee, onClose, onEdit }) {
                                                 href={fileUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-100 hover:bg-violet-200 text-violet-700 text-xs font-bold rounded-lg transition-colors"
+                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-navy-100 hover:bg-navy-200 text-navy-700 text-xs font-bold rounded-lg transition-colors"
                                             >
                                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -155,7 +152,7 @@ export default function EmployeeDetail({ employee, onClose, onEdit }) {
                         >Close</button>
                         <button
                             onClick={() => { onClose(); onEdit(employee); }}
-                            className="flex-[2] py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-bold shadow-md shadow-blue-200 hover:shadow-lg transition-all hover:-translate-y-0.5"
+                            className="flex-[2] py-2.5 rounded-xl bg-gradient-to-r from-ocean-600 to-navy-600 hover:from-ocean-700 hover:to-navy-700 text-white text-sm font-bold shadow-md shadow-ocean-200 hover:shadow-lg transition-all hover:-translate-y-0.5"
                         >✏️ Edit Employee</button>
                     </div>
                 </div>

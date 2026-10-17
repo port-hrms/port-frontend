@@ -20,9 +20,9 @@ export default function FieldAgentVisitCard({ visit }) {
                 {/* Header (Lead badge + Time) */}
                 <div className="flex items-center justify-between gap-2 border-b border-slate-50 pb-2.5 mb-3">
                     <span
-                        className={`px-2.5 py-0.5 rounded-full text-[9px] font-extrabold border ${
+                        className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold border ${
                             isInternship
-                                ? "bg-violet-50 text-violet-700 border-violet-100"
+                                ? "bg-navy-50 text-navy-700 border-navy-100"
                                 : "bg-emerald-50 text-emerald-700 border-emerald-100"
                         }`}
                     >
@@ -39,7 +39,7 @@ export default function FieldAgentVisitCard({ visit }) {
                         <p className="text-[10px] uppercase tracking-[0.1em] text-slate-400 font-bold">
                             {isInternship ? "Student Name" : "Client / Company"}
                         </p>
-                        <p className="font-extrabold text-slate-800 mt-0.5">{visit.clientName}</p>
+                        <p className="font-bold text-slate-800 mt-0.5">{visit.clientName}</p>
                     </div>
 
                     {!isInternship && visit.projectRequirement && (

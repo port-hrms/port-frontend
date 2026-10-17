@@ -4,7 +4,7 @@ import Field from "./Field";
 export default function LoginCredentialsSection({ form, errors, onChange, onToggleCreateLogin }) {
     return (
         <div>
-            <h3 className="text-xs font-extrabold text-emerald-600 uppercase tracking-widest mb-4 flex items-center gap-2">
+            <h3 className="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-4 flex items-center gap-2">
                 <span className="w-5 h-0.5 bg-emerald-600 rounded" /> Employee Login Credentials
             </h3>
 

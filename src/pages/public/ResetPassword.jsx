@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { resetPasswordAPI } from "../../api/authAPI";
 import { config } from "../../config";
 
+import BrandMark from "@/components/BrandMark";
 export default function ResetPassword() {
     const { token } = useParams();
     const navigate = useNavigate();
@@ -89,7 +90,7 @@ export default function ResetPassword() {
 
                     {/* Mobile logo */}
                     <div className="lg:hidden px-6 pt-7 pb-5 text-center border-b border-slate-200 bg-white/95">
-                        <img src="/logo1.png" alt="HRMS" className="mx-auto w-32 object-cover" />
+                        <BrandMark className="mx-auto" />
                     </div>
 
                     <div className="px-5 sm:px-8 lg:px-12 py-7 sm:py-10 space-y-5">

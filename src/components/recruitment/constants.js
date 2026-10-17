@@ -1,7 +1,7 @@
 export const DEPT_COLORS = {
-    Engineering: "bg-blue-100 text-blue-700",
+    Engineering: "bg-ocean-100 text-ocean-700",
     Marketing: "bg-pink-100 text-pink-700",
-    HR: "bg-violet-100 text-violet-700",
+    HR: "bg-navy-100 text-navy-700",
     Finance: "bg-emerald-100 text-emerald-700",
     Sales: "bg-amber-100 text-amber-700",
     Operations: "bg-cyan-100 text-cyan-700",
@@ -9,7 +9,7 @@ export const DEPT_COLORS = {
 };
 
 export const STATUS_STYLES = {
-    New: "bg-blue-100 text-blue-700",
+    New: "bg-ocean-100 text-ocean-700",
     Reviewed: "bg-emerald-100 text-emerald-700",
 };
 
@@ -31,7 +31,4 @@ export const defaultJobForm = {
     status: "Active", deadline: "",
 };
 
-export const AVATAR_COLORS = [
-    "bg-blue-500", "bg-violet-500", "bg-emerald-500",
-    "bg-amber-500", "bg-pink-500", "bg-cyan-500",
-];
+export const AVATAR_COLORS = ["bg-navy-700", "bg-ocean-600", "bg-navy-600", "bg-ocean-500", "bg-port-teal", "bg-navy-500"];

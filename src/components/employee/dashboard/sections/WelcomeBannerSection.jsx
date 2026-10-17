@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import { getGreeting } from "../shared/utils";
+import VoyageTracker from "./VoyageTracker";
 
-export default function WelcomeBannerSection({ employee, userName }) {
+export default function WelcomeBannerSection({ employee, userName, todayRecord, todayStatus }) {
   const [showConfetti, setShowConfetti] = useState(true);
 
   // Check if today is the employee's birthday
@@ -39,19 +40,15 @@ export default function WelcomeBannerSection({ employee, userName }) {
         />
       )}
 
-      <div className="relative overflow-hidden bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white p-8">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-25"
-          style={{ backgroundImage: "url('https://dengsolutions.com/deng_A478Erd/images/employee.png')" }}
-        />
-        <div className="absolute inset-0 bg-slate-900/35" />
+      <div className="relative overflow-hidden rounded-2xl bg-linear-to-r from-navy-800 via-navy-700 to-ocean-600 text-white p-8">
+        <div className="wb-sheen pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-linear-to-r from-transparent via-white/[0.07] to-transparent" />
 
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className={`absolute -top-16 -right-16 w-64 h-64 rounded-full blur-3xl ${
-            isBirthday ? "bg-amber-500/15" : "bg-blue-600/10"
+            isBirthday ? "bg-amber-500/15" : "bg-ocean-400/20"
           }`} />
           <div className={`absolute bottom-0 left-1/3 w-48 h-48 rounded-full blur-2xl ${
-            isBirthday ? "bg-rose-500/10" : "bg-indigo-600/10"
+            isBirthday ? "bg-rose-500/10" : "bg-navy-600/10"
           }`} />
           <div
             className="absolute inset-0 opacity-5"
@@ -64,16 +61,16 @@ export default function WelcomeBannerSection({ employee, userName }) {
 
         <div className="relative flex items-center justify-between flex-wrap gap-6">
           <div>
-            <p className="text-slate-300 text-sm font-medium uppercase tracking-widest mb-2">
+            <p className="text-ocean-200 text-sm font-medium uppercase tracking-widest mb-2">
               {isBirthday ? "🎉 It's Your Special Day!" : ""}
             </p>
-            <h1 className="text-3xl font-extrabold tracking-tight mb-2">
+            <h1 className="text-3xl font-bold tracking-tight mb-2">
               {isBirthday
                 ? <>Happy Birthday, {employee?.firstName}! 🎂</>
                 : <>{getGreeting()}, {employee?.firstName || userName?.split(" ")[0]}</>
               }
             </h1>
-            <p className="text-slate-300 text-sm max-w-md">
+            <p className="text-ocean-100/80 text-sm max-w-md">
               {isBirthday
                 ? `Wishing you a wonderful birthday${age ? ` as you turn ${age}` : ""}! May this year bring you great success and happiness! 🥳`
                 : "Track your attendance, latest payroll, and most recent performance review from one place."
@@ -83,28 +80,30 @@ export default function WelcomeBannerSection({ employee, userName }) {
 
           <div className="flex gap-3 flex-wrap">
             {isBirthday && (
-              <div className="bg-white/10 backdrop-blur border border-white/10 rounded-xl px-5 py-3 flex items-center gap-2">
+              <div className="bg-white/10 backdrop-blur border border-white/15 rounded-xl px-5 py-3 flex items-center gap-2">
                 <span className="text-2xl">🎁</span>
                 <div>
                   <p className="text-white/70 text-xs uppercase tracking-wider mb-0.5">Birthday</p>
-                  <p className="font-extrabold text-white text-lg">Today! 🎊</p>
+                  <p className="font-bold text-white text-lg">Today! 🎊</p>
                 </div>
               </div>
             )}
-            <div className="bg-white/10 backdrop-blur border border-white/10 rounded-xl px-5 py-3">
-              <p className="text-slate-400 text-xs uppercase tracking-wider mb-1">Employee ID</p>
-              <p className="font-extrabold text-white text-lg">{employee?.employeeId || "—"}</p>
+            <div className="bg-white/10 backdrop-blur border border-white/15 rounded-xl px-5 py-3">
+              <p className="text-ocean-200 text-[10px] font-semibold uppercase tracking-wider mb-1">Employee ID</p>
+              <p className="font-bold text-white text-lg">{employee?.employeeId || "—"}</p>
             </div>
-            <div className="bg-white/10 backdrop-blur border border-white/10 rounded-xl px-5 py-3">
-              <p className="text-slate-400 text-xs uppercase tracking-wider mb-1">Department</p>
-              <p className="font-extrabold text-white text-lg">{employee?.department || "—"}</p>
+            <div className="bg-white/10 backdrop-blur border border-white/15 rounded-xl px-5 py-3">
+              <p className="text-ocean-200 text-[10px] font-semibold uppercase tracking-wider mb-1">Department</p>
+              <p className="font-bold text-white text-lg">{employee?.department || "—"}</p>
             </div>
-            <div className="bg-white/10 backdrop-blur border border-white/10 rounded-xl px-5 py-3">
-              <p className="text-slate-400 text-xs uppercase tracking-wider mb-1">Designation</p>
-              <p className="font-extrabold text-white text-lg">{employee?.designation || "—"}</p>
+            <div className="bg-white/10 backdrop-blur border border-white/15 rounded-xl px-5 py-3">
+              <p className="text-ocean-200 text-[10px] font-semibold uppercase tracking-wider mb-1">Designation</p>
+              <p className="font-bold text-white text-lg">{employee?.designation || "—"}</p>
             </div>
           </div>
         </div>
+
+        <VoyageTracker record={todayRecord} status={todayStatus} />
       </div>
     </>
   );

@@ -176,10 +176,10 @@ export default function EmployeeForm({ employee, onClose, onSuccess }) {
                 {/* Header */}
                 <div className="flex items-center justify-between px-7 py-5 border-b border-slate-100 sticky top-0 bg-white rounded-t-2xl z-10">
                     <div>
-                        <h2 className="text-lg font-extrabold text-slate-900">
+                        <h2 className="text-lg font-bold text-navy-900">
                             {isEditMode ? "✏️ Edit Employee" : "➕ Add New Employee"}
                         </h2>
-                        <p className="text-xs text-slate-400 mt-0.5">
+                        <p className="text-xs text-slate-500 mt-0.5">
                             {isEditMode
                                 ? `Editing ${employee.firstName} ${employee.lastName}`
                                 : "Fill in the details to add a new employee"}
@@ -247,7 +247,7 @@ export default function EmployeeForm({ employee, onClose, onSuccess }) {
                             className={`flex-2 py-3 rounded-xl text-white text-sm font-bold transition-all
                 ${loading
                                     ? "bg-slate-400 cursor-not-allowed"
-                                    : "bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-md shadow-blue-200 hover:shadow-lg hover:-translate-y-0.5"
+                                    : "bg-linear-to-r from-ocean-600 to-navy-600 hover:from-ocean-700 hover:to-navy-700 shadow-md shadow-ocean-200 hover:shadow-lg hover:-translate-y-0.5"
                                 }`}
                         >
                             {loading ? (

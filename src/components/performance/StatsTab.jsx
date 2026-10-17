@@ -11,22 +11,22 @@ export default function StatsTab({ stats, selectedYear }) {
             {/* Overview Cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 {[
-                    { label: "Total Reviews", value: stats.totalReviews, icon: "📋", style: "bg-blue-50 border-blue-200 text-blue-700" },
-                    { label: "Avg Score", value: `${stats.avgScore}/100`, icon: "🎯", style: "bg-violet-50 border-violet-200 text-violet-700" },
+                    { label: "Total Reviews", value: stats.totalReviews, icon: "📋", style: "bg-ocean-50 border-ocean-200 text-ocean-700" },
+                    { label: "Avg Score", value: `${stats.avgScore}/100`, icon: "🎯", style: "bg-navy-50 border-navy-200 text-navy-700" },
                     { label: "Increments", value: stats.incrementCount, icon: "💰", style: "bg-emerald-50 border-emerald-200 text-emerald-700" },
                     { label: "Promotions", value: stats.promotionCount, icon: "🚀", style: "bg-amber-50 border-amber-200 text-amber-700" },
                 ].map((c) => (
                     <div key={c.label} className={`rounded-2xl border p-5 shadow-sm ${c.style}`}>
                         <div className="text-2xl mb-2">{c.icon}</div>
-                        <div className="text-3xl font-extrabold">{c.value}</div>
+                        <div className="text-3xl font-bold">{c.value}</div>
                         <div className="text-xs font-bold opacity-80 mt-1">{c.label}</div>
                     </div>
                 ))}
             </div>
 
             {/* Grade Distribution */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
-                <h3 className="font-extrabold text-slate-900 mb-5">Grade Distribution — {selectedYear}</h3>
+            <div className="panel p-6">
+                <h3 className="font-bold text-slate-900 mb-5">Grade Distribution — {selectedYear}</h3>
                 <div className="space-y-4">
                     {Object.entries(stats.gradeCount).map(([grade, count]) => {
                         const pct = stats.totalReviews > 0 ? Math.round((count / stats.totalReviews) * 100) : 0;
@@ -50,12 +50,12 @@ export default function StatsTab({ stats, selectedYear }) {
 
             {/* Top Performers */}
             {stats.topPerformers?.length > 0 && (
-                <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
-                    <h3 className="font-extrabold text-slate-900 mb-5">🏆 Top Performers — {selectedYear}</h3>
+                <div className="panel p-6">
+                    <h3 className="font-bold text-slate-900 mb-5">🏆 Top Performers — {selectedYear}</h3>
                     <div className="space-y-3">
                         {stats.topPerformers.map((tp, i) => (
                             <div key={tp._id} className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl">
-                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0
                                     ${i === 0 ? "bg-amber-400" : i === 1 ? "bg-slate-400" : i === 2 ? "bg-amber-600" : "bg-slate-300"}`}>
                                     {i + 1}
                                 </div>
@@ -67,7 +67,7 @@ export default function StatsTab({ stats, selectedYear }) {
                                     <p className="text-xs text-slate-400">{tp.employee?.department}</p>
                                 </div>
                                 <div className="text-right flex-shrink-0">
-                                    <p className="text-lg font-extrabold text-emerald-600">{tp.overallScore}</p>
+                                    <p className="text-lg font-bold text-emerald-600">{tp.overallScore}</p>
                                     <span className={`text-xs font-bold px-2 py-0.5 rounded-lg ${GRADE_STYLES[tp.grade]?.badge}`}>{tp.grade}</span>
                                 </div>
                             </div>

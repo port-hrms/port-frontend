@@ -15,6 +15,7 @@ import JobsGrid from "../../components/careers/JobsGrid";
 import { defaultForm, departments, jobTypes } from "../../components/careers/constants";
 import { config } from "../../config";
 
+import BrandMark from "@/components/BrandMark";
 export default function Careers() {
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -116,11 +117,7 @@ export default function Careers() {
             <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-white/80 backdrop-blur-xl">
                 <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
                     <Link to="/" className="flex items-center">
-                        <img
-                            src="/logo1.png"
-                            alt="HRFlow"
-                            className="w-32 object-cover shadow-sm"
-                        />
+                        <BrandMark />
                     </Link>
 
                     <nav className="hidden items-center gap-8 text-sm font-semibold text-slate-600 md:flex">
@@ -252,11 +249,7 @@ export default function Careers() {
                 <div className="mx-auto grid max-w-7xl gap-10 px-6 py-10 lg:grid-cols-[1.1fr_0.9fr_0.9fr] lg:px-8">
                     <div>
                         <div className="flex items-center gap-3">
-                            <img
-                                src="/logo1.png"
-                                alt="HRFlow"
-                                className=" w-32 object-cover shadow-sm"
-                            />
+                            <BrandMark />
                         </div>
                         <p className="mt-4 max-w-md text-sm leading-7 text-slate-600">
                             Professional HR management for attendance, payroll, performance, and workforce operations in one connected platform.

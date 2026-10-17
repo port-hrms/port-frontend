@@ -6,8 +6,8 @@ export default function BankInfoSection({ form, errors, onChange }) {
     return (
         <div className="space-y-5">
             <div className="flex items-center gap-3 mb-1">
-                <span className="text-indigo-600 font-black text-sm">|</span>
-                <h3 className="text-sm font-extrabold text-slate-800 uppercase tracking-widest">Bank & Identity Details</h3>
+                <span className="text-navy-600 font-bold text-sm">|</span>
+                <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest">Bank & Identity Details</h3>
                 <span className="text-[10px] text-slate-400 font-medium">(Required for Payroll)</span>
             </div>
 

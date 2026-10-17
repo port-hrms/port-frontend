@@ -7,7 +7,7 @@ export default function ClientDetailModal({ client, onClose }) {
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-          <h3 className="font-extrabold text-slate-800">Client Details</h3>
+          <h3 className="font-bold text-slate-800">Client Details</h3>
           <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-400">
             <X size={16} />
           </button>

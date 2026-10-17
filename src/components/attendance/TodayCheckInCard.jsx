@@ -51,11 +51,11 @@ export default function TodayCheckInCard({
     const hoursWorked = getTodayHours();
 
     return (
-        <section className="rounded-3xl bg-white/80 border border-slate-200 shadow-sm p-5 backdrop-blur-[1px]">
+        <section className="rounded-2xl bg-white/80 border border-slate-200 shadow-sm p-5 backdrop-blur-[1px]">
             {/* Header row */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                    <h3 className="text-lg font-extrabold text-slate-900">Today</h3>
+                    <h3 className="text-lg font-bold text-navy-900">Today</h3>
                     <p className="text-sm text-slate-500 mt-1">Check in and check out for today only</p>
                 </div>
                 <span className={`px-3 py-1 rounded-full text-xs font-bold w-fit ${STATUS_TONE[displayStatus] ?? STATUS_TONE[todayStatus]}`}>
@@ -72,7 +72,7 @@ export default function TodayCheckInCard({
                 ].map(([label, value]) => (
                     <div key={label} className="rounded-2xl border border-slate-200 bg-white/85 p-4">
                         <p className="text-xs uppercase tracking-[0.2em] text-slate-400 font-bold">{label}</p>
-                        <p className="text-lg font-extrabold text-slate-900 mt-2">{value}</p>
+                        <p className="text-lg font-bold text-navy-900 mt-2">{value}</p>
                     </div>
                 ))}
             </div>
@@ -91,7 +91,7 @@ export default function TodayCheckInCard({
                 <button
                     onClick={onCheckOut}
                     disabled={!canCheckOut || actionLoading === "check-out"}
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white text-sm font-bold px-4 py-2.5 rounded-xl shadow-sm transition-all"
+                    className="flex items-center gap-2 bg-ocean-600 hover:bg-ocean-700 disabled:bg-slate-300 text-white text-sm font-bold px-4 py-2.5 rounded-xl shadow-sm transition-all"
                 >
                     {actionLoading === "check-out"
                         ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Checking out...</>

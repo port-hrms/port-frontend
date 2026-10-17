@@ -73,7 +73,7 @@ export default function AppLayout({ activeTab, setActiveTab, children }) {
     : activeItem?.label;
 
   return (
-    <div className="flex h-screen bg-slate-100 font-sans overflow-hidden">
+    <div className="flex h-screen bg-canvas font-sans overflow-hidden">
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}

@@ -5,8 +5,8 @@ import SelectField from "./SelectField";
 export default function JobInfoSection({ form, errors, onChange, departments, empTypes, statuses }) {
     return (
         <div>
-            <h3 className="text-xs font-extrabold text-violet-600 uppercase tracking-widest mb-4 flex items-center gap-2">
-                <span className="w-5 h-0.5 bg-violet-600 rounded" /> Job Information
+            <h3 className="text-xs font-bold text-navy-600 uppercase tracking-widest mb-4 flex items-center gap-2">
+                <span className="w-5 h-0.5 bg-navy-600 rounded" /> Job Information
             </h3>
             <div className="grid grid-cols-2 gap-4">
                 <SelectField label="Department" name="department" options={departments} form={form} onChange={onChange} />

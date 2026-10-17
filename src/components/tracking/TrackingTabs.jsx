@@ -14,7 +14,7 @@ export default function TrackingTabs({ activeTab, onChange }) {
                     onClick={() => onChange(tab.id)}
                     className={`px-5 py-2 rounded-xl text-sm font-bold transition-all
               ${activeTab === tab.id
-                            ? "bg-slate-900 text-white shadow-md"
+                            ? "bg-navy-800 text-white shadow-md"
                             : "bg-white text-slate-500 border border-slate-200 hover:border-slate-300"}`}
                 >
                     {tab.label}

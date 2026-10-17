@@ -78,14 +78,14 @@ export default function LeavePanel({ employeeId, navigate }) {
   return (
     <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
       {/* Header */}
-      <div className="bg-linear-to-r from-violet-50 to-purple-50 border-b border-slate-200 p-5">
+      <div className="bg-linear-to-r from-ocean-50 to-navy-50 border-b border-slate-200 p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-slate-800 flex items-center gap-2">
             <span className="text-2xl">📋</span> My Leaves
           </h3>
           <button
             onClick={() => setShowApplyModal(true)}
-            className="px-3 py-1 bg-violet-600 text-white text-sm font-medium rounded-lg hover:bg-violet-700 transition-colors"
+            className="px-3 py-1 bg-navy-600 text-white text-sm font-medium rounded-lg hover:bg-navy-700 transition-colors"
           >
             + Apply Leave
           </button>
@@ -102,7 +102,7 @@ export default function LeavePanel({ employeeId, navigate }) {
             <p className="text-xs text-slate-600">Pending</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-violet-600">{stats.totalDaysUsed}</p>
+            <p className="text-2xl font-bold text-navy-600">{stats.totalDaysUsed}</p>
             <p className="text-xs text-slate-600">Days Used</p>
           </div>
         </div>
@@ -115,7 +115,7 @@ export default function LeavePanel({ employeeId, navigate }) {
             <p className="text-slate-500 text-sm mb-2">No leave requests yet</p>
             <button
               onClick={() => setShowApplyModal(true)}
-              className="text-violet-600 hover:text-violet-700 font-medium text-sm"
+              className="text-navy-600 hover:text-navy-700 font-medium text-sm"
             >
               Apply for leave
             </button>
@@ -156,7 +156,7 @@ export default function LeavePanel({ employeeId, navigate }) {
       <div className="bg-slate-50 border-t border-slate-200 p-4">
         <button
           onClick={() => navigate("/leaves")}
-          className="w-full py-2 text-center text-slate-700 hover:text-violet-600 font-medium text-sm transition-colors"
+          className="w-full py-2 text-center text-slate-700 hover:text-navy-600 font-medium text-sm transition-colors"
         >
           View all leaves →
         </button>

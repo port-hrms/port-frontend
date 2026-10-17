@@ -21,7 +21,7 @@ export default function ApplicationsPanel({
                 <select
                     value={filterStatus}
                     onChange={(e) => onFilterStatus(e.target.value)}
-                    className="bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer shadow-sm hover:border-blue-400 transition-colors"
+                    className="panel px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer hover:border-ocean-400 transition-colors"
                 >
                     <option value="All">All Statuses</option>
                     <option>New</option>
@@ -30,7 +30,7 @@ export default function ApplicationsPanel({
                 <select
                     value={filterJob}
                     onChange={(e) => onFilterJob(e.target.value)}
-                    className="bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer shadow-sm hover:border-blue-400 transition-colors"
+                    className="panel px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer hover:border-ocean-400 transition-colors"
                 >
                     <option value="All">All Jobs</option>
                     {jobs.map((job) => <option key={job._id} value={job._id}>{job.title}</option>)}
@@ -39,7 +39,7 @@ export default function ApplicationsPanel({
 
             {loading ? (
                 <div className="flex flex-col items-center justify-center py-20 text-slate-400">
-                    <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4" />
+                    <div className="w-10 h-10 border-4 border-ocean-200 border-t-ocean-600 rounded-full animate-spin mb-4" />
                     <p className="text-sm font-medium">Loading applications...</p>
                 </div>
             ) : applications.length === 0 ? (
@@ -49,12 +49,12 @@ export default function ApplicationsPanel({
                     <p className="text-sm mt-1">Applications from the careers page will appear here</p>
                 </div>
             ) : (
-                <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+                <div className="panel overflow-hidden">
                     <table className="w-full">
                         <thead>
-                            <tr className="bg-slate-50 border-b border-slate-100">
+                            <tr className="bg-slate-50/80 border-b border-slate-100">
                                 {["Applicant", "Applied For", "Experience", "Status", "Applied", "Actions"].map((heading) => (
-                                    <th key={heading} className="px-5 py-3.5 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">{heading}</th>
+                                    <th key={heading} className="px-5 py-3.5 text-left uppercase text-[11px] font-semibold text-slate-500 tracking-wider">{heading}</th>
                                 ))}
                             </tr>
                         </thead>
@@ -89,7 +89,7 @@ export default function ApplicationsPanel({
                                     <td className="px-5 py-4 text-xs text-slate-400">{timeAgo(app.appliedAt)}</td>
                                     <td className="px-5 py-4">
                                         <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button onClick={() => onView(app)} className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 text-xs font-bold rounded-lg transition-colors">
+                                            <button onClick={() => onView(app)} className="px-3 py-1.5 bg-ocean-50 hover:bg-ocean-100 text-ocean-600 text-xs font-bold rounded-lg transition-colors">
                                                 View
                                             </button>
                                             {app.status === "New" && (

@@ -3,7 +3,7 @@ import React from "react";
 
 const statusBadge = {
   Pending: "bg-amber-100 text-amber-700",
-  "In Progress": "bg-blue-100 text-blue-700",
+  "In Progress": "bg-ocean-100 text-ocean-700",
   Completed: "bg-emerald-100 text-emerald-700",
 };
 
@@ -17,7 +17,7 @@ const OutgoingTaskCard = ({ task }) => {
         <div>
           <p className="text-sm font-bold text-slate-800">{task.title}</p>
           {task.description && <p className="text-xs text-slate-500 mt-1">{task.description}</p>}
-          <p className="text-[10px] font-bold text-blue-600 mt-2 uppercase tracking-tight">
+          <p className="text-[10px] font-bold text-ocean-600 mt-2 uppercase tracking-tight">
             Assigned to: {task.employee?.firstName} {task.employee?.lastName}
           </p>
         </div>

@@ -5,7 +5,6 @@ import AttendancePanel from "@/components/employee/dashboard/sections/Attendance
 import PerformancePanel from "@/components/employee/dashboard/sections/PerformancePanel";
 import QuickLinksSection from "@/components/employee/dashboard/sections/QuickLinksSection";
 import StatsCardsSection from "@/components/employee/dashboard/sections/StatsCardsSection";
-import TurtleAnimation from "@/components/employee/dashboard/sections/TurtleAnimation";
 import WelcomeBannerSection from "@/components/employee/dashboard/sections/WelcomeBannerSection";
 import FieldAgentTrackingPanel from "@/components/employee/dashboard/sections/FieldAgentTrackingPanel";
 import { GRADE_CONFIG, STATUS_STYLES } from "@/components/employee/dashboard/shared/constants";
@@ -34,6 +33,7 @@ export default function EmployeeDashboard({ setActiveTab }) {
   const [tasks, setTasks] = useState([]);
   const [recentLeaveRequests, setRecentLeaveRequests] = useState([]);
   const [todayWFH, setTodayWFH] = useState(null);
+
 
   const handleUpdateLeaveStatus = async (leaveId, status) => {
     try {
@@ -212,7 +212,7 @@ export default function EmployeeDashboard({ setActiveTab }) {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-slate-400 gap-4">
-        <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+        <div className="w-10 h-10 border-4 border-ocean-200 border-t-ocean-600 rounded-full animate-spin" />
         <p className="text-sm font-medium">Loading your dashboard...</p>
       </div>
     );
@@ -220,20 +220,22 @@ export default function EmployeeDashboard({ setActiveTab }) {
 
   return (
     <div className="space-y-6 pb-8">
-      <div className="relative">
-        <TurtleAnimation />
-        <WelcomeBannerSection employee={employee} userName={user?.name} />
-      </div>
+      <WelcomeBannerSection
+        employee={employee}
+        userName={user?.name}
+        todayRecord={todayRecord}
+        todayStatus={todayStatus}
+      />
 
       {/* ── WFH Day Banner ──────────────────────────────────── */}
       {todayWFH && (
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-teal-500 to-cyan-500 p-4 shadow-md">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-ocean-600 to-port-teal p-4 shadow-md">
           <div className="absolute -top-4 -right-4 w-24 h-24 bg-white/10 rounded-full" />
           <div className="relative flex items-center justify-between gap-4 flex-wrap">
             <div className="flex items-center gap-3">
               <span className="text-2xl">🏠</span>
               <div>
-                <p className="text-white font-extrabold text-sm">Today is a Work From Home Day!</p>
+                <p className="text-white font-bold text-sm">Today is a Work From Home Day!</p>
                 <p className="text-teal-100 text-xs mt-0.5">Geofencing is disabled — check in from anywhere.</p>
               </div>
             </div>
@@ -260,6 +262,9 @@ export default function EmployeeDashboard({ setActiveTab }) {
         payroll={payroll}
         performance={performance}
         gradeConfig={gradeConfig}
+        tasks={tasks}
+        employeeId={employeeId}
+        onOpenTasks={() => setActiveTab?.("tasks")}
       />
       <BirthdayTodayCard employees={birthdayEmployees} />
       <NewsFeedPanel setActiveTab={setActiveTab} />

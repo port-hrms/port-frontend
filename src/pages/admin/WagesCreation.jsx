@@ -135,11 +135,11 @@ export default function WagesCreation() {
 
             {/* Page Header */}
             <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-200">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-ocean-500 to-navy-600 flex items-center justify-center shadow-lg shadow-navy-200">
                     <Banknote className="w-7 h-7 text-white" />
                 </div>
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900 tracking-tight">Wages Creation</h1>
+                    <h1 className="text-3xl font-bold text-navy-900 tracking-tight">Wages Creation</h1>
                     <p className="text-slate-500 text-sm mt-0.5">Register workers, define wage structures, and process payments</p>
                 </div>
             </div>

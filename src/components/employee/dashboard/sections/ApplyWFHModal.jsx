@@ -70,11 +70,11 @@ export default function ApplyWFHModal({ employeeId, onClose }) {
         style={{ animation: "slideUp 0.25s ease" }}
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-teal-500 to-cyan-500 px-6 py-5">
+        <div className="bg-gradient-to-r from-ocean-600 to-port-teal px-6 py-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div>
-                <h2 className="text-lg font-extrabold text-white">Apply for Work From Home</h2>
+                <h2 className="text-lg font-bold text-white">Apply for Work From Home</h2>
                 <p className="text-xs text-teal-100 mt-0.5">Request will be sent for admin approval</p>
               </div>
             </div>
@@ -165,7 +165,7 @@ export default function ApplyWFHModal({ employeeId, onClose }) {
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 px-4 py-2.5 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-xl font-bold text-sm hover:from-teal-600 hover:to-cyan-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-4 py-2.5 bg-gradient-to-r from-ocean-600 to-port-teal text-white rounded-xl font-bold text-sm hover:from-teal-600 hover:to-cyan-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Submitting..." : "Submit Request"}
             </button>

@@ -10,7 +10,7 @@ const toDateInput = (value) => {
 
 const statusBadge = {
   Pending: "bg-amber-100 text-amber-700",
-  "In Progress": "bg-blue-100 text-blue-700",
+  "In Progress": "bg-ocean-100 text-ocean-700",
   Completed: "bg-emerald-100 text-emerald-700",
 };
 
@@ -84,25 +84,25 @@ export default function Tasks() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-slate-900">Daily Tasks</h2>
-          <p className="text-sm text-slate-400 mt-1">Assign tasks to employees and track updates.</p>
+          <h2 className="text-2xl font-bold text-navy-900">Daily Tasks</h2>
+          <p className="text-sm text-slate-500 mt-1">Assign tasks to employees and track updates.</p>
         </div>
         <input
           type="date"
           value={selectedDate}
           onChange={(event) => setSelectedDate(event.target.value)}
-          className="bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
+          className="panel px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer focus:border-ocean-400 focus:ring-2 focus:ring-ocean-100 transition-colors"
         />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="panel p-6 space-y-4">
           <div>
             <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Employee</label>
             <select
               value={form.employee}
               onChange={(event) => setForm((prev) => ({ ...prev, employee: event.target.value }))}
-              className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100"
               required
             >
               <option value="">Select employee</option>
@@ -120,7 +120,7 @@ export default function Tasks() {
               type="text"
               value={form.title}
               onChange={(event) => setForm((prev) => ({ ...prev, title: event.target.value }))}
-              className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100"
               placeholder="e.g., Prepare daily report"
               required
             />
@@ -132,7 +132,7 @@ export default function Tasks() {
               rows="4"
               value={form.description}
               onChange={(event) => setForm((prev) => ({ ...prev, description: event.target.value }))}
-              className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100"
               placeholder="Optional details"
             />
           </div>
@@ -143,7 +143,7 @@ export default function Tasks() {
               type="date"
               value={form.date}
               onChange={(event) => setForm((prev) => ({ ...prev, date: event.target.value }))}
-              className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100"
               required
             />
           </div>
@@ -151,7 +151,7 @@ export default function Tasks() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white text-sm font-bold px-4 py-2.5 rounded-xl shadow-sm transition-all"
+            className="w-full bg-ocean-600 hover:bg-ocean-700 disabled:bg-slate-300 text-white text-sm font-bold px-4 py-2.5 rounded-xl shadow-sm transition-all"
           >
             {submitting ? "Assigning..." : "Assign Task"}
           </button>
@@ -159,16 +159,16 @@ export default function Tasks() {
 
         <div className="lg:col-span-2 space-y-4">
           {loading ? (
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-10 text-center text-slate-400">
+            <div className="panel p-10 text-center text-slate-400">
               Loading tasks...
             </div>
           ) : tasks.length === 0 ? (
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-10 text-center text-slate-400">
+            <div className="panel p-10 text-center text-slate-400">
               No tasks assigned for this day.
             </div>
           ) : (
             Object.values(grouped).map((group) => (
-              <div key={group.employee?._id || group.employee?.employeeId} className="bg-white rounded-2xl border border-slate-100 shadow-sm">
+              <div key={group.employee?._id || group.employee?.employeeId} className="panel">
                 <div className="px-6 py-4 border-b border-slate-100">
                   <p className="text-sm font-bold text-slate-900">
                     {group.employee?.firstName} {group.employee?.lastName}

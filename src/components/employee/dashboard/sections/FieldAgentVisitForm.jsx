@@ -32,7 +32,7 @@ export default function FieldAgentVisitForm({
                             value="Client"
                             checked={leadType === "Client"}
                             onChange={() => setLeadType("Client")}
-                            className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-slate-300"
+                            className="w-4 h-4 text-ocean-600 focus:ring-ocean-500 border-slate-300"
                         />
                         💼 Client Lead
                     </label>
@@ -43,7 +43,7 @@ export default function FieldAgentVisitForm({
                             value="Internship"
                             checked={leadType === "Internship"}
                             onChange={() => setLeadType("Internship")}
-                            className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-slate-300"
+                            className="w-4 h-4 text-ocean-600 focus:ring-ocean-500 border-slate-300"
                         />
                         🎓 Students
                     </label>
@@ -60,7 +60,7 @@ export default function FieldAgentVisitForm({
                                 placeholder="e.g. Acme Corp"
                                 value={clientName}
                                 onChange={(e) => setClientName(e.target.value)}
-                                className="w-full px-3.5 py-2.5 text-xs text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors"
+                                className="w-full px-3.5 py-2.5 text-xs text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors"
                             />
                         </div>
                         <div>
@@ -70,7 +70,7 @@ export default function FieldAgentVisitForm({
                                 placeholder="e.g. E-Commerce Website, Mobile App"
                                 value={projectRequirement}
                                 onChange={(e) => setProjectRequirement(e.target.value)}
-                                className="w-full px-3.5 py-2.5 text-xs text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors"
+                                className="w-full px-3.5 py-2.5 text-xs text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors"
                             />
                         </div>
                     </>
@@ -83,7 +83,7 @@ export default function FieldAgentVisitForm({
                                 placeholder="e.g. Rahul Sharma"
                                 value={clientName}
                                 onChange={(e) => setClientName(e.target.value)}
-                                className="w-full px-3.5 py-2.5 text-xs text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors"
+                                className="w-full px-3.5 py-2.5 text-xs text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors"
                             />
                         </div>
                         <div>
@@ -93,7 +93,7 @@ export default function FieldAgentVisitForm({
                                 placeholder="e.g. Web Development"
                                 value={internshipDomain}
                                 onChange={(e) => setInternshipDomain(e.target.value)}
-                                className="w-full px-3.5 py-2.5 text-xs text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors"
+                                className="w-full px-3.5 py-2.5 text-xs text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors"
                             />
                         </div>
                     </>
@@ -108,7 +108,7 @@ export default function FieldAgentVisitForm({
                         value={notes}
                         onChange={(e) => setNotes(e.target.value)}
                         rows={2}
-                        className="w-full px-3.5 py-2.5 text-xs text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-colors resize-none"
+                        className="w-full px-3.5 py-2.5 text-xs text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors resize-none"
                     />
                 </div>
             </div>
@@ -124,7 +124,7 @@ export default function FieldAgentVisitForm({
                 <button
                     onClick={() => sendPing(false)}
                     disabled={loading || !clientName.trim() || (leadType === "Internship" && !internshipDomain)}
-                    className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 disabled:bg-slate-200 disabled:text-slate-400 text-white text-xs font-bold rounded-xl shadow-sm transition-all cursor-pointer"
+                    className="px-5 py-2.5 bg-navy-800 hover:bg-navy-700 disabled:bg-slate-200 disabled:text-slate-400 text-white text-xs font-bold rounded-xl shadow-sm transition-all cursor-pointer"
                 >
                     {loading ? "Recording..." : leadType === "Client" ? "Log Client Visit" : "Log Internship Lead"}
                 </button>

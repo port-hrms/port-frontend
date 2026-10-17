@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { PlaneTakeoff } from "lucide-react";
 
 export default function OnLeaveTodayCard({ requests = [], activeCount = 0 }) {
     const today = new Date();
@@ -21,10 +22,15 @@ export default function OnLeaveTodayCard({ requests = [], activeCount = 0 }) {
         .slice(0, 5);
 
     return (
-        <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+        <div className="panel px-5 py-4">
             <div className="flex items-center justify-between">
-                <h3 className="text-base font-extrabold text-slate-700">On Leave Today</h3>
-                <span className="text-sm font-bold text-slate-400">{activeCount}</span>
+                <div className="flex items-center gap-2.5">
+                    <span className="h-8 w-8 rounded-lg bg-amber-50 text-port-amber ring-1 ring-amber-100 flex items-center justify-center">
+                        <PlaneTakeoff size={16} />
+                    </span>
+                    <h3 className="text-[15px] font-bold text-navy-900">On Leave Today</h3>
+                </div>
+                <span className="min-w-7 rounded-md bg-slate-100 px-2 py-0.5 text-center text-xs font-bold text-slate-600 tabular-nums">{activeCount}</span>
             </div>
 
             {onLeaveToday.length > 0 ? (
@@ -37,9 +43,9 @@ export default function OnLeaveTodayCard({ requests = [], activeCount = 0 }) {
 
                         return (
                             <div key={request._id} className="w-14 text-center">
-                                <div className="relative mx-auto h-10 w-10 rounded-full bg-slate-300 text-slate-700 font-bold text-xs flex items-center justify-center">
+                                <div className="relative mx-auto h-10 w-10 rounded-full bg-ocean-50 text-navy-700 ring-1 ring-ocean-100 font-bold text-xs flex items-center justify-center">
                                     {initials}
-                                    <span className="absolute -right-0.5 bottom-0 h-2.5 w-2.5 rounded-full border border-white bg-sky-400" />
+                                    <span className="absolute -right-0.5 bottom-0 h-2.5 w-2.5 rounded-full border-2 border-white bg-port-amber" />
                                 </div>
                                 <p className="mt-1 text-xs font-semibold text-slate-500 truncate">
                                     {firstName}
@@ -49,7 +55,7 @@ export default function OnLeaveTodayCard({ requests = [], activeCount = 0 }) {
                     })}
                 </div>
             ) : (
-                <p className="mt-4 text-sm text-slate-400">No approved leaves for today</p>
+                <p className="mt-3 text-sm text-slate-400">Everyone is in today — no approved leaves.</p>
             )}
         </div>
     );

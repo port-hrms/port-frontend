@@ -18,17 +18,17 @@ export default function CompanySettings() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex justify-center items-center h-48">
+      <div className="panel p-6 flex justify-center items-center h-48">
         <span className="text-slate-400 text-sm font-semibold">Loading company settings...</span>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+    <div className="panel p-6">
       <div className="mb-5">
-        <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-          <span className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-lg">💼</span>
+        <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+          <span className="w-8 h-8 rounded-lg bg-navy-500/10 flex items-center justify-center text-lg">💼</span>
           Company Billing Settings
         </h3>
         <p className="text-xs text-slate-400 mt-1 ml-10">
@@ -56,7 +56,7 @@ export default function CompanySettings() {
             className={`px-6 py-2.5 rounded-xl text-sm font-bold text-white transition-all ${
               saving
                 ? "bg-slate-400 cursor-not-allowed"
-                : "bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 shadow-md shadow-indigo-200 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98]"
+                : "bg-gradient-to-r from-ocean-600 to-navy-700 hover:from-ocean-700 hover:to-navy-800 shadow-md shadow-navy-200 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98]"
             }`}
           >
             {saving ? "Saving Changes..." : "Save Settings"}

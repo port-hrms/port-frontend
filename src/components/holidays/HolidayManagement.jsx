@@ -181,8 +181,8 @@ const HolidayManagement = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
-            <Settings size={28} className="text-indigo-600" />
+          <h2 className="text-2xl font-bold text-navy-900 flex items-center gap-2">
+            <Settings size={28} className="text-navy-600" />
             Holiday Settings
           </h2>
           <p className="text-slate-500 font-medium mt-1">Add, edit, and manage company holidays and observances</p>
@@ -190,7 +190,7 @@ const HolidayManagement = () => {
 
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-all shadow-md shadow-indigo-200 hover:-translate-y-0.5"
+          className="flex items-center gap-2 px-6 py-2.5 bg-navy-600 hover:bg-navy-700 text-white rounded-xl font-bold transition-all shadow-md shadow-navy-200 hover:-translate-y-0.5"
         >
           <Plus size={18} className="stroke-[3]" />
           Add Holiday
@@ -203,7 +203,7 @@ const HolidayManagement = () => {
           <select
             value={filterYear}
             onChange={(e) => setFilterYear(parseInt(e.target.value))}
-            className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm font-bold text-slate-700 outline-none transition-all"
+            className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-navy-500/20 focus:border-navy-500 text-sm font-bold text-slate-700 outline-none transition-all"
           >
             {[2023, 2024, 2025, 2026, 2027].map((year) => (
               <option key={year} value={year}>{year}</option>
@@ -215,7 +215,7 @@ const HolidayManagement = () => {
           <select
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
-            className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm font-bold text-slate-700 outline-none transition-all"
+            className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-navy-500/20 focus:border-navy-500 text-sm font-bold text-slate-700 outline-none transition-all"
           >
             <option value="">All Types</option>
             <option value="National">National</option>
@@ -241,11 +241,11 @@ const HolidayManagement = () => {
       {/* Delete Confirmation Modal */}
       {deleteConfirm && (
         <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-3xl shadow-xl max-w-sm w-full p-8 text-center border border-slate-200">
+          <div className="bg-white rounded-2xl shadow-xl max-w-sm w-full p-8 text-center border border-slate-200">
             <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
                <AlertCircle size={32} className="text-red-500" />
             </div>
-            <h3 className="text-2xl font-extrabold text-slate-800 mb-2">Delete Holiday?</h3>
+            <h3 className="text-2xl font-bold text-navy-900 mb-2">Delete Holiday?</h3>
             <p className="text-slate-500 text-sm font-medium mb-8">
               Are you sure? This action cannot be undone and will remove it from the calendar.
             </p>

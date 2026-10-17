@@ -8,7 +8,7 @@ export default function ReviewCard({ review, onView, onEdit, onDelete }) {
     const gradeStyle = GRADE_STYLES[r.grade] || GRADE_STYLES["Average"];
 
     return (
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden group">
+        <div className="panel hover:shadow-md transition-shadow overflow-hidden group">
             {/* Score Bar */}
             <div className="h-1.5 w-full bg-slate-100">
                 <div className={`h-full ${gradeStyle.bar} transition-all duration-500`} style={{ width: `${r.overallScore}%` }} />
@@ -21,13 +21,13 @@ export default function ReviewCard({ review, onView, onEdit, onDelete }) {
                         {r.employee?.firstName?.[0]}{r.employee?.lastName?.[0]}
                     </div>
                     <div className="flex-1 min-w-0">
-                        <p className="text-sm font-extrabold text-slate-900 truncate">
+                        <p className="text-sm font-bold text-slate-900 truncate">
                             {r.employee?.firstName} {r.employee?.lastName}
                         </p>
                         <p className="text-xs text-slate-400 truncate">{r.employee?.designation} · {r.employee?.department}</p>
                     </div>
                     <div className="text-right flex-shrink-0">
-                        <p className="text-2xl font-extrabold text-slate-900">{r.overallScore}</p>
+                        <p className="text-2xl font-bold text-navy-900">{r.overallScore}</p>
                         <p className="text-xs text-slate-400">/ 100</p>
                     </div>
                 </div>
@@ -65,7 +65,7 @@ export default function ReviewCard({ review, onView, onEdit, onDelete }) {
                             </span>
                         )}
                         {r.promotionRecommended && (
-                            <span className="flex items-center gap-1 px-2.5 py-1 bg-violet-50 text-violet-700 rounded-lg text-xs font-bold">
+                            <span className="flex items-center gap-1 px-2.5 py-1 bg-navy-50 text-navy-700 rounded-lg text-xs font-bold">
                                 🚀 Promotion
                             </span>
                         )}
@@ -75,7 +75,7 @@ export default function ReviewCard({ review, onView, onEdit, onDelete }) {
                 {/* Actions */}
                 <div className="flex gap-2 pt-1 border-t border-slate-100">
                     <button onClick={() => onView(r)}
-                        className="flex-1 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 text-xs font-bold rounded-xl transition-colors">
+                        className="flex-1 py-2 bg-ocean-50 hover:bg-ocean-100 text-ocean-600 text-xs font-bold rounded-xl transition-colors">
                         View
                     </button>
                     <button onClick={() => onEdit(r)}

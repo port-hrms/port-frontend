@@ -6,10 +6,15 @@ export const STATUS_TONE = {
     Late:         "bg-amber-100  text-amber-700",
     "Late Entry": "bg-amber-100  text-amber-700",
     Absent:       "bg-rose-100   text-rose-700",
-    "On Leave":   "bg-sky-100    text-sky-700",
-    "Half Day":   "bg-violet-100 text-violet-700",
+    "On Leave":   "bg-ocean-100    text-ocean-700",
+    "Half Day":   "bg-navy-100 text-navy-700",
     "Not Marked": "bg-slate-100  text-slate-600",
 };
+
+/** Standard office shift */
+export const SHIFT_START = "10:00 AM";
+export const SHIFT_END = "5:30 PM";
+export const SHIFT_TOTAL_MINUTES = 7 * 60 + 30;
 
 export const monthInputFromDate = (date) => {
     const year  = date.getFullYear();

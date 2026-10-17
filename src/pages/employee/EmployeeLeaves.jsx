@@ -58,14 +58,14 @@ export default function EmployeeLeaves() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-slate-400 gap-4">
-        <div className="w-10 h-10 border-4 border-violet-200 border-t-violet-600 rounded-full animate-spin" />
+        <div className="w-10 h-10 border-4 border-navy-200 border-t-navy-600 rounded-full animate-spin" />
         <p className="text-sm font-medium">Loading your leaves...</p>
       </div>
     );
   }
 
   return (
-    <div className="relative overflow-hidden rounded-3xl pb-8">
+    <div className="relative overflow-hidden rounded-2xl pb-8">
       <div className="absolute inset-0 bg-[url('/Leave.png')] bg-cover bg-center" />
       <div className="absolute inset-0 bg-white/10" />
 
@@ -73,12 +73,12 @@ export default function EmployeeLeaves() {
       <div className="bg-white/74 rounded-2xl border border-slate-100 shadow-sm p-6 backdrop-blur-[1px]">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <h2 className="text-xl font-extrabold text-slate-900">My Leaves</h2>
+            <h2 className="text-xl font-bold text-navy-900">My Leaves</h2>
             <p className="text-sm text-slate-500 mt-1">View all leave requests and apply for new leave</p>
           </div>
           <button
             onClick={() => setShowModal(true)}
-            className="px-4 py-2 bg-violet-600 text-white text-sm font-bold rounded-xl hover:bg-violet-700 transition-colors"
+            className="px-4 py-2 bg-navy-600 text-white text-sm font-bold rounded-xl hover:bg-navy-700 transition-colors"
           >
             + Apply Leave
           </button>
@@ -89,10 +89,10 @@ export default function EmployeeLeaves() {
             { label: "Approved", val: stats.totalApproved, style: "bg-emerald-50 text-emerald-700 border-emerald-100" },
             { label: "Pending", val: stats.totalPending, style: "bg-amber-50 text-amber-700 border-amber-100" },
             { label: "Rejected", val: stats.totalRejected || 0, style: "bg-red-50 text-red-700 border-red-100" },
-            { label: "Days Used", val: stats.totalDaysUsed, style: "bg-violet-50 text-violet-700 border-violet-100" },
+            { label: "Days Used", val: stats.totalDaysUsed, style: "bg-navy-50 text-navy-700 border-navy-100" },
           ].map((card) => (
             <div key={card.label} className={`border rounded-xl px-4 py-3 ${card.style}`}>
-              <p className="text-xl font-extrabold">{card.val}</p>
+              <p className="text-xl font-bold">{card.val}</p>
               <p className="text-xs font-bold opacity-80 mt-1">{card.label}</p>
             </div>
           ))}
@@ -101,7 +101,7 @@ export default function EmployeeLeaves() {
 
       <div className="bg-white/74 rounded-2xl border border-slate-100 shadow-sm overflow-hidden backdrop-blur-[1px]">
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-          <h3 className="font-extrabold text-slate-900">Leave History</h3>
+          <h3 className="font-bold text-slate-900">Leave History</h3>
           <span className="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl">{leaves.length} requests</span>
         </div>
 

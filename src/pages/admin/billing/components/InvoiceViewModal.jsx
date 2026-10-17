@@ -24,7 +24,7 @@ export default function InvoiceViewModal({ invoice, onClose }) {
       <div className="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl animate-fade-in" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-          <h3 className="font-extrabold text-slate-800">
+          <h3 className="font-bold text-slate-800">
             Tax Invoice - {invoice.invoiceNumber}
           </h3>
           <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-400">

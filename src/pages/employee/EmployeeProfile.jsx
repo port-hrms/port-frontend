@@ -32,21 +32,21 @@ export default function EmployeeProfile() {
 
 
   return (
-    <div className="relative overflow-hidden rounded-3xl pb-8">
+    <div className="relative overflow-hidden rounded-2xl pb-8">
       <div className="absolute inset-0 bg-[url('/profile.png')] bg-cover bg-center" />
       <div className="absolute inset-0 bg-white/15" />
 
       <div className="relative z-10 space-y-6">
       <div>
-        <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight p-1">My Profile</h2>
+        <h2 className="text-2xl font-bold text-navy-900 tracking-tight p-1">My Profile</h2>
       </div>
 
       <div className="bg-white/78 rounded-2xl shadow-sm border border-slate-100 p-6 backdrop-blur-[1px]">
-        <h3 className="text-base font-extrabold text-slate-900 mb-4">Employment Details</h3>
+        <h3 className="text-base font-bold text-slate-900 mb-4">Employment Details</h3>
 
         {loading ? (
           <div className="flex items-center gap-3 text-slate-400 py-2">
-            <div className="w-5 h-5 border-2 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+            <div className="w-5 h-5 border-2 border-ocean-200 border-t-ocean-600 rounded-full animate-spin" />
             <p className="text-sm">Loading employee details...</p>
           </div>
         ) : !profile ? (

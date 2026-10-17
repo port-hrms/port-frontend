@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import API from "../../api/axios";
-import TurtleCalendar from "../../components/attendance/TurtleCalendar";
+import VoyageCalendar from "../../components/attendance/VoyageCalendar";
 import TodayCheckInCard from "../../components/attendance/TodayCheckInCard";
 import {
     monthInputFromDate,
@@ -19,9 +19,9 @@ import { formatHours } from "../../utils/dateUtils";
 ───────────────────────────────────────────────────────── */
 function StatCard({ label, value }) {
     return (
-        <article className="rounded-3xl bg-white/75 border border-slate-200 shadow-sm p-5 backdrop-blur-[1px]">
+        <article className="rounded-2xl bg-white/75 border border-slate-200 shadow-sm p-5 backdrop-blur-[1px]">
             <p className="text-xs uppercase tracking-[0.2em] text-slate-400 font-bold">{label}</p>
-            <p className="text-2xl font-extrabold text-slate-900 mt-3">{value}</p>
+            <p className="text-2xl font-bold text-navy-900 mt-3">{value}</p>
         </article>
     );
 }
@@ -85,14 +85,14 @@ export default function EmployeeAttendance() {
     /* ── Loading / no-profile guards ── */
     if (loading) return (
         <div className="flex flex-col items-center justify-center h-full text-slate-400 select-none">
-            <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4" />
+            <div className="w-12 h-12 border-4 border-ocean-200 border-t-ocean-600 rounded-full animate-spin mb-4" />
             <p className="text-sm font-medium">Loading your attendance...</p>
         </div>
     );
 
     if (!profile) return (
-        <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-slate-200 shadow-sm p-8 lg:p-10">
-            <h2 className="text-2xl font-extrabold text-slate-900">Attendance is not available yet</h2>
+        <div className="panel max-w-3xl mx-auto p-8 lg:p-10">
+            <h2 className="text-2xl font-bold text-navy-900">Attendance is not available yet</h2>
             <p className="text-slate-500 mt-3 leading-7">
                 Your account is not linked to an employee profile yet. Ask an administrator to connect your profile.
             </p>
@@ -101,25 +101,25 @@ export default function EmployeeAttendance() {
 
     /* ── Main render ── */
     return (
-        <div className="relative overflow-hidden rounded-3xl p-4 sm:p-5">
+        <div className="relative overflow-hidden rounded-2xl p-4 sm:p-5">
             <div className="relative z-10 space-y-6">
 
                 {/* Page header + month picker */}
                 <div className="flex items-center justify-between flex-wrap gap-3">
                     <div>
-                        <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">My Attendance</h2>
-                        <p className="text-sm text-slate-400 mt-0.5">Track your monthly attendance and work hours</p>
+                        <h2 className="text-2xl font-bold text-navy-900 tracking-tight">My Attendance</h2>
+                        <p className="text-sm text-slate-500 mt-0.5">Track your monthly attendance and work hours</p>
                     </div>
                     <input
                         type="month"
                         value={selectedMonth}
                         onChange={e => setSelectedMonth(e.target.value)}
-                        className="bg-white/85 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
+                        className="bg-white/85 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer shadow-sm focus:border-ocean-400 focus:ring-2 focus:ring-ocean-100 transition-colors"
                     />
                 </div>
 
-                {/* 🐢 Turtle calendar */}
-                <TurtleCalendar selectedMonth={selectedMonth} records={records} holidays={holidays} />
+                {/* Voyage calendar */}
+                <VoyageCalendar selectedMonth={selectedMonth} records={records} holidays={holidays} />
 
                 {/* Today check-in card */}
                 <TodayCheckInCard
@@ -139,10 +139,10 @@ export default function EmployeeAttendance() {
                 </section>
 
                 {/* Attendance log */}
-                <section className="rounded-3xl bg-white/78 border border-slate-200 shadow-sm p-6 backdrop-blur-[1px]">
+                <section className="rounded-2xl bg-white/78 border border-slate-200 shadow-sm p-6 backdrop-blur-[1px]">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
                         <div>
-                            <h3 className="text-lg font-extrabold text-slate-900">Attendance Log</h3>
+                            <h3 className="text-lg font-bold text-navy-900">Attendance Log</h3>
                             <p className="text-sm text-slate-500 mt-1">{monthLabel}</p>
                         </div>
                         <span className="text-sm font-semibold text-slate-500">{formatHours(summary?.totalHours ?? 0)} total</span>

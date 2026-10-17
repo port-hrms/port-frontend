@@ -2,15 +2,12 @@
 // client/src/components/dashboard/RecentEmployees.jsx
 // ─────────────────────────────────────────────────────────────
 
-const AVATAR_COLORS = [
-    "bg-blue-500", "bg-violet-500", "bg-emerald-500",
-    "bg-amber-500", "bg-pink-500", "bg-cyan-500", "bg-rose-500",
-];
+const AVATAR_COLORS = ["bg-navy-700", "bg-ocean-600", "bg-navy-600", "bg-ocean-500", "bg-port-teal"];
 
 const STATUS_STYLES = {
-    Active: "bg-emerald-100 text-emerald-700",
-    "On Leave": "bg-amber-100 text-amber-700",
-    Inactive: "bg-red-100 text-red-600",
+    Active: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100",
+    "On Leave": "bg-amber-50 text-amber-700 ring-1 ring-amber-100",
+    Inactive: "bg-rose-50 text-rose-700 ring-1 ring-rose-100",
 };
 
 const getAvatarColor = (name = "") =>
@@ -20,11 +17,11 @@ const getInitials = (first = "", last = "") =>
 
 export default function RecentEmployees({ employees }) {
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <div className="panel overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
                 <div>
-                    <h3 className="text-base font-extrabold text-slate-900">Recent Employees</h3>
-                    <p className="text-xs text-slate-400 mt-0.5">Latest additions to the organization</p>
+                    <h3 className="text-[15px] font-bold text-navy-900">Recent Employees</h3>
+                    <p className="text-xs text-slate-500 mt-0.5">Latest additions to the organization</p>
                 </div>
             </div>
 
@@ -32,9 +29,9 @@ export default function RecentEmployees({ employees }) {
                 <div className="overflow-x-auto">
                     <table className="w-full min-w-180">
                         <thead>
-                            <tr className="bg-slate-50 border-b border-slate-100">
+                            <tr className="bg-slate-50/80 border-b border-slate-100">
                                 {["Employee", "Department", "Designation", "Status", "Joined"].map((h) => (
-                                    <th key={h} className="px-5 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                    <th key={h} className="px-5 py-3 text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                                         {h}
                                     </th>
                                 ))}
@@ -42,14 +39,14 @@ export default function RecentEmployees({ employees }) {
                         </thead>
                         <tbody className="divide-y divide-slate-50">
                             {employees.map((emp) => (
-                                <tr key={emp._id} className="hover:bg-blue-50/40 transition-colors duration-150">
+                                <tr key={emp._id} className="hover:bg-ocean-50/50 transition-colors duration-150">
                                     <td className="px-5 py-4">
                                         <div className="flex items-center gap-3">
                                             <div className={`w-9 h-9 rounded-full ${getAvatarColor(emp.firstName)} text-white text-xs font-bold flex items-center justify-center shrink-0 shadow-sm`}>
                                                 {getInitials(emp.firstName, emp.lastName)}
                                             </div>
                                             <div>
-                                                <p className="text-sm font-bold text-slate-900">{emp.firstName} {emp.lastName}</p>
+                                                <p className="text-sm font-semibold text-navy-900">{emp.firstName} {emp.lastName}</p>
                                                 <p className="text-xs text-slate-400">{emp.employeeId} · {emp.email}</p>
                                             </div>
                                         </div>
@@ -57,7 +54,7 @@ export default function RecentEmployees({ employees }) {
                                     <td className="px-5 py-4 text-sm text-slate-600">{emp.department}</td>
                                     <td className="px-5 py-4 text-sm text-slate-600">{emp.designation}</td>
                                     <td className="px-5 py-4">
-                                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${STATUS_STYLES[emp.status] || "bg-slate-100 text-slate-600"}`}>
+                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-semibold ${STATUS_STYLES[emp.status] || "bg-slate-100 text-slate-600"}`}>
                                             {emp.status}
                                         </span>
                                     </td>

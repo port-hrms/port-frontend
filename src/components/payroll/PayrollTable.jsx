@@ -15,10 +15,10 @@ const net = (p) => gross(p) - totalDeductions(p);
 export default function PayrollTable({ payrolls, loading, selectedMonth, selectedYear, onViewSlip, onOpenPaymentStepper, onDelete }) {
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <div className="panel overflow-hidden">
             <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
                 <div>
-                    <h3 className="font-extrabold text-slate-900">Payroll Records</h3>
+                    <h3 className="font-bold text-slate-900">Payroll Records</h3>
                     <p className="text-xs text-slate-400 mt-0.5">
                         {MONTHS[selectedMonth - 1]} {selectedYear} · {payrolls.length} records
                     </p>
@@ -27,7 +27,7 @@ export default function PayrollTable({ payrolls, loading, selectedMonth, selecte
 
             {loading ? (
                 <div className="flex flex-col items-center justify-center py-16 text-slate-400">
-                    <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4" />
+                    <div className="w-10 h-10 border-4 border-ocean-200 border-t-ocean-600 rounded-full animate-spin mb-4" />
                     <p className="text-sm font-medium">Loading payroll...</p>
                 </div>
             ) : payrolls.length === 0 ? (
@@ -40,15 +40,15 @@ export default function PayrollTable({ payrolls, loading, selectedMonth, selecte
                 <div className="overflow-x-auto">
                     <table className="w-full min-w-200">
                         <thead>
-                            <tr className="bg-slate-50 border-b border-slate-100">
+                            <tr className="bg-slate-50/80 border-b border-slate-100">
                                 {["Employee", "Basic", "Gross", "Deductions", "Net Salary", "Status", "Actions"].map((h) => (
-                                    <th key={h} className="px-5 py-3.5 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">{h}</th>
+                                    <th key={h} className="px-5 py-3.5 text-left uppercase text-[11px] font-semibold text-slate-500 tracking-wider">{h}</th>
                                 ))}
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50">
                             {payrolls.map((p) => (
-                                <tr key={p._id} className="hover:bg-blue-50/40 transition-colors group">
+                                <tr key={p._id} className="hover:bg-ocean-50/40 transition-colors group">
                                     {/* Employee */}
                                     <td className="px-5 py-4">
                                         <div className="flex items-center gap-3">
@@ -79,7 +79,7 @@ export default function PayrollTable({ payrolls, loading, selectedMonth, selecte
 
                                     {/* Net Salary */}
                                     <td className="px-5 py-4">
-                                        <p className="text-base font-extrabold text-slate-900">{fmt(net(p))}</p>
+                                        <p className="text-base font-bold text-slate-900">{fmt(net(p))}</p>
                                     </td>
 
                                     {/* Status */}
@@ -93,7 +93,7 @@ export default function PayrollTable({ payrolls, loading, selectedMonth, selecte
                                     <td className="px-5 py-4">
                                         <div className="flex gap-2 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
                                             <button onClick={() => onViewSlip(p)}
-                                                className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 text-xs font-bold rounded-lg transition-colors">Slip</button>
+                                                className="px-3 py-1.5 bg-ocean-50 hover:bg-ocean-100 text-ocean-600 text-xs font-bold rounded-lg transition-colors">Slip</button>
                                             {p?.payment?.status !== "Paid" && (
                                                 <button onClick={() => onOpenPaymentStepper(p)}
                                                     className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 text-xs font-bold rounded-lg transition-colors">Pay</button>

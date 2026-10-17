@@ -136,11 +136,11 @@ export default function PerformancePage() {
             {/* Page Header */}
             <div className="flex items-center justify-between flex-wrap gap-3">
                 <div>
-                    <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Performance</h2>
-                    <p className="text-sm text-slate-400 mt-0.5">Manage employee performance reviews & KPIs</p>
+                    <h2 className="text-2xl font-bold text-navy-900 tracking-tight">Performance</h2>
+                    <p className="text-sm text-slate-500 mt-0.5">Manage employee performance reviews & KPIs</p>
                 </div>
                 <button onClick={openAddForm}
-                    className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-bold px-5 py-2.5 rounded-xl shadow-md shadow-blue-200 transition-all hover:-translate-y-0.5">
+                    className="flex items-center gap-2 bg-gradient-to-r from-ocean-600 to-navy-600 hover:from-ocean-700 hover:to-navy-700 text-white text-sm font-bold px-5 py-2.5 rounded-xl shadow-md shadow-ocean-200 transition-all hover:-translate-y-0.5">
                     + New Review
                 </button>
             </div>
@@ -151,7 +151,7 @@ export default function PerformancePage() {
                     <button key={t} onClick={() => setActiveTab(t)}
                         className={`px-5 py-2 rounded-xl text-sm font-bold capitalize transition-all
                             ${activeTab === t
-                                ? "bg-slate-900 text-white shadow-md"
+                                ? "bg-navy-800 text-white shadow-md"
                                 : "bg-white text-slate-500 border border-slate-200 hover:border-slate-300"}`}>
                         {t === "reviews" ? "📋 Reviews" : "📊 Stats & Insights"}
                     </button>
@@ -169,7 +169,7 @@ export default function PerformancePage() {
                             { value: selectedStatus, setter: setSelectedStatus, options: STATUSES, label: "Status" },
                         ].map(({ value, setter, options, label, isNum }) => (
                             <select key={label} value={value} onChange={(e) => setter(isNum ? Number(e.target.value) : e.target.value)}
-                                className="bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer shadow-sm hover:border-blue-400 transition-colors">
+                                className="panel px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer hover:border-ocean-400 transition-colors">
                                 {options.map((o) => <option key={o} value={o}>{o}</option>)}
                             </select>
                         ))}
@@ -178,7 +178,7 @@ export default function PerformancePage() {
                     {/* Reviews Grid */}
                     {loading ? (
                         <div className="flex flex-col items-center justify-center py-20 text-slate-400">
-                            <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4" />
+                            <div className="w-10 h-10 border-4 border-ocean-200 border-t-ocean-600 rounded-full animate-spin mb-4" />
                             <p className="text-sm font-medium">Loading reviews...</p>
                         </div>
                     ) : reviews.length === 0 ? (

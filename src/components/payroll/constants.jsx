@@ -13,15 +13,12 @@ export const PAYMENT_METHODS = ["Bank Transfer", "Cash", "Cheque"];
 
 export const STATUS_STYLES = {
     Draft: "bg-slate-100 text-slate-600",
-    Processed: "bg-blue-100 text-blue-700",
+    Processed: "bg-ocean-100 text-ocean-700",
     Paid: "bg-emerald-100 text-emerald-700",
     Hold: "bg-amber-100 text-amber-700",
 };
 
-const AVATAR_COLORS = [
-    "bg-blue-500", "bg-violet-500", "bg-emerald-500",
-    "bg-amber-500", "bg-pink-500", "bg-cyan-500", "bg-rose-500",
-];
+const AVATAR_COLORS = ["bg-navy-700", "bg-ocean-600", "bg-navy-600", "bg-ocean-500", "bg-port-teal", "bg-navy-500"];
 
 export const getAvatarColor = (name = "") =>
     AVATAR_COLORS[name.charCodeAt(0) % AVATAR_COLORS.length];

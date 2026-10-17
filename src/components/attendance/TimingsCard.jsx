@@ -3,11 +3,9 @@
 
 import { useMemo } from "react";
 import { FaRegClock } from "react-icons/fa";
+import { SHIFT_END, SHIFT_START, SHIFT_TOTAL_MINUTES } from "./attendanceHelpers";
 
 const DAYS = ["M", "T", "W", "T", "F", "S", "S"];
-const SHIFT_START = "10:00 AM";
-const SHIFT_END = "5:30 PM";
-const SHIFT_TOTAL_MINUTES = 7 * 60 + 30;
 
 const parseTimeOnDate = (dateValue, timeValue) => {
     if (!timeValue) return null;
@@ -113,8 +111,8 @@ export default function TimingsCard({ selectedDate, records = [] }) {
     }, [records, selectedDate]);
 
     return (
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4">
-            <h3 className="text-lg font-extrabold text-slate-700 mb-4">Timings</h3>
+        <div className="panel p-4">
+            <h3 className="text-lg font-bold text-slate-700 mb-4">Timings</h3>
 
             <div className="flex items-center gap-2 mb-10">
                 {DAYS.map((day, index) => {

@@ -20,7 +20,7 @@ export default function FieldAgentVisitsFilterBar({
                         placeholder="Search by client or student name..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-9 pr-4 py-2 text-xs text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium"
+                        className="w-full pl-9 pr-4 py-2 text-xs text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-all font-medium"
                     />
                 </div>
 
@@ -28,7 +28,7 @@ export default function FieldAgentVisitsFilterBar({
                 <select
                     value={leadTypeFilter}
                     onChange={(e) => setLeadTypeFilter(e.target.value)}
-                    className="w-full sm:w-auto px-3 py-2 text-xs text-slate-600 bg-white rounded-xl border border-slate-200 outline-none focus:border-blue-500 font-bold cursor-pointer"
+                    className="w-full sm:w-auto px-3 py-2 text-xs text-slate-600 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 font-bold cursor-pointer"
                 >
                     <option value="All">🎯 All Lead Types</option>
                     <option value="Client">🤝 Client Leads</option>
@@ -41,7 +41,7 @@ export default function FieldAgentVisitsFilterBar({
                         type="date"
                         value={selectedDate}
                         onChange={(e) => setSelectedDate(e.target.value)}
-                        className="w-full sm:w-auto px-3 py-2 text-xs text-slate-600 bg-white rounded-xl border border-slate-200 outline-none focus:border-blue-500 font-bold cursor-pointer"
+                        className="w-full sm:w-auto px-3 py-2 text-xs text-slate-600 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 font-bold cursor-pointer"
                     />
                     {selectedDate && (
                         <button
@@ -58,7 +58,7 @@ export default function FieldAgentVisitsFilterBar({
             <button
                 onClick={onRefresh}
                 disabled={loading}
-                className="w-full sm:w-auto px-4 py-2 bg-slate-900 hover:bg-slate-800 disabled:bg-slate-200 disabled:text-slate-400 text-white text-xs font-bold rounded-xl transition-all cursor-pointer shrink-0"
+                className="w-full sm:w-auto px-4 py-2 bg-navy-800 hover:bg-navy-700 disabled:bg-slate-200 disabled:text-slate-400 text-white text-xs font-bold rounded-xl transition-all cursor-pointer shrink-0"
             >
                 {loading ? "Refreshing..." : "🔄 Refresh"}
             </button>

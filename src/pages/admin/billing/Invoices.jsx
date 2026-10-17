@@ -35,18 +35,18 @@ export default function Invoices() {
   } = useInvoices();
 
   const statCards = [
-    { label: "Total Invoices", value: stats?.total || 0, color: "text-blue-600" },
+    { label: "Total Invoices", value: stats?.total || 0, color: "text-ocean-600" },
     { label: "Paid", value: stats?.paid || 0, color: "text-emerald-600" },
     { label: "Unpaid", value: stats?.unpaid || 0, color: "text-amber-600" },
     { label: "Overdue", value: stats?.overdue || 0, color: "text-rose-600" },
-    { label: "Revenue", value: `₹${(stats?.revenueGenerated || 0).toLocaleString("en-IN")}`, color: "text-violet-600" },
+    { label: "Revenue", value: `₹${(stats?.revenueGenerated || 0).toLocaleString("en-IN")}`, color: "text-navy-600" },
     { label: "Pending Payments", value: `₹${(stats?.pendingPayments || 0).toLocaleString("en-IN")}`, color: "text-orange-600" },
   ];
 
   const statusStyles = {
     Paid: "bg-emerald-50 text-emerald-600",
     Unpaid: "bg-amber-50 text-amber-600",
-    Partial: "bg-blue-50 text-blue-600",
+    Partial: "bg-ocean-50 text-ocean-600",
     Overdue: "bg-rose-50 text-rose-600",
   };
 
@@ -55,12 +55,12 @@ export default function Invoices() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-900">Invoices</h1>
-          <p className="text-sm text-slate-400 mt-0.5">Manage invoices and payment tracking</p>
+          <h1 className="text-2xl font-bold text-navy-900">Invoices</h1>
+          <p className="text-sm text-slate-500 mt-0.5">Manage invoices and payment tracking</p>
         </div>
         <button
           onClick={() => { setEditing(null); resetForm(); setShowModal(true); }}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-blue-600 to-indigo-600 text-white text-sm font-bold rounded-xl shadow-md shadow-blue-200 hover:from-blue-700 hover:to-indigo-700 hover:-translate-y-0.5 transition-all"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-ocean-600 to-navy-600 text-white text-sm font-bold rounded-xl shadow-md shadow-ocean-200 hover:from-ocean-700 hover:to-navy-700 hover:-translate-y-0.5 transition-all"
         >
           <Plus size={16} />
           Create Invoice
@@ -70,9 +70,9 @@ export default function Invoices() {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {statCards.map((s) => (
-          <div key={s.label} className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4">
+          <div key={s.label} className="panel p-4">
             <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{s.label}</p>
-            <p className={`text-lg font-extrabold mt-1 ${s.color}`}>{s.value}</p>
+            <p className={`text-lg font-bold mt-1 ${s.color}`}>{s.value}</p>
           </div>
         ))}
       </div>
@@ -81,17 +81,17 @@ export default function Invoices() {
       <div className="relative max-w-md">
         <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
         <input type="text" placeholder="Search invoices..." value={search} onChange={(e) => setSearch(e.target.value)}
-          className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors" />
+          className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-700 outline-none focus:border-ocean-400 focus:ring-2 focus:ring-ocean-100 transition-colors" />
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+      <div className="panel overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-100">
+              <tr className="bg-slate-50/80 border-b border-slate-100">
                 {["Invoice ID", "Client", "Amount", "Due Date", "Payment Status", "Actions"].map((h) => (
-                  <th key={h} className="text-left px-5 py-3.5 text-xs font-extrabold text-slate-500 uppercase tracking-wider whitespace-nowrap">{h}</th>
+                  <th key={h} className="text-left px-5 py-3.5 uppercase whitespace-nowrap text-[11px] font-semibold text-slate-500 tracking-wider">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -113,13 +113,13 @@ export default function Invoices() {
                   </td>
                   <td className="px-4 py-3.5">
                     <div className="flex items-center gap-1">
-                      <button onClick={() => setShowView(inv)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-blue-50 text-slate-400 hover:text-blue-600" title="View"><View size={13} /></button>
-                      <button onClick={() => handleDownloadPDF(inv._id)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-indigo-50 text-slate-400 hover:text-indigo-600" title="Download PDF"><Download size={13} /></button>
-                      <button onClick={() => handleSendEmail(inv._id)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-sky-50 text-slate-400 hover:text-sky-600" title="Send Email"><Mail size={13} /></button>
+                      <button onClick={() => setShowView(inv)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-ocean-50 text-slate-400 hover:text-ocean-600" title="View"><View size={13} /></button>
+                      <button onClick={() => handleDownloadPDF(inv._id)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-navy-50 text-slate-400 hover:text-navy-600" title="Download PDF"><Download size={13} /></button>
+                      <button onClick={() => handleSendEmail(inv._id)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-ocean-50 text-slate-400 hover:text-ocean-600" title="Send Email"><Mail size={13} /></button>
                       {inv.paymentStatus !== "Paid" && (
                         <button onClick={() => handleMarkPaid(inv)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-emerald-50 text-slate-400 hover:text-emerald-600" title="Mark as Paid"><CheckCircle size={13} /></button>
                       )}
-                      <button onClick={() => openEdit(inv)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-indigo-50 text-slate-400 hover:text-indigo-600" title="Edit"><Pencil size={13} /></button>
+                      <button onClick={() => openEdit(inv)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-navy-50 text-slate-400 hover:text-navy-600" title="Edit"><Pencil size={13} /></button>
                       <button onClick={() => handleDelete(inv)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-rose-50 text-slate-400 hover:text-rose-600" title="Delete"><Trash2 size={13} /></button>
                     </div>
                   </td>

@@ -123,14 +123,14 @@ export default function EmployeeTasks() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Daily Tasks</h2>
-          <p className="text-sm text-slate-400 mt-1">Assign tasks to colleagues and track updates.</p>
+          <h2 className="text-2xl font-bold text-navy-900 tracking-tight">Daily Tasks</h2>
+          <p className="text-sm text-slate-500 mt-1">Assign tasks to colleagues and track updates.</p>
         </div>
         <input
           type="date"
           value={selectedDate}
           onChange={(event) => setSelectedDate(event.target.value)}
-          className="bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
+          className="panel px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer focus:border-ocean-400 focus:ring-2 focus:ring-ocean-100 transition-colors"
         />
       </div>
 
@@ -147,12 +147,12 @@ export default function EmployeeTasks() {
         {/* Right Col: Task Lists */}
         <div className="lg:col-span-2 space-y-8">
           {loading ? (
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-10 text-center text-slate-400">
-              <div className="w-8 h-8 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin mx-auto mb-4" />
+            <div className="panel p-10 text-center text-slate-400">
+              <div className="w-8 h-8 border-4 border-ocean-100 border-t-ocean-600 rounded-full animate-spin mx-auto mb-4" />
               Loading tasks...
             </div>
           ) : tasks.length === 0 ? (
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-10 text-center text-slate-400 select-none">
+            <div className="panel p-10 text-center text-slate-400 select-none">
               <div className="text-4xl mb-3 opacity-30">📋</div>
               No tasks for this day.
             </div>
@@ -161,7 +161,7 @@ export default function EmployeeTasks() {
               {/* Incoming Tasks (My Work) */}
               {groupedTasks.incoming.length > 0 && (
                 <div className="space-y-4">
-                  <h3 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-[0.2em] ml-1">My Work</h3>
+                  <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] ml-1">My Work</h3>
                   {groupedTasks.incoming.map((task) => (
                     <IncomingTaskCard
                       key={task._id}
@@ -178,7 +178,7 @@ export default function EmployeeTasks() {
               {/* Outgoing Tasks (Assigned by Me) */}
               {groupedTasks.outgoing.length > 0 && (
                 <div className="space-y-4">
-                  <h3 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-[0.2em] ml-1">Tasks I Assigned</h3>
+                  <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] ml-1">Tasks I Assigned</h3>
                   {groupedTasks.outgoing.map((task) => (
                     <OutgoingTaskCard key={task._id} task={task} />
                   ))}

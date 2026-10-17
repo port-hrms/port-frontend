@@ -11,10 +11,10 @@ export default function PerformancePanel({ performance, gradeConfig, navigate, s
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex-1">
+    <div className="panel overflow-hidden flex-1">
       <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
         <div>
-          <h3 className="font-extrabold text-slate-900">Latest Performance</h3>
+          <h3 className="font-bold text-slate-900">Latest Performance</h3>
           <p className="text-xs text-slate-400 mt-0.5">Most recent review cycle</p>
         </div>
         <span className="text-xl">📈</span>
@@ -37,12 +37,12 @@ export default function PerformancePanel({ performance, gradeConfig, navigate, s
                   size={80}
                   stroke={7}
                   color={performance.overallScore >= 90 ? "#10b981"
-                    : performance.overallScore >= 75 ? "#3b82f6"
+                    : performance.overallScore >= 75 ? "#1e88c8"
                       : performance.overallScore >= 60 ? "#f59e0b"
                         : "#ef4444"}
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-lg font-extrabold text-slate-900">{performance.overallScore}</span>
+                  <span className="text-lg font-bold text-navy-900">{performance.overallScore}</span>
                   <span className="text-[9px] text-slate-400 font-bold">/ 100</span>
                 </div>
               </div>
@@ -59,7 +59,7 @@ export default function PerformancePanel({ performance, gradeConfig, navigate, s
                       <span className="text-xs font-bold text-slate-700">{val}/5</span>
                     </div>
                     <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-linear-to-r from-blue-400 to-indigo-500 rounded-full" style={{ width: `${(val / 5) * 100}%` }} />
+                      <div className="h-full bg-linear-to-r from-ocean-400 to-navy-500 rounded-full" style={{ width: `${(val / 5) * 100}%` }} />
                     </div>
                   </div>
                 ))}
@@ -85,15 +85,15 @@ export default function PerformancePanel({ performance, gradeConfig, navigate, s
                 {performance.incrementRecommended && (
                   <div className="flex-1 bg-green-50 border border-green-100 rounded-xl p-2.5 text-center">
                     <p className="text-base">💰</p>
-                    <p className="text-xs font-extrabold text-green-700">+{performance.incrementPercent}%</p>
+                    <p className="text-xs font-bold text-green-700">+{performance.incrementPercent}%</p>
                     <p className="text-[10px] text-green-600">Increment</p>
                   </div>
                 )}
                 {performance.promotionRecommended && (
-                  <div className="flex-1 bg-violet-50 border border-violet-100 rounded-xl p-2.5 text-center">
+                  <div className="flex-1 bg-navy-50 border border-navy-100 rounded-xl p-2.5 text-center">
                     <p className="text-base">🚀</p>
-                    <p className="text-xs font-extrabold text-violet-700">Recommended</p>
-                    <p className="text-[10px] text-violet-600">Promotion</p>
+                    <p className="text-xs font-bold text-navy-700">Recommended</p>
+                    <p className="text-[10px] text-navy-600">Promotion</p>
                   </div>
                 )}
               </div>

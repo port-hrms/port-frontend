@@ -78,7 +78,7 @@ export default function EmployeeWFH() {
   return (
     <div className="space-y-5 pb-8">
       {/* ── Header ── */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-teal-500 via-cyan-500 to-blue-500 p-6 shadow-lg">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-navy-700 via-ocean-600 to-port-teal p-6 shadow-lg">
         {/* Decorative blobs */}
         <div className="absolute -top-8 -right-8 w-48 h-48 bg-white/10 rounded-full" />
         <div className="absolute -bottom-4 left-16 w-32 h-32 bg-white/10 rounded-full" />
@@ -87,7 +87,7 @@ export default function EmployeeWFH() {
           <div>
             <div className="flex items-center gap-2 mb-1">
              
-              <h2 className="text-xl font-extrabold text-white">Work From Home</h2>
+              <h2 className="text-xl font-bold text-white">Work From Home</h2>
             </div>
             <p className="text-teal-100 text-sm">Apply for WFH. Once approved, check-in from anywhere.</p>
           </div>
@@ -109,7 +109,7 @@ export default function EmployeeWFH() {
             { label: "Total WFH Days", val: stats.totalDays, style: "bg-white/90 text-teal-700" },
           ].map((card) => (
             <div key={card.label} className={`rounded-xl px-4 py-3 backdrop-blur-sm ${card.style}`}>
-              <p className="text-xl font-extrabold">{card.val}</p>
+              <p className="text-xl font-bold">{card.val}</p>
               <p className="text-xs font-bold opacity-70 mt-0.5">{card.label}</p>
             </div>
           ))}
@@ -117,9 +117,9 @@ export default function EmployeeWFH() {
       </div>
 
       {/* ── WFH Request List ── */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+      <div className="panel overflow-hidden">
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-          <h3 className="font-extrabold text-slate-900">WFH History</h3>
+          <h3 className="font-bold text-slate-900">WFH History</h3>
           <span className="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl">
             {wfhList.length} request{wfhList.length !== 1 ? "s" : ""}
           </span>

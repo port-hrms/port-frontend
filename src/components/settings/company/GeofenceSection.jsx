@@ -16,7 +16,7 @@ export const GeofenceSection = ({ latitude, longitude, handleChange }) => {
             step="any"
             value={latitude}
             onChange={handleChange}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors"
             placeholder="e.g. 20.296059"
           />
         </div>
@@ -28,7 +28,7 @@ export const GeofenceSection = ({ latitude, longitude, handleChange }) => {
             step="any"
             value={longitude}
             onChange={handleChange}
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-colors"
+            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 transition-colors"
             placeholder="e.g. 85.824539"
           />
         </div>

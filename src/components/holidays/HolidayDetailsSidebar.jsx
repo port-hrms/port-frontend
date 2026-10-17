@@ -12,10 +12,10 @@ export default function HolidayDetailsSidebar({
             <div className="flex-1">
             {selectedDate ? (
                 <>
-                    <div className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest mb-1">
+                    <div className="text-[10px] font-bold text-navy-500 uppercase tracking-widest mb-1">
                         {selectedDate.toLocaleString("default", { month: "long" })}
                     </div>
-                    <h3 className="font-extrabold text-3xl text-slate-900 mb-6 flex gap-2 items-baseline">
+                    <h3 className="font-bold text-3xl text-navy-900 mb-6 flex gap-2 items-baseline">
                     {selectedDate.getDate()}
                     <span className="text-base text-slate-500 font-semibold lowercase">
                         {selectedDate.toLocaleString("default", { weekday: "long" })}
@@ -27,14 +27,14 @@ export default function HolidayDetailsSidebar({
                         dateHolidays.map((holiday) => (
                         <div
                             key={holiday._id}
-                            className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden group cursor-pointer hover:shadow-md transition-all"
+                            className="panel p-5 relative overflow-hidden group cursor-pointer hover:shadow-md transition-all"
                             onClick={() => onSelectHoliday?.(holiday)}
                         >
-                            <div className="absolute left-0 top-0 bottom-0 w-1.5" style={{ backgroundColor: holiday.color || "#6366f1" }}></div>
-                            <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider mb-2" style={{ backgroundColor: `${holiday.color}20`, color: holiday.color || "#6366f1" }}>
+                            <div className="absolute left-0 top-0 bottom-0 w-1.5" style={{ backgroundColor: holiday.color || "#1e88c8" }}></div>
+                            <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider mb-2" style={{ backgroundColor: `${holiday.color}20`, color: holiday.color || "#1e88c8" }}>
                                 {holiday.type}
                             </span>
-                            <h4 className="font-extrabold text-slate-800 text-base leading-tight mb-1">
+                            <h4 className="font-bold text-slate-800 text-base leading-tight mb-1">
                             {holiday.name}
                             </h4>
                             {holiday.description && (
@@ -66,7 +66,7 @@ export default function HolidayDetailsSidebar({
             <div className="mt-8 pt-6 border-t border-slate-200">
                 <button
                 onClick={() => onNavigateToForm?.(selectedDate || new Date())}
-                className="w-full py-3.5 bg-slate-900 hover:bg-indigo-600 text-white rounded-xl text-sm font-bold shadow-md transition-all flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-navy-800 hover:bg-navy-700 text-white rounded-xl text-sm font-bold shadow-md transition-all flex items-center justify-center gap-2"
                 >
                 Add Holiday
                 </button>

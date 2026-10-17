@@ -24,6 +24,28 @@ const getCoordinates = () =>
         );
     });
 
+/**
+ * Verify location, then check in / check out. Shows its own toasts.
+ * Throws on failure so callers can skip their refresh.
+ */
+export async function performAttendanceAction(kind) {
+    const label = kind === "check-in" ? "Check-in" : "Check-out";
+    let toastId;
+    try {
+        toastId = toast.loading("Verifying your location...");
+        const coords = await getCoordinates();
+        toast.dismiss(toastId);
+        toastId = toast.loading(kind === "check-in" ? "Checking in..." : "Checking out...");
+        await API.post(`/attendance/${kind}`, { latitude: coords.latitude, longitude: coords.longitude });
+        toast.dismiss(toastId);
+        toast.success(kind === "check-in" ? "Checked in successfully! ✅" : "Checked out successfully! ✅");
+    } catch (err) {
+        if (toastId) toast.dismiss(toastId);
+        toast.error(err.response?.data?.message || err.message || `${label} failed`);
+        throw err;
+    }
+}
+
 export default function useEmployeeAttendance() {
     const [selectedMonth, setSelectedMonth] = useState(() => monthInputFromDate(new Date()));
     const [profile, setProfile] = useState(null);
@@ -76,63 +98,21 @@ export default function useEmployeeAttendance() {
         }
     }, [selectedMonth]);
 
-    const handleCheckIn = async () => {
-        let locationToastId;
+    const runAction = async (kind) => {
         try {
-            setActionLoading("check-in");
-            locationToastId = toast.loading("Verifying your location...");
-
-            // Get coordinates
-            const coords = await getCoordinates();
-
-            toast.dismiss(locationToastId);
-            locationToastId = toast.loading("Checking in...");
-
-            // Check in
-            await API.post("/attendance/check-in", {
-                latitude: coords.latitude,
-                longitude: coords.longitude
-            });
-            toast.dismiss(locationToastId);
-            toast.success("Checked in successfully! ✅");
+            setActionLoading(kind);
+            await performAttendanceAction(kind);
             await fetchDashboard();
             if (profile?._id) await fetchAttendance(profile._id, selectedMonth);
-
-        } catch (err) {
-            if (locationToastId) toast.dismiss(locationToastId);
-            toast.error(err.response?.data?.message || err.message || "Check-in failed");
+        } catch {
+            // toast already shown
         } finally {
             setActionLoading("");
         }
     };
 
-    const handleCheckOut = async () => {
-        let locationToastId;
-        try {
-            setActionLoading("check-out");
-            locationToastId = toast.loading("Verifying your location...");
-
-            // Get coordinates
-            const coords = await getCoordinates();
-
-            toast.dismiss(locationToastId);
-            locationToastId = toast.loading("Checking out...");
-
-            await API.post("/attendance/check-out", {
-                latitude: coords.latitude,
-                longitude: coords.longitude
-            });
-            toast.dismiss(locationToastId);
-            toast.success("Checked out successfully! ✅");
-            await fetchDashboard();
-            if (profile?._id) await fetchAttendance(profile._id, selectedMonth);
-        } catch (err) {
-            if (locationToastId) toast.dismiss(locationToastId);
-            toast.error(err.response?.data?.message || err.message || "Check-out failed");
-        } finally {
-            setActionLoading("");
-        }
-    };
+    const handleCheckIn = () => runAction("check-in");
+    const handleCheckOut = () => runAction("check-out");
 
     useEffect(() => {
         fetchDashboard();
