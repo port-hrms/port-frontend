@@ -1,7 +1,6 @@
 // @ts-nocheck
 import { useMemo } from "react";
 import { Anchor } from "lucide-react";
-import { isHalfDay, isLateEntry } from "./attendanceHelpers";
 
 /* ─── Small container ship, used for today's marker and the header ─── */
 function MiniShip({ className = "" }) {
@@ -59,12 +58,9 @@ function deriveStatus(calDay) {
     const todayObj = new Date();
     todayObj.setHours(0, 0, 0, 0);
 
+    // The saved status is final (server rules + admin corrections)
     if (calDay.record) {
-        if (calDay.record.checkIn) {
-            if (isHalfDay(calDay.record.checkIn))   return "Half Day";
-            if (isLateEntry(calDay.record.checkIn)) return "Late";
-        }
-        return calDay.record.status;
+        return calDay.record.status === "Late Entry" ? "Late" : calDay.record.status;
     }
 
     if (calDateObj < todayObj) {

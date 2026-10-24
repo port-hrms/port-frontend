@@ -3,7 +3,9 @@
 // Shared constants, style maps, and helpers for the Attendance module
 
 export const STATUS_OPTIONS = ["Present", "Absent", "On Leave", "Half Day", "Late"];
-export const LEAVE_TYPES = ["", "Sick Leave", "Casual Leave", "Paid Leave", "Unpaid Leave"];
+// Same leave types as leave requests
+export const LEAVE_TYPES = ["", "Sick Leave", "Casual Leave", "Earned Leave", "Maternity Leave", "Special Leave", "Unpaid Leave"];
+export { WORKING_STATUSES, todayIST, nowTimeIST, to24h, formatClockTime } from "./timeUtils";
 
 export const STATUS_STYLES = {
     Present: "bg-emerald-100 text-emerald-700",
@@ -13,65 +15,10 @@ export const STATUS_STYLES = {
     Late: "bg-navy-100 text-navy-600",
 };
 
-export const STATUS_ICONS = {
-    Present: "✅", Absent: "❌", "On Leave": "🏖️", "Half Day": "🕐", Late: "⏰",
-};
-
-const AVATAR_COLORS = ["bg-navy-700", "bg-ocean-600", "bg-navy-600", "bg-ocean-500", "bg-port-teal", "bg-navy-500"];
-
-export const getAvatarColor = (name = "") =>
-    AVATAR_COLORS[name.charCodeAt(0) % AVATAR_COLORS.length];
 
 export const toDateInput = (d) => new Date(d).toISOString().split("T")[0];
 export const formatDate = (d) =>
     new Date(d).toLocaleDateString("en-IN", { weekday: "short", day: "2-digit", month: "short", year: "numeric" });
-
-export const formatTime = (time) => {
-    if (!time) return "—";
-    try {
-        // If time is already a string in HH:MM AM/PM or HH:MM format, just return it
-        if (typeof time === "string" && !time.includes("T") && !time.includes("-")) {
-            return time;
-        }
-        // Otherwise parse as ISO date and format
-        const date = new Date(time);
-        if (isNaN(date.getTime())) return "—";
-        
-        return date.toLocaleString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-        });
-    } catch (error) {
-        return "—";
-    }
-};
-
-// ─── Format check-in/check-out time in Indian timezone (IST) ──────────────────────────────────────
-export const formatCheckInTime = (time) => {
-    if (!time) return "—";
-    try {
-        // If time is already a string in HH:MM AM/PM or HH:MM format, just return it
-        if (typeof time === "string" && !time.includes("T") && !time.includes("-")) {
-            return time;
-        }
-        // Otherwise parse as ISO date and format
-        const date = new Date(time);
-        if (isNaN(date.getTime())) return "—";
-        
-        return date.toLocaleString("en-IN", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: true,
-        });
-    } catch {
-        return "—";
-    }
-};
 
 // ─── Reusable field label ──────────────────────────────────────
 export const FieldLabel = ({ label, required }) => (

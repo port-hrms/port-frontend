@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useEffect, useState } from "react";
-import { formatCheckInTime } from "./constants";
+import { formatClockTime } from "./timeUtils";
 import { STATUS_TONE, parseMinutes } from "./attendanceHelpers";
 import { formatHours } from "../../utils/dateUtils";
 
@@ -66,8 +66,8 @@ export default function TodayCheckInCard({
             {/* Time info */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
                 {[
-                    ["Check In",  formatCheckInTime(todayRecord?.checkIn)],
-                    ["Check Out", formatCheckInTime(todayRecord?.checkOut)],
+                    ["Check In",  formatClockTime(todayRecord?.checkIn)],
+                    ["Check Out", formatClockTime(todayRecord?.checkOut)],
                     ["Hours",     formatHours(hoursWorked)],
                 ].map(([label, value]) => (
                     <div key={label} className="rounded-2xl border border-slate-200 bg-white/85 p-4">

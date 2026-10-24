@@ -11,7 +11,10 @@ export const STATUS_TONE = {
     "Not Marked": "bg-slate-100  text-slate-600",
 };
 
-/** Standard office shift */
+/**
+ * Fallback shift values, used only until the real rules arrive from
+ * GET /attendance/policy (see hooks/useAttendancePolicy). The server is the single source.
+ */
 export const SHIFT_START = "10:00 AM";
 export const SHIFT_END = "5:30 PM";
 export const SHIFT_TOTAL_MINUTES = 7 * 60 + 30;
@@ -42,24 +45,9 @@ export const parseMinutes = (timeString) => {
     return hours * 60 + minutes;
 };
 
-/** 10:30 AM – 1:00 PM = Late Entry */
-export const isLateEntry = (timeString) => {
-    const m = parseMinutes(timeString);
-    if (m === null) return false;
-    return m >= 630 && m < 780; // 10:30 → 13:00
-};
-
-/** After 1:00 PM = Half Day */
-export const isHalfDay = (timeString) => {
-    const m = parseMinutes(timeString);
-    if (m === null) return false;
-    return m >= 780; // 13:00
-};
-
-/** Derive display status from a check-in time + raw DB status */
-export const deriveStatus = (checkIn, rawStatus) => {
-    if (!checkIn) return rawStatus;
-    if (isHalfDay(checkIn))  return "Half Day";
-    if (isLateEntry(checkIn)) return "Late Entry";
-    return rawStatus;
-};
+/**
+ * Display status for a record. The status saved on the server is final
+ * (it applies the shift rules at check-in, and admins may correct it),
+ * so screens must not re-decide it from the check-in time.
+ */
+export const deriveStatus = (_checkIn, rawStatus) => (rawStatus === "Late Entry" ? "Late" : rawStatus);

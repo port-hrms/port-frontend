@@ -10,6 +10,8 @@ export default function ConfirmDialog({
     cancelLabel = "Cancel",
     tone = "danger",
     busy = false,
+    confirmDisabled = false,
+    children,
     onConfirm,
     onCancel,
 }) {
@@ -42,9 +44,10 @@ export default function ConfirmDialog({
                     <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${tone === "danger" ? "bg-red-50 text-port-red" : "bg-ocean-50 text-ocean-600"}`}>
                         <AlertTriangle size={20} />
                     </span>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                         <h3 id="confirm-title" className="text-base font-bold text-navy-900">{title}</h3>
                         <div className="mt-1.5 text-sm leading-6 text-slate-600">{message}</div>
+                        {children && <div className="mt-3">{children}</div>}
                     </div>
                 </div>
                 <div className="mt-6 flex justify-end gap-2.5">
@@ -60,7 +63,7 @@ export default function ConfirmDialog({
                     <button
                         type="button"
                         onClick={onConfirm}
-                        disabled={busy}
+                        disabled={busy || confirmDisabled}
                         className={`rounded-lg px-4 py-2 text-sm font-semibold text-white focus:outline-none focus-visible:ring-4 disabled:opacity-60 ${confirmTone}`}
                     >
                         {busy ? "Please wait…" : confirmLabel}

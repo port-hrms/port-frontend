@@ -8,8 +8,6 @@ import {
     monthInputFromDate,
     formatDate,
     STATUS_TONE,
-    isLateEntry,
-    isHalfDay,
     deriveStatus,
 } from "../../components/attendance/attendanceHelpers";
 import { formatHours } from "../../utils/dateUtils";

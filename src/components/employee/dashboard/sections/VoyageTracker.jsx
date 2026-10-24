@@ -3,7 +3,8 @@
 
 import { useEffect, useState } from "react";
 import { Anchor } from "lucide-react";
-import { parseMinutes, SHIFT_END, SHIFT_START, SHIFT_TOTAL_MINUTES } from "@/components/attendance/attendanceHelpers";
+import { parseMinutes } from "@/components/attendance/attendanceHelpers";
+import useAttendancePolicy from "@/hooks/useAttendancePolicy";
 
 const fmtDuration = (mins) => {
     const m = Math.max(0, Math.round(mins));
@@ -12,7 +13,7 @@ const fmtDuration = (mins) => {
 
 
 
-function getVoyage(record, status, now) {
+function getVoyage(record, status, now, { shiftStart: SHIFT_START, shiftMinutes: SHIFT_TOTAL_MINUTES }) {
     if (status === "On Leave") {
         return { progress: 0, worked: 0, state: "anchored", label: "In harbour", detail: "On leave today — enjoy your day off" };
     }
@@ -100,6 +101,9 @@ function Port() {
 }
 
 export default function VoyageTracker({ record, status }) {
+    const policy = useAttendancePolicy();
+    const SHIFT_START = policy.shiftStart;
+    const SHIFT_END = policy.shiftEnd;
     const [now, setNow] = useState(new Date());
 
     useEffect(() => {
@@ -107,7 +111,7 @@ export default function VoyageTracker({ record, status }) {
         return () => clearInterval(timer);
     }, []);
 
-    const voyage = getVoyage(record, status, now);
+    const voyage = getVoyage(record, status, now, policy);
 
     return (
         <div className="relative mt-5">

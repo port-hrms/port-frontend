@@ -12,7 +12,7 @@ const getCoordinates = () =>
             return;
         }
         navigator.geolocation.getCurrentPosition(
-            (pos) => resolve({ latitude: pos.coords.latitude, longitude: pos.coords.longitude }),
+            (pos) => resolve({ latitude: pos.coords.latitude, longitude: pos.coords.longitude, accuracy: pos.coords.accuracy }),
             (error) => {
                 let msg = "Failed to retrieve location. Please enable location permission.";
                 if (error.code === error.PERMISSION_DENIED)        msg = "Location permission denied. Please allow location access to check-in.";
@@ -36,9 +36,9 @@ export async function performAttendanceAction(kind) {
         const coords = await getCoordinates();
         toast.dismiss(toastId);
         toastId = toast.loading(kind === "check-in" ? "Checking in..." : "Checking out...");
-        await API.post(`/attendance/${kind}`, { latitude: coords.latitude, longitude: coords.longitude });
+        await API.post(`/attendance/${kind}`, { latitude: coords.latitude, longitude: coords.longitude, accuracy: coords.accuracy });
         toast.dismiss(toastId);
-        toast.success(kind === "check-in" ? "Checked in successfully! ✅" : "Checked out successfully! ✅");
+        toast.success(kind === "check-in" ? "Checked in" : "Checked out");
     } catch (err) {
         if (toastId) toast.dismiss(toastId);
         toast.error(err.response?.data?.message || err.message || `${label} failed`);

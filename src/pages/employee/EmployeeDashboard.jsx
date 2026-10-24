@@ -12,7 +12,7 @@ import NewsFeedPanel from "@/components/dashboard/NewsFeedPanel";
 import RecentLeaveRequests from "@/components/dashboard/RecentLeaveRequests";
 import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
-import { isHalfDay, isLateEntry, parseMinutes } from "@/components/attendance/attendanceHelpers";
+import { deriveStatus, parseMinutes } from "@/components/attendance/attendanceHelpers";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -119,12 +119,7 @@ export default function EmployeeDashboard({ setActiveTab }) {
 
         const stats = { present: 0, late: 0, halfDay: 0, onLeave: 0, absent: 0, total: 0, totalHours: 0 };
         records.forEach((record) => {
-          let status = record.status;
-          if (status === "Half Day" || (record.checkIn && isHalfDay(record.checkIn))) {
-            status = "Half Day";
-          } else if (status === "Late" || status === "Late Entry" || (record.checkIn && isLateEntry(record.checkIn))) {
-            status = "Late";
-          }
+          const status = deriveStatus(record.checkIn, record.status);
 
           if (status === "Present") stats.present += 1;
           else if (status === "Late") stats.late += 1;
@@ -151,13 +146,7 @@ export default function EmployeeDashboard({ setActiveTab }) {
         const todayText = now.toDateString();
         const todayRec = records.find((record) => new Date(record.date).toDateString() === todayText);
         if (todayRec) {
-          let status = todayRec.status;
-          if (status === "Half Day" || (todayRec.checkIn && isHalfDay(todayRec.checkIn))) {
-            status = "Half Day";
-          } else if (status === "Late" || status === "Late Entry" || (todayRec.checkIn && isLateEntry(todayRec.checkIn))) {
-            status = "Late";
-          }
-          setTodayStatus(status);
+          setTodayStatus(deriveStatus(todayRec.checkIn, todayRec.status));
           setTodayRecord(todayRec);
         }
       }

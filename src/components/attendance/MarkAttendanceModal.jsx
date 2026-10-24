@@ -1,9 +1,46 @@
 // @ts-nocheck
 // client/src/components/attendance/MarkAttendanceModal.jsx
 
-import { STATUS_OPTIONS, STATUS_ICONS, LEAVE_TYPES, formatDate } from "./constants";
+import { useMemo, useState } from "react";
+import { STATUS_OPTIONS, LEAVE_TYPES, WORKING_STATUSES, formatDate, to24h } from "./constants";
+import StatusIcon from "./StatusIcon";
+import useAttendancePolicy from "../../hooks/useAttendancePolicy";
+
+// Status the shift rules give for a check-in time ("HH:mm")
+const statusForCheckIn = (time24, policy) => {
+    if (!time24) return null;
+    if (time24 >= to24h(policy.halfDayCheckInAfter)) return "Half Day";
+    if (time24 > to24h(policy.lateAfter)) return "Late";
+    return "Present";
+};
 
 export default function MarkAttendanceModal({ form, setForm, employees, selectedDate, onSubmit, onClose }) {
+    const policy = useAttendancePolicy();
+    const [search, setSearch] = useState("");
+    const [statusTouched, setStatusTouched] = useState(false);
+
+    const filtered = useMemo(() => {
+        const q = search.trim().toLowerCase();
+        const list = q
+            ? employees.filter((e) => `${e.firstName} ${e.lastName} ${e.employeeId} ${e.department}`.toLowerCase().includes(q))
+            : employees;
+        // keep the chosen employee visible even if it doesn't match the search
+        const chosen = employees.find((e) => e._id === form.employee);
+        return chosen && !list.includes(chosen) ? [chosen, ...list] : list;
+    }, [employees, search, form.employee]);
+
+    const suggested = statusForCheckIn(form.checkIn, policy);
+
+    const onCheckInChange = (value) => {
+        setForm((p) => {
+            const next = { ...p, checkIn: value };
+            // Follow the shift rules unless the admin picked a status themselves
+            const auto = statusForCheckIn(value, policy);
+            if (auto && !statusTouched && WORKING_STATUSES.includes(p.status)) next.status = auto;
+            return next;
+        });
+    };
+
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl" onClick={(e) => e.stopPropagation()}>
@@ -19,15 +56,24 @@ export default function MarkAttendanceModal({ form, setForm, employees, selected
                 <form onSubmit={onSubmit} className="px-6 py-5 space-y-4">
                     {/* Employee Select */}
                     <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Employee <span className="text-red-500">*</span></label>
+                        <label htmlFor="mark-employee" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Employee <span className="text-red-500">*</span></label>
+                        <input
+                            type="search"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder={`Search ${employees.length} unmarked employee${employees.length === 1 ? "" : "s"}…`}
+                            aria-label="Search employees"
+                            className="mb-2 w-full px-3.5 py-2 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 placeholder-slate-400"
+                        />
                         <select
+                            id="mark-employee"
                             required
                             value={form.employee}
                             onChange={(e) => setForm((p) => ({ ...p, employee: e.target.value }))}
                             className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none cursor-pointer focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors"
                         >
                             <option value="">-- Select Employee --</option>
-                            {employees.map((emp) => (
+                            {filtered.map((emp) => (
                                 <option key={emp._id} value={emp._id}>
                                     {emp.firstName} {emp.lastName} ({emp.employeeId})
                                 </option>
@@ -43,14 +89,14 @@ export default function MarkAttendanceModal({ form, setForm, employees, selected
                                 <button
                                     type="button"
                                     key={s}
-                                    onClick={() => setForm((p) => ({ ...p, status: s }))}
+                                    onClick={() => { setStatusTouched(true); setForm((p) => ({ ...p, status: s })); }}
                                     className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all
                                         ${form.status === s
                                             ? "border-ocean-500 bg-ocean-50 text-ocean-700 shadow-sm"
                                             : "border-slate-200 text-slate-500 hover:border-slate-300"
                                         }`}
                                 >
-                                    {STATUS_ICONS[s]} {s}
+                                    <span className="inline-flex items-center justify-center gap-1"><StatusIcon status={s} /> {s}</span>
                                 </button>
                             ))}
                         </div>
@@ -62,7 +108,7 @@ export default function MarkAttendanceModal({ form, setForm, employees, selected
                             <div>
                                 <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Check In</label>
                                 <input type="time" value={form.checkIn}
-                                    onChange={(e) => setForm((p) => ({ ...p, checkIn: e.target.value }))}
+                                    onChange={(e) => onCheckInChange(e.target.value)}
                                     className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors" />
                             </div>
                             <div>
@@ -72,6 +118,14 @@ export default function MarkAttendanceModal({ form, setForm, employees, selected
                                     className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors" />
                             </div>
                         </div>
+                    )}
+
+                    {WORKING_STATUSES.includes(form.status) && suggested && (
+                        <p className={`-mt-2 text-xs ${suggested === form.status ? "text-slate-400" : "text-amber-700"}`}>
+                            {suggested === form.status
+                                ? `Status set from the check-in time (late after ${policy.lateAfter}, half day from ${policy.halfDayCheckInAfter}).`
+                                : `Shift rules say “${suggested}” for this check-in time — you've chosen “${form.status}”.`}
+                        </p>
                     )}
 
                     {/* Leave Type */}
