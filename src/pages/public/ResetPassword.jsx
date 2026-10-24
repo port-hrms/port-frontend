@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FaLock } from "react-icons/fa6";
 import { IoEye, IoEyeOff } from "react-icons/io5";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { resetPasswordAPI } from "../../api/authAPI";
 import { config } from "../../config";
@@ -12,6 +12,9 @@ import BrandMark from "@/components/BrandMark";
 export default function ResetPassword() {
     const { token } = useParams();
     const navigate = useNavigate();
+    // New-employee invites reuse this page with ?invite=1
+    const [searchParams] = useSearchParams();
+    const isInvite = searchParams.get("invite") === "1";
 
     const [form, setForm] = useState({ newPassword: "", confirmPassword: "" });
     const [showNew, setShowNew] = useState(false);
@@ -40,7 +43,7 @@ export default function ResetPassword() {
         setLoading(true);
         try {
             const data = await resetPasswordAPI(token, form.newPassword);
-            toast.success(data.message || "Password reset successful! Please log in.");
+            toast.success(isInvite ? "Password set. You can sign in now." : (data.message || "Password reset successful! Please log in."));
             navigate("/login", { replace: true });
         } catch (err) {
             const msg = err.response?.data?.message || "Reset failed. The link may have expired.";
@@ -95,9 +98,11 @@ export default function ResetPassword() {
 
                     <div className="px-5 sm:px-8 lg:px-12 py-7 sm:py-10 space-y-5">
                         <div>
-                            <h2 className="text-xl font-extrabold text-slate-800">Create New Password</h2>
+                            <h2 className="text-xl font-extrabold text-slate-800">{isInvite ? "Set your password" : "Create New Password"}</h2>
                             <p className="text-slate-500 text-sm mt-1">
-                                Enter and confirm your new password below.
+                                {isInvite
+                                    ? "Welcome! Choose a password to activate your HRMS account."
+                                    : "Enter and confirm your new password below."}
                             </p>
                         </div>
 
@@ -211,7 +216,7 @@ export default function ResetPassword() {
                                             <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
                                             Resetting...
                                         </span>
-                                    ) : "Reset Password →"}
+                                    ) : isInvite ? "Set Password →" : "Reset Password →"}
                                 </button>
                             </form>
                         ) : (
@@ -228,7 +233,9 @@ export default function ResetPassword() {
                                     <div>
                                         <p className="font-bold text-amber-800 text-sm">Link Expired or Invalid</p>
                                         <p className="text-amber-700 text-xs mt-1 leading-relaxed">
-                                            Your reset link has expired or is invalid. Please request a new one.
+                                            {isInvite
+                                                ? "This invite link has expired or was already used. Ask HR to send a new invite, or request a reset link below."
+                                                : "Your reset link has expired or is invalid. Please request a new one."}
                                         </p>
                                     </div>
                                 </div>

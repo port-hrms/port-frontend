@@ -1,6 +1,7 @@
 // @ts-nocheck
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 import Attendance from "../pages/admin/Attendance";
@@ -32,15 +33,15 @@ import Clients from "../pages/admin/billing/Clients";
 import Quotations from "../pages/admin/billing/Quotations";
 import Invoices from "../pages/admin/billing/Invoices";
 
-import EmployeeDetail from "../components/employee/EmployeeDetail";
+import AdminEmployeeProfile from "../pages/admin/EmployeeProfile";
 import EmployeeForm from "../components/employee/EmployeeForm";
 
-export default function AppRoutes({ activeTab, setActiveTab }) {
+export default function AppRoutes({ activeTab, setActiveTab, profileId }) {
   const { user, isAdmin } = useAuth();
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [editEmployee, setEditEmployee] = useState(null);
-  const [viewEmployee, setViewEmployee] = useState(null);
+  const navigate = useNavigate();
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const triggerRefresh = () => setRefreshTrigger((n) => n + 1);
@@ -75,11 +76,18 @@ export default function AppRoutes({ activeTab, setActiveTab }) {
     <>
       {activeTab === "dashboard" && (!isAdmin && user?.role === "employee" ? <EmployeeDashboard setActiveTab={setActiveTab} /> : <Dashboard setActiveTab={setActiveTab} />)}
 
-      {activeTab === "employees" && isAdmin && (
+      {activeTab === "employees" && isAdmin && profileId && (
+        <AdminEmployeeProfile
+          key={profileId}
+          employeeId={profileId}
+          onBack={() => navigate("/admin/dashboard", { state: { tab: "employees" } })}
+        />
+      )}
+      {activeTab === "employees" && isAdmin && !profileId && (
         <Employees
-          key={refreshTrigger}
+          refreshKey={refreshTrigger}
           onAddClick={() => setShowAddForm(true)}
-          onViewClick={(emp) => setViewEmployee(emp)}
+          onViewClick={(emp) => navigate(`/admin/employees/${emp._id}`)}
           onEditClick={(emp) => setEditEmployee(emp)}
         />
       )}
@@ -126,13 +134,6 @@ export default function AppRoutes({ activeTab, setActiveTab }) {
 
       {showAddForm && <EmployeeForm onClose={() => setShowAddForm(false)} onSuccess={triggerRefresh} />}
       {editEmployee && <EmployeeForm employee={editEmployee} onClose={() => setEditEmployee(null)} onSuccess={triggerRefresh} />}
-      {viewEmployee && (
-        <EmployeeDetail
-          employee={viewEmployee}
-          onClose={() => setViewEmployee(null)}
-          onEdit={(emp) => { setViewEmployee(null); setEditEmployee(emp); }}
-        />
-      )}
     </>
   );
 }

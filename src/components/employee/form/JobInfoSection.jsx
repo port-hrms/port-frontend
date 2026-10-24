@@ -1,22 +1,29 @@
 // @ts-nocheck
-import Field from "./Field";
-import SelectField from "./SelectField";
+import Field, { SectionTitle, SelectField } from "./Field";
 
 export default function JobInfoSection({ form, errors, onChange, departments, empTypes, statuses }) {
+    const needsEndDate = ["Contract", "Intern"].includes(form.employmentType);
     return (
-        <div>
-            <h3 className="text-xs font-bold text-navy-600 uppercase tracking-widest mb-4 flex items-center gap-2">
-                <span className="w-5 h-0.5 bg-navy-600 rounded" /> Job Information
-            </h3>
-            <div className="grid grid-cols-2 gap-4">
-                <SelectField label="Department" name="department" options={departments} form={form} onChange={onChange} />
-                <Field label="Designation" name="designation" placeholder="Software Engineer" required form={form} errors={errors} onChange={onChange} />
-                <SelectField label="Employment Type" name="employmentType" options={empTypes} form={form} onChange={onChange} />
-                <Field label="Joining Date" name="joiningDate" type="date" required form={form} errors={errors} onChange={onChange} />
-                <Field label="Ending Date (Contract/Interns)" name="endingDate" type="date" form={form} errors={errors} onChange={onChange} />
-                <SelectField label="Status" name="status" options={statuses} form={form} onChange={onChange} />
-                <Field label="Monthly Salary (₹)" name="salary" type="number" placeholder="60000" required form={form} errors={errors} onChange={onChange} />
+        <section>
+            <SectionTitle title="Job details" description="Role, team and pay." />
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <SelectField label="Department" name="department" options={departments} placeholder="Select department" required form={form} errors={errors} onChange={onChange} />
+                <Field label="Designation" name="designation" placeholder="e.g. Software Engineer" required form={form} errors={errors} onChange={onChange} />
+                <SelectField label="Employment type" name="employmentType" options={empTypes} required form={form} errors={errors} onChange={onChange} />
+                <SelectField label="Status" name="status" options={statuses} required form={form} errors={errors} onChange={onChange} />
+                <Field label="Joining date" name="joiningDate" type="date" required form={form} errors={errors} onChange={onChange} />
+                <Field
+                    label="End date"
+                    name="endingDate"
+                    type="date"
+                    min={form.joiningDate || undefined}
+                    hint={needsEndDate ? "Contract / internship end date" : "Only for contracts and internships"}
+                    form={form}
+                    errors={errors}
+                    onChange={onChange}
+                />
+                <Field label="Monthly salary" name="salary" type="number" prefix="₹" placeholder="60000" min={0} required form={form} errors={errors} onChange={onChange} />
             </div>
-        </div>
+        </section>
     );
 }

@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { Cake } from "lucide-react";
+import EmployeeAvatar from "@/components/employee/EmployeeAvatar";
 
 function Header({ count }) {
     return (
@@ -33,27 +34,16 @@ export default function BirthdayTodayCard({ employees = [] }) {
 
             <div className="mt-4 space-y-2.5">
                 {employees.map((emp) => {
-                    const initials = `${emp.firstName?.[0] || ""}${emp.lastName?.[0] || ""}`.toUpperCase();
-                    const age = emp.dateOfBirth
+                    const age = emp.age ?? (emp.dateOfBirth
                         ? new Date().getFullYear() - new Date(emp.dateOfBirth).getFullYear()
-                        : null;
+                        : null);
 
                     return (
                         <div
                             key={emp._id || emp.employeeId}
                             className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50/60 px-3 py-2.5 transition-colors hover:bg-white hover:border-slate-200"
                         >
-                            {emp.avatar ? (
-                                <img
-                                    src={emp.avatar}
-                                    alt={`${emp.firstName} ${emp.lastName}`}
-                                    className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-rose-100"
-                                />
-                            ) : (
-                                <div className="h-10 w-10 shrink-0 rounded-full bg-ocean-50 text-navy-700 ring-2 ring-rose-100 font-bold text-xs flex items-center justify-center">
-                                    {initials}
-                                </div>
-                            )}
+                            <EmployeeAvatar employee={emp} className="h-10 w-10 text-xs ring-2 ring-rose-100" />
 
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-semibold text-navy-900 truncate">

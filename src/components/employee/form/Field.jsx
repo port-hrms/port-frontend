@@ -1,54 +1,102 @@
 // @ts-nocheck
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { fieldId } from "./fieldId";
 
-export default function Field({ label, name, type = "text", placeholder, required, colSpan = "", form, errors, onChange, ...inputProps }) {
+const inputClass = (hasError, extra = "") =>
+    `w-full py-2.5 text-sm text-slate-800 bg-white rounded-lg border outline-none transition-colors placeholder-slate-400 ${extra}
+     ${hasError
+        ? "border-red-400 bg-red-50/40 focus:border-red-500 focus:ring-2 focus:ring-red-100"
+        : "border-slate-200 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100"}`;
+
+function Label({ name, label, required }) {
+    return (
+        <label htmlFor={fieldId(name)} className="mb-1.5 block text-xs font-semibold text-slate-600">
+            {label} {required && <span className="text-port-red" aria-hidden="true">*</span>}
+        </label>
+    );
+}
+
+function Message({ name, error, hint }) {
+    if (error) return <p id={`${fieldId(name)}-msg`} role="alert" className="mt-1 text-xs text-red-600">{error}</p>;
+    if (hint) return <p id={`${fieldId(name)}-msg`} className="mt-1 text-xs text-slate-500">{hint}</p>;
+    return null;
+}
+
+export default function Field({
+    label, name, type = "text", placeholder, required, colSpan = "", form, errors, onChange,
+    prefix, hint, ...inputProps
+}) {
     const [show, setShow] = useState(false);
     const isPassword = type === "password";
     const inputType = isPassword ? (show ? "text" : "password") : type;
+    const error = errors?.[name];
 
     return (
         <div className={colSpan}>
-            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
-                {label} {required && <span className="text-red-500">*</span>}
-            </label>
+            <Label name={name} label={label} required={required} />
             <div className="relative">
+                {prefix && (
+                    <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm font-medium text-slate-500">{prefix}</span>
+                )}
                 <input
+                    id={fieldId(name)}
                     type={inputType}
                     name={name}
-                    value={form[name]}
+                    value={form[name] ?? ""}
                     onChange={onChange}
                     placeholder={placeholder}
+                    aria-invalid={Boolean(error)}
+                    aria-required={required || undefined}
+                    aria-describedby={error || hint ? `${fieldId(name)}-msg` : undefined}
                     onWheel={inputType === "number" ? (e) => e.target.blur() : undefined}
                     {...inputProps}
-                    className={`w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border outline-none transition-colors placeholder-slate-300
-          ${isPassword ? "pr-10" : ""}
-          ${errors[name]
-                            ? "border-red-400 focus:border-red-500 bg-red-50"
-                            : "border-slate-200 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100"
-                        }`}
+                    className={inputClass(error, `${prefix ? "pl-12" : "pl-3.5"} ${isPassword ? "pr-10" : "pr-3.5"}`)}
                 />
                 {isPassword && (
                     <button
                         type="button"
-                        onClick={() => setShow(s => !s)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
-                        tabIndex={-1}
+                        onClick={() => setShow((s) => !s)}
+                        aria-label={show ? "Hide password" : "Show password"}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                     >
-                        {show ? (
-                            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-5 0-9-4-9-7s4-7 9-7a9.96 9.96 0 015.34 1.56M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 3l18 18" />
-                            </svg>
-                        ) : (
-                            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                            </svg>
-                        )}
+                        {show ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
                 )}
             </div>
-            {errors[name] && <p className="text-xs text-red-500 mt-1">{errors[name]}</p>}
+            <Message name={name} error={error} hint={hint} />
+        </div>
+    );
+}
+
+export function SelectField({ label, name, options, required, colSpan = "", form, errors, onChange, placeholder = "Select…", hint }) {
+    const error = errors?.[name];
+    return (
+        <div className={colSpan}>
+            <Label name={name} label={label} required={required} />
+            <select
+                id={fieldId(name)}
+                name={name}
+                value={form[name] ?? ""}
+                onChange={onChange}
+                aria-invalid={Boolean(error)}
+                aria-required={required || undefined}
+                aria-describedby={error || hint ? `${fieldId(name)}-msg` : undefined}
+                className={`${inputClass(error, "px-3.5 cursor-pointer")} ${form[name] ? "" : "text-slate-400"}`}
+            >
+                <option value="" disabled={required}>{placeholder}</option>
+                {options.map((option) => <option key={option} value={option} className="text-slate-800">{option}</option>)}
+            </select>
+            <Message name={name} error={error} hint={hint} />
+        </div>
+    );
+}
+
+export function SectionTitle({ title, description }) {
+    return (
+        <div className="mb-5">
+            <h3 className="text-base font-bold text-navy-900">{title}</h3>
+            {description && <p className="mt-0.5 text-sm text-slate-500">{description}</p>}
         </div>
     );
 }

@@ -1,97 +1,109 @@
 // @ts-nocheck
 // client/src/components/employee/form/DocumentsSection.jsx
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { CheckCircle2, Eye, RefreshCw, Upload, X } from "lucide-react";
+import API from "../../../api/axios";
+import { DOCUMENT_TYPES } from "../documentTypes";
+import { SectionTitle } from "./Field";
 
-const DOCS = [
-    {
-        field: "bankDetails",
-        label: "Bank Details",
-        icon: "🏦",
-        desc: "Bank passbook / cancelled cheque",
-    },
-    {
-        field: "aadhar",
-        label: "Aadhar Card",
-        icon: "🪪",
-        desc: "Aadhar front & back (PDF / DOC)",
-    },
-    {
-        field: "resume",
-        label: "Resume / CV",
-        icon: "📄",
-        desc: "Latest resume",
-    },
-    {
-        field: "offerLetter",
-        label: "Offer Letter",
-        icon: "📨",
-        desc: "Signed offer letter",
-    },
-];
+const FILE_TYPES = ".pdf,.doc,.docx,.jpg,.jpeg,.png,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png";
+const MAX_MB = 10;
 
-const FILE_TYPES = ".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+export default function DocumentsSection({ docs, onFileChange, existingDocs = {}, employeeId }) {
+    const [opening, setOpening] = useState("");
 
-export default function DocumentsSection({ docs, onFileChange }) {
+    const viewExisting = async (key) => {
+        try {
+            setOpening(key);
+            const { data } = await API.get(`/employees/${employeeId}/documents/${key}`, { responseType: "blob" });
+            const url = URL.createObjectURL(data);
+            window.open(url, "_blank", "noopener,noreferrer");
+            setTimeout(() => URL.revokeObjectURL(url), 60000);
+        } catch {
+            toast.error("Could not open document");
+        } finally {
+            setOpening("");
+        }
+    };
+
+    const pick = (key, file) => {
+        if (file && file.size > MAX_MB * 1024 * 1024) {
+            toast.error(`File is larger than ${MAX_MB} MB`);
+            return;
+        }
+        onFileChange(key, file || null);
+    };
+
     return (
-        <div>
-            {/* Section heading */}
-            <div className="flex items-center gap-2 mb-4">
-                <span className="w-4 h-0.5 bg-navy-500 rounded" />
-                <p className="text-xs font-bold text-navy-600 uppercase tracking-widest">
-                    Documents
-                </p>
-                <span className="text-xs text-slate-400 font-normal normal-case">(PDF or DOC only)</span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {DOCS.map(({ field, label, icon, desc }) => {
-                    const file = docs[field];
+        <section>
+            <SectionTitle title="Documents" description={`PDF, Word, JPG or PNG · up to ${MAX_MB} MB each. Photos of Aadhaar or a passbook are fine.`} />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {DOCUMENT_TYPES.map(({ key, label, desc, icon }) => {
+                    const Icon = icon;
+                    const newFile = docs[key];
+                    const hasExisting = Boolean(existingDocs?.[key]);
+                    const inputId = `doc-${key}`;
                     return (
-                        <label
-                            key={field}
-                            htmlFor={`doc-${field}`}
-                            className={`flex items-start gap-3 rounded-xl border-2 border-dashed p-3.5 cursor-pointer transition-all
-                                ${file
-                                    ? "border-navy-400 bg-navy-50"
-                                    : "border-slate-200 bg-slate-50 hover:border-navy-300 hover:bg-navy-50/40"
-                                }`}
+                        <div
+                            key={key}
+                            className={`rounded-xl border p-3.5 transition-colors ${newFile ? "border-ocean-300 bg-ocean-50/50" : "border-slate-200 bg-white"}`}
                         >
-                            <span className="text-2xl shrink-0">{icon}</span>
-                            <div className="min-w-0 flex-1">
-                                <p className="text-sm font-bold text-slate-800">{label}</p>
-                                <p className="text-[11px] text-slate-400 mt-0.5">
-                                    {file ? (
-                                        <span className="text-navy-600 font-semibold truncate block">
-                                            ✓ {file.name}
-                                        </span>
-                                    ) : (
-                                        desc
-                                    )}
-                                </p>
+                            <div className="flex items-start gap-3">
+                                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-navy-600 ring-1 ring-slate-200">
+                                    <Icon size={18} />
+                                </span>
+                                <div className="min-w-0 flex-1">
+                                    <p className="text-sm font-semibold text-navy-900">{label}</p>
+                                    <p className="mt-0.5 truncate text-xs text-slate-500">
+                                        {newFile
+                                            ? <span className="font-medium text-ocean-700">New: {newFile.name}</span>
+                                            : hasExisting
+                                                ? <span className="inline-flex items-center gap-1 text-emerald-700"><CheckCircle2 size={12} /> Uploaded</span>
+                                                : desc}
+                                    </p>
+                                </div>
                             </div>
-                            {file && (
-                                <button
-                                    type="button"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        onFileChange(field, null);
-                                    }}
-                                    className="shrink-0 text-rose-400 hover:text-rose-600 text-lg font-bold leading-none"
-                                    title="Remove"
+
+                            <div className="mt-3 flex flex-wrap gap-2">
+                                {hasExisting && !newFile && employeeId && (
+                                    <button
+                                        type="button"
+                                        onClick={() => viewExisting(key)}
+                                        disabled={opening === key}
+                                        className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-semibold text-ocean-700 hover:bg-ocean-50 disabled:opacity-60"
+                                    >
+                                        <Eye size={13} /> {opening === key ? "Opening…" : "View"}
+                                    </button>
+                                )}
+                                <label
+                                    htmlFor={inputId}
+                                    className="inline-flex cursor-pointer items-center gap-1 rounded-md px-2 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 focus-within:ring-2 focus-within:ring-ocean-200"
                                 >
-                                    ×
-                                </button>
-                            )}
-                            <input
-                                id={`doc-${field}`}
-                                type="file"
-                                accept={FILE_TYPES}
-                                className="hidden"
-                                onChange={(e) => onFileChange(field, e.target.files?.[0] || null)}
-                            />
-                        </label>
+                                    {hasExisting || newFile ? <RefreshCw size={13} /> : <Upload size={13} />}
+                                    {hasExisting || newFile ? "Replace" : "Upload"}
+                                    <input
+                                        id={inputId}
+                                        type="file"
+                                        accept={FILE_TYPES}
+                                        className="sr-only"
+                                        onChange={(e) => { pick(key, e.target.files?.[0]); e.target.value = ""; }}
+                                    />
+                                </label>
+                                {newFile && (
+                                    <button
+                                        type="button"
+                                        onClick={() => onFileChange(key, null)}
+                                        className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-semibold text-port-red hover:bg-red-50"
+                                    >
+                                        <X size={13} /> {hasExisting ? "Keep current" : "Remove"}
+                                    </button>
+                                )}
+                            </div>
+                        </div>
                     );
                 })}
             </div>
-        </div>
+        </section>
     );
 }

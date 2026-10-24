@@ -10,11 +10,11 @@ import FieldAgentTrackingPanel from "@/components/employee/dashboard/sections/Fi
 import { GRADE_CONFIG, STATUS_STYLES } from "@/components/employee/dashboard/shared/constants";
 import NewsFeedPanel from "@/components/dashboard/NewsFeedPanel";
 import RecentLeaveRequests from "@/components/dashboard/RecentLeaveRequests";
+import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 import { isHalfDay, isLateEntry, parseMinutes } from "@/components/attendance/attendanceHelpers";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 
 export default function EmployeeDashboard({ setActiveTab }) {
   const { user } = useAuth();
@@ -31,21 +31,35 @@ export default function EmployeeDashboard({ setActiveTab }) {
   const [performance, setPerformance] = useState(null);
   const [birthdayEmployees, setBirthdayEmployees] = useState([]);
   const [tasks, setTasks] = useState([]);
-  const [recentLeaveRequests, setRecentLeaveRequests] = useState([]);
   const [todayWFH, setTodayWFH] = useState(null);
+  // HR staff (department or designation "HR") review everyone's leave requests here
+  const [recentLeaveRequests, setRecentLeaveRequests] = useState([]);
+  const isHrStaff = (emp) => ["hr"].includes((emp?.department || "").toLowerCase()) || (emp?.designation || "").toLowerCase() === "hr";
 
+  const fetchLeaveRequestsForHr = async () => {
+    try {
+      const { data } = await API.get("/dashboard/stats");
+      setRecentLeaveRequests(Array.isArray(data?.data?.recentLeaveRequests) ? data.data.recentLeaveRequests : []);
+    } catch {
+      // not HR staff on the server side — keep the panel hidden
+      setRecentLeaveRequests([]);
+    }
+  };
 
   const handleUpdateLeaveStatus = async (leaveId, status) => {
     try {
       await API.put(`/leaves/${leaveId}`, { status });
       toast.success(`Leave ${status.toLowerCase()} successfully`);
-      if (employeeId) fetchAll(employeeId);
+      fetchLeaveRequestsForHr();
     } catch (error) {
-      const message = error?.response?.data?.message || "Failed to update leave status";
-      toast.error(message);
-      console.error(error);
+      toast.error(error?.response?.data?.message || "Failed to update leave status");
+      throw error;
     }
   };
+
+
+
+
 
   const fetchLatestPayroll = async (empId, month, year) => {
     try {
@@ -81,7 +95,7 @@ export default function EmployeeDashboard({ setActiveTab }) {
         API.get(`/attendance/report/${empId}`, { params: { month, year } }),
         API.get("/payroll", { params: { employeeId: empId, month, year } }),
         API.get("/performance", { params: { employeeId: empId } }),
-        API.get("/dashboard/stats"),
+        API.get("/dashboard/employee/highlights"),
         API.get("/tasks", { params: { date: todayStr } }),
         API.get("/wfh/today"),
       ]);
@@ -90,6 +104,7 @@ export default function EmployeeDashboard({ setActiveTab }) {
 
       if (empRes.status === "fulfilled") {
         setEmployee(empRes.value.data.data);
+        if (isHrStaff(empRes.value.data.data)) fetchLeaveRequestsForHr();
       }
 
       if (attendRes.status === "fulfilled") {
@@ -160,7 +175,6 @@ export default function EmployeeDashboard({ setActiveTab }) {
       if (statsRes.status === "fulfilled") {
         const stats = statsRes.value.data?.data || {};
         setBirthdayEmployees(Array.isArray(stats.birthdayEmployees) ? stats.birthdayEmployees : []);
-        setRecentLeaveRequests(Array.isArray(stats.recentLeaveRequests) ? stats.recentLeaveRequests : []);
       }
 
       if (tasksRes.status === "fulfilled") {
@@ -279,7 +293,7 @@ export default function EmployeeDashboard({ setActiveTab }) {
         />
 
         <div className="lg:col-span-2 flex flex-col gap-5">
-          {employee?.department === "HR" && recentLeaveRequests.length > 0 && (
+          {isHrStaff(employee) && recentLeaveRequests.length > 0 && (
             <RecentLeaveRequests requests={recentLeaveRequests} onUpdateStatus={handleUpdateLeaveStatus} />
           )}
           <PerformancePanel performance={performance} gradeConfig={gradeConfig} navigate={navigate} setActiveTab={setActiveTab} />

@@ -1,8 +1,8 @@
 // @ts-nocheck
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Toaster } from "react-hot-toast";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate, useParams } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { SuperAdminProvider, useSuperAdmin } from "./context/SuperAdminContext";
 
@@ -30,11 +30,22 @@ import SupportTickets from "./pages/superadmin/SupportTickets";
 // App Shell (shown after login)
 // ─────────────────────────────────────────────────────────────
 function AppShell() {
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const { employeeId } = useParams(); // set on /admin/employees/:employeeId
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [activeTab, setActiveTabState] = useState(
+    () => (employeeId ? "employees" : location.state?.tab || "dashboard")
+  );
+
+  // On a profile URL, switching sections returns to the dashboard URL (keeping the chosen tab)
+  const setActiveTab = useCallback((tab) => {
+    if (employeeId) navigate("/admin/dashboard", { state: { tab } });
+    else setActiveTabState(tab);
+  }, [employeeId, navigate]);
 
   return (
     <AppLayout activeTab={activeTab} setActiveTab={setActiveTab}>
-      <AppRoutes activeTab={activeTab} setActiveTab={setActiveTab} />
+      <AppRoutes activeTab={activeTab} setActiveTab={setActiveTab} profileId={employeeId} />
     </AppLayout>
   );
 }
@@ -127,6 +138,14 @@ export default function App() {
           />
           <Route
             path="/admin/dashboard"
+            element={(
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AppShell />
+              </ProtectedRoute>
+            )}
+          />
+          <Route
+            path="/admin/employees/:employeeId"
             element={(
               <ProtectedRoute allowedRoles={["admin"]}>
                 <AppShell />

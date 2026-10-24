@@ -1,46 +1,20 @@
 // @ts-nocheck
-import Field from "./Field";
-import SelectField from "./SelectField";
+import Field, { SectionTitle, SelectField } from "./Field";
 
 export default function PersonalInfoSection({ form, errors, onChange, genders }) {
+    const today = new Date().toISOString().slice(0, 10);
     return (
-        <div>
-            <h3 className="text-xs font-bold text-ocean-600 uppercase tracking-widest mb-4 flex items-center gap-2">
-                <span className="w-5 h-0.5 bg-ocean-600 rounded" /> Personal Information
-            </h3>
-            <div className="grid grid-cols-2 gap-4">
-                <Field label="First Name" name="firstName" placeholder="Priya" required form={form} errors={errors} onChange={onChange} />
-                <Field label="Last Name" name="lastName" placeholder="Sharma" required form={form} errors={errors} onChange={onChange} />
-                <Field label="Email" name="email" type="email" placeholder="priya@company.com" required form={form} errors={errors} onChange={onChange} />
-                <Field
-                    label="Phone"
-                    name="phone"
-                    placeholder="9876543210"
-                    required
-                    form={form}
-                    errors={errors}
-                    onChange={onChange}
-                    inputMode="numeric"
-                    maxLength={10}
-                    pattern="[0-9]{10}"
-                />
-                <Field label="Date of Birth" name="dateOfBirth" type="date" form={form} errors={errors} onChange={onChange} />
-                <SelectField label="Gender" name="gender" options={genders} form={form} onChange={onChange} />
-                <Field
-                    label="Aadhaar Number"
-                    name="aadharNumber"
-                    placeholder="12-digit Aadhaar number"
-                    required
-                    form={form}
-                    errors={errors}
-                    onChange={onChange}
-                    inputMode="numeric"
-                    maxLength={12}
-                />
+        <section>
+            <SectionTitle title="Personal details" description="Basic information about the employee." />
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <Field label="First name" name="firstName" placeholder="e.g. Priya" required autoComplete="off" form={form} errors={errors} onChange={onChange} />
+                <Field label="Last name" name="lastName" placeholder="e.g. Sharma" required autoComplete="off" form={form} errors={errors} onChange={onChange} />
+                <Field label="Work email" name="email" type="email" placeholder="priya@company.com" required autoComplete="off" hint="Also used to sign in" form={form} errors={errors} onChange={onChange} />
+                <Field label="Mobile number" name="phone" prefix="+91" placeholder="98765 43210" required inputMode="numeric" maxLength={10} autoComplete="off" form={form} errors={errors} onChange={onChange} />
+                <Field label="Date of birth" name="dateOfBirth" type="date" max={today} form={form} errors={errors} onChange={onChange} />
+                <SelectField label="Gender" name="gender" options={genders} placeholder="Select gender" form={form} errors={errors} onChange={onChange} />
+                <Field label="Address" name="address" placeholder="House, street, city, PIN" colSpan="sm:col-span-2" form={form} errors={errors} onChange={onChange} />
             </div>
-            <div className="mt-4">
-                <Field label="Address" name="address" placeholder="Full residential address..." form={form} errors={errors} onChange={onChange} />
-            </div>
-        </div>
+        </section>
     );
 }
