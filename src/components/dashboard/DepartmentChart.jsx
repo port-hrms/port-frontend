@@ -5,7 +5,7 @@
 function DepartmentBar({ name, count, maxCount }) {
     const pct = maxCount > 0 ? (count / maxCount) * 100 : 0;
     return (
-        <li className="flex items-center gap-3 group">
+        <li className="relative flex items-center gap-3 group">
             <span className="text-xs font-medium text-slate-600 w-24 text-right truncate">{name}</span>
             <div className="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden" aria-hidden="true">
                 <div

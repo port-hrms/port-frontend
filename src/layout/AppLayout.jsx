@@ -73,7 +73,9 @@ export default function AppLayout({ activeTab, setActiveTab, children }) {
     : activeItem?.label;
 
   return (
-    <div className="flex h-screen bg-canvas font-sans overflow-hidden">
+    // relative + overflow-hidden: nothing inside (absolute menus, sr-only labels…) can make the
+    // page taller than the screen. h-dvh = the visible height on mobile, unlike h-screen.
+    <div className="relative flex h-dvh bg-canvas font-sans overflow-hidden">
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
@@ -88,7 +90,7 @@ export default function AppLayout({ activeTab, setActiveTab, children }) {
           onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         />
 
-        <main className="flex-1 min-w-0 overflow-auto p-3 sm:p-5 lg:p-7">
+        <main className="relative flex-1 min-w-0 overflow-auto overscroll-contain p-3 sm:p-5 lg:p-7">
           {children}
         </main>
       </div>
