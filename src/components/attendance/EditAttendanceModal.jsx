@@ -25,6 +25,13 @@ export default function EditAttendanceModal({ record, presetCheckOut = "", onSub
         if (presetCheckOut) checkOutRef.current?.focus();
     }, [presetCheckOut]);
 
+    // Esc closes the popup (not while saving)
+    useEffect(() => {
+        const onKey = (e) => { if (e.key === "Escape" && !saving) onClose(); };
+        document.addEventListener("keydown", onKey);
+        return () => document.removeEventListener("keydown", onKey);
+    }, [onClose, saving]);
+
     if (!record) return null;
 
     const isWorking = WORKING_STATUSES.includes(form.status);
@@ -71,8 +78,8 @@ export default function EditAttendanceModal({ record, presetCheckOut = "", onSub
                 <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
                     {/* Status */}
                     <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Status</label>
-                        <div className="grid grid-cols-3 gap-2">
+                        <p id="att-edit-status" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Status</p>
+                        <div className="grid grid-cols-3 gap-2" role="group" aria-labelledby="att-edit-status">
                             {STATUS_OPTIONS.map((s) => (
                                 <button type="button" key={s} onClick={() => { setForm((p) => ({ ...p, status: s })); setError(""); }}
                                     className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all

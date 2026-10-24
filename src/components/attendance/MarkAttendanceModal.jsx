@@ -1,7 +1,7 @@
 // @ts-nocheck
 // client/src/components/attendance/MarkAttendanceModal.jsx
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { STATUS_OPTIONS, LEAVE_TYPES, WORKING_STATUSES, formatDate, to24h } from "./constants";
 import StatusIcon from "./StatusIcon";
 import useAttendancePolicy from "../../hooks/useAttendancePolicy";
@@ -31,6 +31,13 @@ export default function MarkAttendanceModal({ form, setForm, employees, selected
 
     const suggested = statusForCheckIn(form.checkIn, policy);
 
+    // Esc closes the popup
+    useEffect(() => {
+        const onKey = (e) => { if (e.key === "Escape") onClose(); };
+        document.addEventListener("keydown", onKey);
+        return () => document.removeEventListener("keydown", onKey);
+    }, [onClose]);
+
     const onCheckInChange = (value) => {
         setForm((p) => {
             const next = { ...p, checkIn: value };
@@ -50,7 +57,7 @@ export default function MarkAttendanceModal({ form, setForm, employees, selected
                         <h2 className="text-lg font-bold text-navy-900">Mark Attendance</h2>
                         <p className="text-xs text-slate-500 mt-0.5">{formatDate(selectedDate)}</p>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-xl text-lg font-bold transition-colors">✕</button>
+                    <button type="button" onClick={onClose} aria-label="Close" className="w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-xl text-lg font-bold transition-colors">✕</button>
                 </div>
 
                 <form onSubmit={onSubmit} className="px-6 py-5 space-y-4">
@@ -83,8 +90,8 @@ export default function MarkAttendanceModal({ form, setForm, employees, selected
 
                     {/* Status */}
                     <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Status <span className="text-red-500">*</span></label>
-                        <div className="grid grid-cols-3 gap-2">
+                        <p id="mark-status" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Status <span className="text-red-500">*</span></p>
+                        <div className="grid grid-cols-3 gap-2" role="group" aria-labelledby="mark-status">
                             {STATUS_OPTIONS.map((s) => (
                                 <button
                                     type="button"
@@ -106,14 +113,14 @@ export default function MarkAttendanceModal({ form, setForm, employees, selected
                     {["Present", "Late", "Half Day"].includes(form.status) && (
                         <div className="grid grid-cols-2 gap-3">
                             <div>
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Check In</label>
-                                <input type="time" value={form.checkIn}
+                                <label htmlFor="mark-check-in" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Check In</label>
+                                <input id="mark-check-in" type="time" value={form.checkIn}
                                     onChange={(e) => onCheckInChange(e.target.value)}
                                     className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors" />
                             </div>
                             <div>
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Check Out</label>
-                                <input type="time" value={form.checkOut}
+                                <label htmlFor="mark-check-out" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Check Out</label>
+                                <input id="mark-check-out" type="time" value={form.checkOut}
                                     onChange={(e) => setForm((p) => ({ ...p, checkOut: e.target.value }))}
                                     className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors" />
                             </div>
@@ -131,8 +138,8 @@ export default function MarkAttendanceModal({ form, setForm, employees, selected
                     {/* Leave Type */}
                     {form.status === "On Leave" && (
                         <div>
-                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Leave Type</label>
-                            <select value={form.leaveType}
+                            <label htmlFor="mark-leave-type" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Leave Type</label>
+                            <select id="mark-leave-type" value={form.leaveType}
                                 onChange={(e) => setForm((p) => ({ ...p, leaveType: e.target.value }))}
                                 className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none cursor-pointer focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors">
                                 {LEAVE_TYPES.map((l) => <option key={l} value={l}>{l || "-- Select Leave Type --"}</option>)}
@@ -142,8 +149,8 @@ export default function MarkAttendanceModal({ form, setForm, employees, selected
 
                     {/* Remarks */}
                     <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Remarks</label>
-                        <input type="text" placeholder="Optional note..." value={form.remarks}
+                        <label htmlFor="mark-remarks" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Remarks</label>
+                        <input id="mark-remarks" type="text" placeholder="Optional note..." value={form.remarks}
                             onChange={(e) => setForm((p) => ({ ...p, remarks: e.target.value }))}
                             className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white rounded-xl border border-slate-200 outline-none placeholder-slate-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-100 transition-colors" />
                     </div>

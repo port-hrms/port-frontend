@@ -1,9 +1,11 @@
 // @ts-nocheck
 // client/src/pages/Attendance.jsx
-// Slim orchestrator — all UI is delegated to sub-components
+// Daily register (every employee for one day) + monthly register (employees × days).
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { ChevronLeft, ChevronRight, Search, UserX, X } from "lucide-react";
 import API from "@/api/axios";
 
 import AttendanceTable from "@/components/attendance/AttendanceTable";
@@ -13,15 +15,32 @@ import MarkAttendanceModal from "@/components/attendance/MarkAttendanceModal";
 import SummaryCards from "@/components/attendance/SummaryCards";
 import DayAtAGlance from "@/components/attendance/DayAtAGlance";
 import AttendanceHistoryModal from "@/components/attendance/AttendanceHistoryModal";
+import MonthlyRegister from "@/components/attendance/MonthlyRegister";
 import ConfirmDialog from "@/components/ConfirmDialog";
+import { DEPARTMENTS } from "@/components/employee/form/constants";
+
+const PAGE_SIZE = 15;
+const STATUS_FILTERS = ["All", "Not marked", "Present", "Late", "Half Day", "Absent", "On Leave"];
+const EMPTY_FILTERS = { search: "", department: "All", status: "All", mode: "All", missedOnly: false };
+
+const shiftDate = (dateStr, days) => {
+    const d = new Date(`${dateStr}T12:00:00Z`);
+    d.setUTCDate(d.getUTCDate() + days);
+    return d.toISOString().slice(0, 10);
+};
 
 export default function Attendance() {
     const today = todayIST();
+    const navigate = useNavigate();
 
+    const [view, setView] = useState("daily"); // daily | monthly
     const [selectedDate, setSelectedDate] = useState(today);
     const [records, setRecords] = useState([]); // includes "Not Marked" rows (no _id)
     const [summary, setSummary] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [filters, setFilters] = useState(EMPTY_FILTERS);
+    const [page, setPage] = useState(1);
+
     const [editRecord, setEditRecord] = useState(null);
     const [presetCheckOut, setPresetCheckOut] = useState("");
     const [historyId, setHistoryId] = useState(null);
@@ -30,23 +49,23 @@ export default function Attendance() {
     const [deleting, setDeleting] = useState(false);
     const [showDeleted, setShowDeleted] = useState(false);
     const [deletedRecords, setDeletedRecords] = useState([]);
-    const [onlyMissed, setOnlyMissed] = useState(false);
-    const [page, setPage] = useState(1);
-    const PAGE_SIZE = 10;
+    const [quickBusy, setQuickBusy] = useState(null); // employee id being quick-marked
+    const [bulkOpen, setBulkOpen] = useState(false);
+    const [bulkBusy, setBulkBusy] = useState(false);
     const [showMarkModal, setShowMarkModal] = useState(false);
     const [markForm, setMarkForm] = useState({
         employee: "", status: "Present", checkIn: "", checkOut: "", leaveType: "", remarks: "",
     });
 
     // ─── Data Fetching ───────────────────────────────────────────
-    const fetchSummary = async () => {
+    const fetchSummary = useCallback(async () => {
         try {
             const { data } = await API.get("/attendance/today/summary", { params: { date: selectedDate } });
             setSummary(data.data);
         } catch { /* silent */ }
-    };
+    }, [selectedDate]);
 
-    const fetchAttendance = async () => {
+    const fetchAttendance = useCallback(async () => {
         try {
             setLoading(true);
             const { data } = await API.get("/attendance", { params: { date: selectedDate, includeUnmarked: true } });
@@ -56,10 +75,7 @@ export default function Attendance() {
         } finally {
             setLoading(false);
         }
-    };
-
-    // Summary and register both follow the selected date
-    useEffect(() => { setPage(1); fetchAttendance(); fetchSummary(); }, [selectedDate]);
+    }, [selectedDate]);
 
     const fetchDeleted = useCallback(async () => {
         try {
@@ -69,14 +85,39 @@ export default function Attendance() {
             toast.error("Failed to load deleted records");
         }
     }, [selectedDate]);
+
+    // Summary and register both follow the selected date
+    useEffect(() => { fetchAttendance(); fetchSummary(); }, [fetchAttendance, fetchSummary]);
     useEffect(() => { if (showDeleted) fetchDeleted(); }, [showDeleted, fetchDeleted]);
-    useEffect(() => { setPage(1); }, [showDeleted, onlyMissed]);
+    useEffect(() => { setPage(1); }, [selectedDate, showDeleted, filters]);
 
     const refresh = () => { fetchAttendance(); fetchSummary(); if (showDeleted) fetchDeleted(); };
-    const missedCount = records.filter((r) => r.missedCheckOut).length;
-    const visibleRows = showDeleted ? deletedRecords : onlyMissed ? records.filter((r) => r.missedCheckOut) : records;
-    const totalPages = Math.ceil(visibleRows.length / PAGE_SIZE);
+
+    // ─── Filtering ───────────────────────────────────────────────
+    const setFilter = (k, v) => setFilters((f) => ({ ...f, [k]: v }));
+    const hasFilters = JSON.stringify(filters) !== JSON.stringify(EMPTY_FILTERS);
+
+    const filteredRows = useMemo(() => {
+        if (showDeleted) return deletedRecords;
+        const q = filters.search.trim().toLowerCase();
+        return records.filter((r) => {
+            const e = r.employee || {};
+            if (q && !`${e.firstName} ${e.lastName} ${e.employeeId}`.toLowerCase().includes(q)) return false;
+            if (filters.department !== "All" && e.department !== filters.department) return false;
+            if (filters.status === "Not marked" && !r.unmarked) return false;
+            if (!["All", "Not marked"].includes(filters.status) && r.status !== filters.status) return false;
+            if (filters.mode === "WFH" && r.workMode !== "WFH") return false;
+            if (filters.mode === "Office" && (r.unmarked || r.workMode === "WFH")) return false;
+            if (filters.missedOnly && !r.missedCheckOut) return false;
+            return true;
+        });
+    }, [records, deletedRecords, filters, showDeleted]);
+
+    const totalPages = Math.ceil(filteredRows.length / PAGE_SIZE);
     const unmarkedEmployees = records.filter((r) => r.unmarked).map((r) => r.employee);
+    const missedCount = records.filter((r) => r.missedCheckOut).length;
+    const isFuture = selectedDate > today;
+    const canBulkAbsent = !isFuture && !summary?.isOffDay && unmarkedEmployees.length > 0;
 
     // ─── Actions ─────────────────────────────────────────────────
     const openMark = (employeeId = "") => {
@@ -104,6 +145,38 @@ export default function Attendance() {
             refresh();
         } catch (err) {
             toast.error(err.response?.data?.message || "Failed to mark attendance");
+        }
+    };
+
+    // One-click marking from a "Not marked" row (no times — add them with Edit if needed)
+    const handleQuickMark = async (employee, status) => {
+        try {
+            setQuickBusy(employee._id);
+            await API.post("/attendance", { employee: employee._id, date: selectedDate, status, reason: "Quick-marked from the daily register" });
+            toast.success(`${employee.firstName} marked ${status}`);
+            refresh();
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Failed to mark attendance");
+        } finally {
+            setQuickBusy(null);
+        }
+    };
+
+    const handleBulkAbsent = async () => {
+        try {
+            setBulkBusy(true);
+            const { data } = await API.post("/attendance/bulk", {
+                date: selectedDate,
+                reason: "Bulk-marked absent: no check-in or record for the day",
+                records: unmarkedEmployees.map((e) => ({ employee: e._id, status: "Absent" })),
+            });
+            toast.success(data.message || "Marked absent");
+            setBulkOpen(false);
+            refresh();
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Bulk marking failed");
+        } finally {
+            setBulkBusy(false);
         }
     };
 
@@ -159,91 +232,162 @@ export default function Attendance() {
         setEditRecord(rec);
     };
 
+    const openEmployee = (id) => id && navigate(`/admin/employees/${id}?tab=attendance`);
+    const openDay = (date) => { setSelectedDate(date); setView("daily"); };
+
     // ─── UI ──────────────────────────────────────────────────────
     return (
-        <div className="space-y-6">
+        <div className="space-y-5">
 
             {/* Page Header */}
             <div className="flex items-center justify-between flex-wrap gap-3">
                 <div>
                     <h2 className="text-2xl font-bold text-navy-900 tracking-tight">Attendance</h2>
-                    <p className="text-sm text-slate-500 mt-0.5">Track daily attendance for all employees</p>
+                    <p className="text-sm text-slate-500 mt-0.5">Daily register and monthly overview for all employees</p>
                 </div>
-                <div className="flex gap-3 flex-wrap">
-                    <input type="date" value={selectedDate} max={today} aria-label="Date"
-                        onChange={(e) => e.target.value && setSelectedDate(e.target.value)}
-                        className="panel px-4 py-2.5 text-sm text-slate-700 outline-none cursor-pointer focus:border-ocean-400 focus:ring-2 focus:ring-ocean-100 transition-colors" />
-                    <button onClick={() => openMark()} disabled={unmarkedEmployees.length === 0}
-                        title={unmarkedEmployees.length === 0 ? "Everyone is marked for this date" : undefined}
-                        className="flex items-center gap-2 bg-linear-to-r from-ocean-600 to-navy-600 hover:from-ocean-700 hover:to-navy-700 text-white text-sm font-bold px-4 py-2.5 rounded-xl shadow-md shadow-ocean-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
-                        + Mark Attendance
-                    </button>
+                <div className="flex rounded-xl border border-slate-200 bg-white p-1" role="tablist" aria-label="View">
+                    {[["daily", "Daily register"], ["monthly", "Monthly register"]].map(([id, label]) => (
+                        <button
+                            key={id}
+                            role="tab"
+                            aria-selected={view === id}
+                            onClick={() => setView(id)}
+                            className={`rounded-lg px-3.5 py-1.5 text-sm font-semibold transition-colors ${view === id ? "bg-navy-800 text-white" : "text-slate-600 hover:text-navy-800"}`}
+                        >
+                            {label}
+                        </button>
+                    ))}
                 </div>
             </div>
 
-            {/* Summary Cards */}
-            <SummaryCards summary={summary} isToday={selectedDate === today} />
-
-            {/* Real figures for the selected day */}
-            <DayAtAGlance records={records} isToday={selectedDate === today} />
-
-            {/* Register filters */}
-            <div className="flex flex-wrap items-center gap-2">
-                {!showDeleted && missedCount > 0 && (
-                    <button
-                        onClick={() => setOnlyMissed((v) => !v)}
-                        aria-pressed={onlyMissed}
-                        className={`rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition-colors ${onlyMissed ? "bg-amber-600 text-white ring-amber-600" : "bg-amber-50 text-amber-800 ring-amber-200 hover:bg-amber-100"}`}
-                    >
-                        {onlyMissed ? "Showing" : "Show"} {missedCount} missed check-out{missedCount === 1 ? "" : "s"}
-                    </button>
-                )}
-                <label className="ml-auto inline-flex cursor-pointer items-center gap-2 text-xs font-semibold text-slate-600">
-                    <input type="checkbox" checked={showDeleted} onChange={(e) => { setShowDeleted(e.target.checked); setOnlyMissed(false); }} className="h-4 w-4 accent-navy-700" />
-                    Show deleted records
-                </label>
-            </div>
-
-            {/* Attendance Table */}
-            <AttendanceTable
-                records={visibleRows.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)}
-                deletedMode={showDeleted}
-                onRestore={handleRestore}
-                onHistory={(id) => setHistoryId(id)}
-                loading={loading}
-                selectedDate={selectedDate}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                onCheckout={handleCheckout}
-                onMark={(emp) => openMark(emp._id)}
-            />
-
-            {/* Pagination */}
-            {totalPages > 1 && (
-                <div className="flex items-center justify-between px-1">
-                    <p className="text-sm text-slate-400">
-                        Page {page} of {totalPages}
-                    </p>
-                    <div className="flex gap-2">
-                        <button
-                            onClick={() => setPage(p => p - 1)}
-                            disabled={page === 1}
-                            className="px-3 py-1.5 text-xs font-bold rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                        >
-                            ← Prev
+            {view === "monthly" ? (
+                <MonthlyRegister onOpenDay={openDay} onOpenEmployee={openEmployee} />
+            ) : (
+                <>
+                    {/* Date controls + actions */}
+                    <div className="flex flex-wrap items-center gap-2.5">
+                        <div className="flex items-center rounded-xl border border-slate-200 bg-white">
+                            <button onClick={() => setSelectedDate((d) => shiftDate(d, -1))} aria-label="Previous day" className="rounded-l-xl p-2.5 text-slate-500 hover:bg-slate-50"><ChevronLeft size={18} /></button>
+                            <input type="date" value={selectedDate} max={today} aria-label="Date"
+                                onChange={(e) => e.target.value && setSelectedDate(e.target.value)}
+                                className="border-x border-slate-200 px-3 py-2 text-sm text-slate-700 outline-none cursor-pointer" />
+                            <button onClick={() => setSelectedDate((d) => shiftDate(d, 1))} disabled={selectedDate >= today} aria-label="Next day" className="rounded-r-xl p-2.5 text-slate-500 hover:bg-slate-50 disabled:opacity-30"><ChevronRight size={18} /></button>
+                        </div>
+                        <button onClick={() => setSelectedDate(today)} disabled={selectedDate === today} className="rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-40">
+                            Today
                         </button>
-                        <button
-                            onClick={() => setPage(p => p + 1)}
-                            disabled={page === totalPages}
-                            className="px-3 py-1.5 text-xs font-bold rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                        >
-                            Next →
-                        </button>
+                        <div className="ml-auto flex flex-wrap gap-2">
+                            <button
+                                onClick={() => setBulkOpen(true)}
+                                disabled={!canBulkAbsent}
+                                title={summary?.isOffDay ? "Off day — nobody is expected to work" : unmarkedEmployees.length === 0 ? "Everyone is marked" : undefined}
+                                className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
+                            >
+                                <UserX size={15} /> Mark {unmarkedEmployees.length || ""} unmarked as Absent
+                            </button>
+                            <button onClick={() => openMark()} disabled={unmarkedEmployees.length === 0 || isFuture}
+                                title={unmarkedEmployees.length === 0 ? "Everyone is marked for this date" : undefined}
+                                className="flex items-center gap-2 bg-linear-to-r from-ocean-600 to-navy-600 hover:from-ocean-700 hover:to-navy-700 text-white text-sm font-bold px-4 py-2 rounded-xl shadow-md shadow-ocean-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                                + Mark Attendance
+                            </button>
+                        </div>
                     </div>
-                </div>
+
+                    <SummaryCards summary={summary} isToday={selectedDate === today} />
+                    <DayAtAGlance records={records} isToday={selectedDate === today} />
+
+                    {/* Filters */}
+                    <div className="flex flex-wrap items-center gap-2">
+                        <label className="flex min-w-52 flex-1 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2">
+                            <Search size={15} className="text-slate-400" />
+                            <input value={filters.search} onChange={(e) => setFilter("search", e.target.value)} disabled={showDeleted}
+                                placeholder="Search name or employee ID" aria-label="Search employees"
+                                className="w-full bg-transparent text-sm outline-none placeholder-slate-400" />
+                        </label>
+                        {[
+                            ["department", "Department", ["All", ...DEPARTMENTS]],
+                            ["status", "Status", STATUS_FILTERS],
+                            ["mode", "Mode", ["All", "Office", "WFH"]],
+                        ].map(([key, label, options]) => (
+                            <label key={key} className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-500">
+                                <span className="hidden sm:inline">{label}</span>
+                                <select value={filters[key]} onChange={(e) => setFilter(key, e.target.value)} disabled={showDeleted}
+                                    className="bg-transparent font-medium text-slate-800 outline-none cursor-pointer">
+                                    {options.map((o) => <option key={o} value={o}>{o}</option>)}
+                                </select>
+                            </label>
+                        ))}
+                        {missedCount > 0 && !showDeleted && (
+                            <button
+                                onClick={() => setFilter("missedOnly", !filters.missedOnly)}
+                                aria-pressed={filters.missedOnly}
+                                className={`rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition-colors ${filters.missedOnly ? "bg-amber-600 text-white ring-amber-600" : "bg-amber-50 text-amber-800 ring-amber-200 hover:bg-amber-100"}`}
+                            >
+                                {missedCount} missed check-out{missedCount === 1 ? "" : "s"}
+                            </button>
+                        )}
+                        {hasFilters && !showDeleted && (
+                            <button onClick={() => setFilters(EMPTY_FILTERS)} className="inline-flex items-center gap-1 text-sm font-semibold text-ocean-700 hover:text-navy-800">
+                                <X size={14} /> Clear
+                            </button>
+                        )}
+                        <label className="ml-auto inline-flex cursor-pointer items-center gap-2 text-xs font-semibold text-slate-600">
+                            <input type="checkbox" checked={showDeleted} onChange={(e) => setShowDeleted(e.target.checked)} className="h-4 w-4 accent-navy-700" />
+                            Show deleted
+                        </label>
+                    </div>
+
+                    <AttendanceTable
+                        records={filteredRows.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)}
+                        totalCount={filteredRows.length}
+                        deletedMode={showDeleted}
+                        onRestore={handleRestore}
+                        onHistory={(id) => setHistoryId(id)}
+                        loading={loading}
+                        selectedDate={selectedDate}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
+                        onCheckout={handleCheckout}
+                        onMark={(emp) => openMark(emp._id)}
+                        onQuickMark={handleQuickMark}
+                        quickMarkDisabled={isFuture}
+                        busyEmployeeId={quickBusy}
+                        onOpenEmployee={openEmployee}
+                    />
+
+                    {/* Pagination */}
+                    {totalPages > 1 && (
+                        <div className="flex items-center justify-between px-1">
+                            <p className="text-sm text-slate-500">
+                                Showing {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, filteredRows.length)} of {filteredRows.length}
+                            </p>
+                            <div className="flex gap-2">
+                                <button onClick={() => setPage((p) => p - 1)} disabled={page === 1}
+                                    className="px-3 py-1.5 text-xs font-bold rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
+                                    Previous
+                                </button>
+                                <button onClick={() => setPage((p) => p + 1)} disabled={page === totalPages}
+                                    className="px-3 py-1.5 text-xs font-bold rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </>
             )}
 
             {historyId && <AttendanceHistoryModal recordId={historyId} onClose={() => setHistoryId(null)} />}
+
+            <ConfirmDialog
+                open={bulkOpen}
+                tone="primary"
+                title={`Mark ${unmarkedEmployees.length} employee${unmarkedEmployees.length === 1 ? "" : "s"} absent?`}
+                message={`Everyone without a record on ${new Date(`${selectedDate}T00:00:00`).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "short" })} will be marked Absent. Each record notes that it was bulk-marked, and you can still edit or delete any of them.`}
+                confirmLabel="Mark absent"
+                busy={bulkBusy}
+                onConfirm={handleBulkAbsent}
+                onCancel={() => setBulkOpen(false)}
+            />
 
             <ConfirmDialog
                 open={Boolean(pendingDelete)}
@@ -265,7 +409,6 @@ export default function Attendance() {
                 />
             </ConfirmDialog>
 
-            {/* Mark Attendance Modal */}
             {showMarkModal && (
                 <MarkAttendanceModal
                     form={markForm}
@@ -277,7 +420,6 @@ export default function Attendance() {
                 />
             )}
 
-            {/* Edit Attendance Modal */}
             {editRecord && (
                 <EditAttendanceModal
                     key={`${editRecord._id}-${presetCheckOut}`}

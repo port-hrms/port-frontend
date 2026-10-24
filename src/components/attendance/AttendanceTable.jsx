@@ -1,7 +1,8 @@
 // @ts-nocheck
 // client/src/components/attendance/AttendanceTable.jsx
 
-import { CalendarX2 } from "lucide-react";
+import { CalendarX2, History, LogOut, Pencil, Trash2 } from "lucide-react";
+import RowActionsMenu from "../RowActionsMenu";
 import { STATUS_STYLES, WORKING_STATUSES, formatDate, formatClockTime } from "./constants";
 import EmployeeAvatar from "../employee/EmployeeAvatar";
 import StatusIcon from "./StatusIcon";
@@ -30,7 +31,10 @@ function LocationTag({ loc, distance, radius, wfh }) {
     );
 }
 
-export default function AttendanceTable({ records, loading, selectedDate, onEdit, onDelete, onCheckout, onMark, onHistory, deletedMode = false, onRestore }) {
+export default function AttendanceTable({
+    records, loading, selectedDate, onEdit, onDelete, onCheckout, onMark, onQuickMark, onHistory,
+    onOpenEmployee, deletedMode = false, onRestore, quickMarkDisabled = false, busyEmployeeId = null, totalCount,
+}) {
     const markedCount = records.filter((r) => !r.unmarked).length;
     return (
         <div className="panel overflow-hidden">
@@ -41,7 +45,7 @@ export default function AttendanceTable({ records, loading, selectedDate, onEdit
                     <p className="text-xs text-slate-400 mt-0.5">
                         {deletedMode
                             ? `${formatDate(selectedDate)} · ${records.length} deleted record${records.length === 1 ? "" : "s"}`
-                            : `${formatDate(selectedDate)} · ${markedCount} marked${records.length > markedCount ? ` · ${records.length - markedCount} not marked` : ""}`}
+                            : `${formatDate(selectedDate)} · ${markedCount} marked${records.length > markedCount ? ` · ${records.length - markedCount} not marked` : ""}${totalCount != null && totalCount !== records.length ? ` (page of ${totalCount})` : ""}`}
                     </p>
                 </div>
             </div>
@@ -74,10 +78,15 @@ export default function AttendanceTable({ records, loading, selectedDate, onEdit
                                 <td className="px-5 py-4">
                                     <div className="flex items-center gap-3">
                                         <EmployeeAvatar employee={rec.employee} />
-                                        <div>
-                                            <p className="text-sm font-bold text-slate-900">
+                                        <div className="min-w-0">
+                                            <button
+                                                type="button"
+                                                onClick={() => onOpenEmployee?.(rec.employee?._id)}
+                                                className="text-left text-sm font-bold text-slate-900 hover:text-ocean-700 hover:underline"
+                                                title="Open employee profile"
+                                            >
                                                 {rec.employee?.firstName} {rec.employee?.lastName}
-                                            </p>
+                                            </button>
                                             <p className="text-xs text-slate-400">{rec.employee?.employeeId} · {rec.employee?.department}</p>
                                         </div>
                                     </div>
@@ -161,35 +170,46 @@ export default function AttendanceTable({ records, loading, selectedDate, onEdit
                                             </div>
                                         </div>
                                     ) : rec.unmarked ? (
-                                        <button
-                                            onClick={() => onMark(rec.employee)}
-                                            className="px-3 py-1.5 bg-navy-50 hover:bg-navy-100 text-navy-700 text-xs font-bold rounded-lg transition-colors"
-                                        >
-                                            Mark
-                                        </button>
-                                    ) : (
-                                    <div className="flex gap-2">
-                                        {WORKING_STATUSES.includes(rec.status) && rec.checkIn && !rec.checkOut && (
+                                        <div className="flex flex-wrap items-center gap-1.5">
+                                            {[["Present", "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"], ["Absent", "bg-red-50 text-red-600 hover:bg-red-100"], ["On Leave", "bg-amber-50 text-amber-700 hover:bg-amber-100"]].map(([st, tone]) => (
+                                                <button
+                                                    key={st}
+                                                    type="button"
+                                                    disabled={quickMarkDisabled || busyEmployeeId === rec.employee?._id}
+                                                    onClick={() => onQuickMark?.(rec.employee, st)}
+                                                    title={quickMarkDisabled ? "Can't mark a future date" : `Mark ${st}`}
+                                                    className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${tone}`}
+                                                >
+                                                    {st === "On Leave" ? "Leave" : st}
+                                                </button>
+                                            ))}
                                             <button
-                                                onClick={() => onCheckout(rec)}
-                                                className="px-3 py-1.5 bg-green-50 hover:bg-green-100 text-green-600 text-xs font-bold rounded-lg transition-colors"
+                                                type="button"
+                                                disabled={quickMarkDisabled}
+                                                onClick={() => onMark(rec.employee)}
+                                                className="px-2 py-1 text-xs font-semibold text-slate-500 hover:text-navy-800 disabled:opacity-40"
+                                                title="Mark with times, leave type or remarks"
                                             >
-                                                Check out
+                                                More…
                                             </button>
-                                        )}
-                                        <button
-                                            onClick={() => onEdit(rec)}
-                                            className="px-3 py-1.5 bg-ocean-50 hover:bg-ocean-100 text-ocean-600 text-xs font-bold rounded-lg transition-colors"
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            onClick={() => onDelete(rec._id)}
-                                            className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-500 text-xs font-bold rounded-lg transition-colors"
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>
+                                        </div>
+                                    ) : (
+                                        <div className="flex items-center gap-1">
+                                            <button
+                                                onClick={() => onEdit(rec)}
+                                                className="px-3 py-1.5 bg-ocean-50 hover:bg-ocean-100 text-ocean-700 text-xs font-bold rounded-lg transition-colors"
+                                            >
+                                                Edit
+                                            </button>
+                                            <RowActionsMenu
+                                                items={[
+                                                    { label: "Check out", icon: LogOut, onClick: () => onCheckout(rec), hidden: !(WORKING_STATUSES.includes(rec.status) && rec.checkIn && !rec.checkOut) },
+                                                    { label: "Edit", icon: Pencil, onClick: () => onEdit(rec) },
+                                                    { label: "History", icon: History, onClick: () => onHistory?.(rec._id) },
+                                                    { label: "Delete", icon: Trash2, onClick: () => onDelete(rec._id), danger: true },
+                                                ]}
+                                            />
+                                        </div>
                                     )}
                                 </td>
                             </tr>
