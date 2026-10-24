@@ -1,25 +1,13 @@
 // @ts-nocheck
 import { PlaneTakeoff } from "lucide-react";
+import EmployeeAvatar from "@/components/employee/EmployeeAvatar";
 
-export default function OnLeaveTodayCard({ requests = [], activeCount = 0 }) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+const MAX_SHOWN = 5;
 
-    const onLeaveToday = requests
-        .filter((request) => {
-            if (request?.status !== "Approved") return false;
-            const start = new Date(request.startDate);
-            const end = new Date(request.endDate);
-            start.setHours(0, 0, 0, 0);
-            end.setHours(23, 59, 59, 999);
-            return start <= today && end >= today;
-        })
-        .filter((request, index, list) => {
-            const employeeId = request?.employee?._id;
-            if (!employeeId) return true;
-            return list.findIndex((item) => item?.employee?._id === employeeId) === index;
-        })
-        .slice(0, 5);
+// `leaves` is the server's list of approved leaves covering today, one per employee
+export default function OnLeaveTodayCard({ leaves = [] }) {
+    const shown = leaves.slice(0, MAX_SHOWN);
+    const hiddenCount = leaves.length - shown.length;
 
     return (
         <div className="panel px-5 py-4">
@@ -30,22 +18,21 @@ export default function OnLeaveTodayCard({ requests = [], activeCount = 0 }) {
                     </span>
                     <h3 className="text-[15px] font-bold text-navy-900">On Leave Today</h3>
                 </div>
-                <span className="min-w-7 rounded-md bg-slate-100 px-2 py-0.5 text-center text-xs font-bold text-slate-600 tabular-nums">{activeCount}</span>
+                <span className="min-w-7 rounded-md bg-slate-100 px-2 py-0.5 text-center text-xs font-bold text-slate-600 tabular-nums">{leaves.length}</span>
             </div>
 
-            {onLeaveToday.length > 0 ? (
+            {shown.length > 0 ? (
                 <div className="mt-4 flex items-start gap-4">
-                    {onLeaveToday.map((request) => {
-                        const employee = request.employee || {};
+                    {shown.map((leave) => {
+                        const employee = leave.employee || {};
                         const firstName = employee.firstName || "Employee";
                         const lastName = employee.lastName || "";
-                        const initials = `${firstName[0] || "E"}${lastName[0] || ""}`.toUpperCase();
 
                         return (
-                            <div key={request._id} className="w-14 text-center">
-                                <div className="relative mx-auto h-10 w-10 rounded-full bg-ocean-50 text-navy-700 ring-1 ring-ocean-100 font-bold text-xs flex items-center justify-center">
-                                    {initials}
-                                    <span className="absolute -right-0.5 bottom-0 h-2.5 w-2.5 rounded-full border-2 border-white bg-port-amber" />
+                            <div key={leave._id} className="w-14 text-center" title={`${firstName} ${lastName} · ${leave.leaveType}`}>
+                                <div className="relative mx-auto h-10 w-10">
+                                    <EmployeeAvatar employee={employee} className="h-10 w-10 text-xs" />
+                                    <span className="absolute -right-0.5 bottom-0 h-2.5 w-2.5 rounded-full border-2 border-white bg-port-amber" aria-hidden="true" />
                                 </div>
                                 <p className="mt-1 text-xs font-semibold text-slate-500 truncate">
                                     {firstName}
@@ -53,9 +40,17 @@ export default function OnLeaveTodayCard({ requests = [], activeCount = 0 }) {
                             </div>
                         );
                     })}
+                    {hiddenCount > 0 && (
+                        <div className="w-14 text-center">
+                            <div className="mx-auto h-10 w-10 rounded-full bg-slate-100 text-slate-600 font-bold text-xs flex items-center justify-center">
+                                +{hiddenCount}
+                            </div>
+                            <p className="mt-1 text-xs font-semibold text-slate-500">more</p>
+                        </div>
+                    )}
                 </div>
             ) : (
-                <p className="mt-3 text-sm text-slate-400">Everyone is in today — no approved leaves.</p>
+                <p className="mt-3 text-sm text-slate-500">Everyone is in today — no approved leaves.</p>
             )}
         </div>
     );

@@ -23,7 +23,7 @@ export default function BirthdayTodayCard({ employees = [] }) {
         return (
             <div className="panel px-5 py-4">
                 <Header count={0} />
-                <p className="mt-3 text-sm text-slate-400">No birthdays today</p>
+                <p className="mt-3 text-sm text-slate-500">No birthdays today</p>
             </div>
         );
     }

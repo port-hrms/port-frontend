@@ -68,9 +68,17 @@ export default function WelcomeBanner() {
     const { user } = useAuth();
     const [now, setNow] = useState(new Date());
 
+    // Tick on each minute boundary — the clock shows no seconds
     useEffect(() => {
-        const timer = setInterval(() => setNow(new Date()), 1000);
-        return () => clearInterval(timer);
+        let interval;
+        const timeout = setTimeout(() => {
+            setNow(new Date());
+            interval = setInterval(() => setNow(new Date()), 60_000);
+        }, 60_000 - (Date.now() % 60_000));
+        return () => {
+            clearTimeout(timeout);
+            clearInterval(interval);
+        };
     }, []);
 
     const date = now.toLocaleDateString("en-IN", {
@@ -82,7 +90,6 @@ export default function WelcomeBanner() {
     const time = now.toLocaleTimeString("en-IN", {
         hour: "2-digit",
         minute: "2-digit",
-        second: "2-digit",
         hour12: true,
     });
 
@@ -95,22 +102,17 @@ export default function WelcomeBanner() {
                 <HarbourSilhouette />
             </div>
 
-            <div className="relative px-6 py-6 sm:px-8 sm:py-7">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-ocean-200">
-                    {greetingFor(now.getHours())}
-                </p>
-                <h2 className="mt-1 text-2xl sm:text-[28px] font-bold leading-tight">
-                    Welcome back, {user?.name?.split(" ")[0]}
+            <div className="relative px-6 py-5 sm:px-8">
+                <h2 className="text-xl sm:text-2xl font-bold leading-tight">
+                    {greetingFor(now.getHours())}, {user?.name?.split(" ")[0]}
                 </h2>
-                <p className="mt-1 text-sm text-ocean-100/75">Here's how your workforce looks today.</p>
-
-                <div className="mt-5 flex flex-wrap gap-2.5">
-                    <span className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-sm font-medium backdrop-blur-sm">
-                        <CalendarDays size={15} className="text-ocean-200" />
+                <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-ocean-100/85">
+                    <span className="inline-flex items-center gap-1.5">
+                        <CalendarDays size={14} className="text-ocean-200" />
                         {date}
                     </span>
-                    <span className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-sm font-semibold tabular-nums backdrop-blur-sm">
-                        <Clock size={15} className="text-ocean-200" />
+                    <span className="inline-flex items-center gap-1.5 tabular-nums">
+                        <Clock size={14} className="text-ocean-200" />
                         {time}
                     </span>
                 </div>

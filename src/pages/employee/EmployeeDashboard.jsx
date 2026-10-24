@@ -38,7 +38,8 @@ export default function EmployeeDashboard({ setActiveTab }) {
 
   const fetchLeaveRequestsForHr = async () => {
     try {
-      const { data } = await API.get("/dashboard/stats");
+      // Only the leave list — not the company-wide figures
+      const { data } = await API.get("/dashboard/stats", { params: { sections: "recentLeaveRequests" } });
       setRecentLeaveRequests(Array.isArray(data?.data?.recentLeaveRequests) ? data.data.recentLeaveRequests : []);
     } catch {
       // not HR staff on the server side — keep the panel hidden
@@ -46,9 +47,9 @@ export default function EmployeeDashboard({ setActiveTab }) {
     }
   };
 
-  const handleUpdateLeaveStatus = async (leaveId, status) => {
+  const handleUpdateLeaveStatus = async (leaveId, status, managerNotes) => {
     try {
-      await API.put(`/leaves/${leaveId}`, { status });
+      await API.put(`/leaves/${leaveId}`, { status, managerNotes });
       toast.success(`Leave ${status.toLowerCase()} successfully`);
       fetchLeaveRequestsForHr();
     } catch (error) {

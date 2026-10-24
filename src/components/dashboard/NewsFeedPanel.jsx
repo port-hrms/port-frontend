@@ -1,36 +1,33 @@
 import { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
-import { Megaphone, Pin, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Megaphone, Pin, ArrowRight } from "lucide-react";
 import API from "@/api/axios";
 import { config } from "@/config";
+import SectionError from "./SectionError";
 
-const PAGE_SIZE = 3;
+const PREVIEW_COUNT = 3; // the full list lives on the Announcements page
 
 export default function NewsFeedPanel({ setActiveTab }) {
     const [announcements, setAnnouncements] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [failed, setFailed] = useState(false);
+
+    const fetchAnnouncements = async () => {
+        setLoading(true);
+        try {
+            const res = await API.get("/announcements", { params: { limit: PREVIEW_COUNT } });
+            setAnnouncements(res.data.announcements || []);
+            setFailed(false);
+        } catch {
+            setFailed(true);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchAnnouncements = async () => {
-            try {
-                const res = await API.get("/announcements");
-                setAnnouncements(res.data.announcements || []);
-                setCurrentPage(1);
-            } catch (error) {
-                // Ignore error silently
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchAnnouncements();
     }, []);
-
-    const totalPages = Math.ceil(announcements.length / PAGE_SIZE);
-    const paginatedAnnouncements = announcements.slice(
-        (currentPage - 1) * PAGE_SIZE,
-        currentPage * PAGE_SIZE
-    );
 
     if (loading) {
         return (
@@ -38,6 +35,12 @@ export default function NewsFeedPanel({ setActiveTab }) {
                 <div className="w-8 h-8 border-4 border-ocean-100 border-t-ocean-600 rounded-full animate-spin" />
             </div>
         );
+    }
+
+    const openAnnouncements = () => setActiveTab("announcements");
+
+    if (failed) {
+        return <SectionError title="Company Connect" onRetry={fetchAnnouncements} />;
     }
 
     return (
@@ -60,20 +63,29 @@ export default function NewsFeedPanel({ setActiveTab }) {
 
             <div className="space-y-4 flex-1">
                 {announcements.length === 0 ? (
-                    <div className="h-full flex flex-col items-center justify-center text-slate-400 py-8">
-                        <Megaphone className="w-10 h-10 text-slate-200 mb-2" />
+                    <div className="h-full flex flex-col items-center justify-center text-slate-500 py-8">
+                        <Megaphone className="w-10 h-10 text-slate-300 mb-2" />
                         <p className="text-sm font-medium">No recent announcements</p>
                     </div>
                 ) : (
-                    paginatedAnnouncements.map((post) => (
+                    announcements.map((post) => (
                         <div
                             key={post._id}
-                            className="group p-4 rounded-xl border border-slate-100 bg-slate-50/60 hover:bg-white hover:border-ocean-200 hover:shadow-sm transition-all cursor-pointer relative overflow-hidden"
-                            onClick={() => setActiveTab("announcements")}
+                            role="button"
+                            tabIndex={0}
+                            className="group p-4 rounded-xl border border-slate-100 bg-slate-50/60 hover:bg-white hover:border-ocean-200 hover:shadow-sm transition-all cursor-pointer relative overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-ocean-300"
+                            onClick={openAnnouncements}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                    e.preventDefault();
+                                    openAnnouncements();
+                                }
+                            }}
                         >
                             {post.isPinned && (
-                                <div className="absolute top-0 right-0 z-10 bg-port-amber text-white text-[9px] font-bold uppercase tracking-widest py-1 px-2.5 rounded-bl-lg shadow-sm flex items-center gap-1">
-                                    <Pin className="w-2.5 h-2.5 fill-white" />
+                                <div className="absolute top-0 right-0 z-10 bg-port-amber text-white py-1 px-2.5 rounded-bl-lg shadow-sm flex items-center gap-1" title="Pinned">
+                                    <Pin className="w-3 h-3 fill-white" aria-hidden="true" />
+                                    <span className="sr-only">Pinned</span>
                                 </div>
                             )}
 
@@ -86,7 +98,7 @@ export default function NewsFeedPanel({ setActiveTab }) {
                                     <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-xl overflow-hidden border border-slate-200 bg-slate-100 shadow-sm z-0 relative">
                                         <img
                                             src={`${config.imageBaseUrl}${post.image}`}
-                                            alt="Announcement preview"
+                                            alt=""
                                             className="absolute inset-0 w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                                         />
                                     </div>
@@ -102,9 +114,9 @@ export default function NewsFeedPanel({ setActiveTab }) {
                                             {post.author?.name?.charAt(0) || "U"}
                                         </div>
                                     )}
-                                    <span className="text-[11px] font-semibold text-slate-700">{post.author?.name || "Management"}</span>
+                                    <span className="text-xs font-semibold text-slate-700">{post.author?.name || "Management"}</span>
                                 </div>
-                                <span className="text-[10px] font-bold text-slate-400">
+                                <span className="text-xs font-medium text-slate-500">
                                     {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
                                 </span>
                             </div>
@@ -112,45 +124,6 @@ export default function NewsFeedPanel({ setActiveTab }) {
                     ))
                 )}
             </div>
-
-            {/* Pagination Controls */}
-            {totalPages > 1 && (
-                <div className="flex items-center justify-between mt-5 pt-4 border-t border-slate-100">
-                    <button
-                        onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                        disabled={currentPage === 1}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-ocean-50 hover:text-ocean-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
-                    >
-                        <ChevronLeft className="w-3.5 h-3.5" />
-                        Prev
-                    </button>
-
-                    <div className="flex items-center gap-1.5">
-                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                            <button
-                                key={page}
-                                onClick={() => setCurrentPage(page)}
-                                className={`w-7 h-7 rounded-lg text-xs font-bold transition-all duration-200 ${
-                                    page === currentPage
-                                        ? "bg-navy-800 text-white shadow-sm"
-                                        : "text-slate-500 hover:bg-ocean-50 hover:text-ocean-700"
-                                }`}
-                            >
-                                {page}
-                            </button>
-                        ))}
-                    </div>
-
-                    <button
-                        onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                        disabled={currentPage === totalPages}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-ocean-50 hover:text-ocean-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
-                    >
-                        Next
-                        <ChevronRight className="w-3.5 h-3.5" />
-                    </button>
-                </div>
-            )}
         </div>
     );
 }

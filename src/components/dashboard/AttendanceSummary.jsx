@@ -15,22 +15,17 @@ export default function AttendanceSummary({ attendance }) {
 
     return (
         <div className="panel p-6">
-            <div className="flex items-center justify-between mb-5">
-                <div>
-                    <h3 className="text-[15px] font-bold text-navy-900">Today's Attendance</h3>
-                    <p className="text-xs text-slate-500 mt-0.5">Status breakdown for today</p>
-                </div>
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold bg-emerald-50 text-port-green ring-1 ring-emerald-100 px-2.5 py-1 rounded-md">
-                    <span className="relative flex h-1.5 w-1.5">
-                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-port-green opacity-60" />
-                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-port-green" />
-                    </span>
-                    Live
-                </span>
+            <div className="mb-5">
+                <h3 className="text-[15px] font-bold text-navy-900">Today's Attendance</h3>
+                <p className="text-xs text-slate-500 mt-0.5">Status breakdown for today</p>
             </div>
 
             {/* Distribution bar */}
-            <div className="mb-5 flex h-2 w-full overflow-hidden rounded-full bg-slate-100">
+            <div
+                className="mb-5 flex h-2 w-full overflow-hidden rounded-full bg-slate-100"
+                role="img"
+                aria-label={total > 0 ? STATUSES.map((s) => `${s.label} ${attendance[s.key] || 0}`).join(", ") : "No attendance marked yet"}
+            >
                 {total > 0 && STATUSES.map((s) => {
                     const count = attendance[s.key] || 0;
                     return count > 0 ? (
@@ -44,7 +39,7 @@ export default function AttendanceSummary({ attendance }) {
                     <div key={s.key} className="flex items-center gap-3 py-2.5">
                         <span className={`h-2.5 w-2.5 rounded-full ${s.dot}`} />
                         <span className="text-sm font-medium text-slate-600">{s.label}</span>
-                        <span className="ml-auto text-xs text-slate-400 tabular-nums">
+                        <span className="ml-auto text-xs text-slate-500 tabular-nums">
                             {total > 0 ? `${Math.round(((attendance[s.key] || 0) / total) * 100)}%` : "—"}
                         </span>
                         <span className={`w-8 text-right text-sm font-bold tabular-nums ${s.text}`}>{attendance[s.key] || 0}</span>
