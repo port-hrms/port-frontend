@@ -293,7 +293,12 @@ export default function Attendance() {
                         </div>
                     </div>
 
-                    <SummaryCards summary={summary} isToday={selectedDate === today} />
+                    <SummaryCards
+                        summary={summary}
+                        isToday={selectedDate === today}
+                        activeStatus={filters.status}
+                        onPick={(status) => { setShowDeleted(false); setFilter("status", status); }}
+                    />
                     <DayAtAGlance records={records} isToday={selectedDate === today} />
 
                     {/* Filters */}
